@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id
 
 data class Expense(
   @Id val id: Long = 0,
+  var title: String,
   var amountInCents: Int,
   var dueDate: OffsetDateTime,
   var type: ExpenseType,

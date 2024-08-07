@@ -2,6 +2,7 @@ package de.simplyroba.suite.budgets.rest
 
 import de.simplyroba.suite.budgets.persistence.Income
 import de.simplyroba.suite.budgets.service.IncomeService
+import java.time.OffsetDateTime
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -17,9 +19,19 @@ import reactor.core.publisher.Mono
 @RequestMapping("/api/v1/income")
 class IncomeController(private val incomeService: IncomeService) {
 
+  // TODO remove log() after testing
+
   @GetMapping()
   fun getIncomeList(): Flux<Income> {
     return incomeService.findAll().log()
+  }
+
+  @GetMapping()
+  fun getIncomeBetweenDates(
+    @RequestParam startDate: OffsetDateTime,
+    @RequestParam endDate: OffsetDateTime,
+  ): Flux<Income> {
+    return incomeService.findAllBetweenDates(startDate, endDate).log()
   }
 
   @GetMapping("/{id}")
