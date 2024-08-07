@@ -1,0 +1,13 @@
+# local development
+## run local postgres
+```bash
+docker run --name budgets-pg -e POSTGRES_USER=roba -e POSTGRES_PASSWORD=budgets -e POSTGRES_DB=roba_budgets -p 5432:5432 -d postgres:16-alpine
+```
+
+## run curl against endpoint
+```bash
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:8080/api/v1/income
+```
+```bash
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X POST -d '{"amountInCents":123,"dueDate":"2024-08-07T07:55:34Z"}' http://localhost:8080/api/v1/income
+```
