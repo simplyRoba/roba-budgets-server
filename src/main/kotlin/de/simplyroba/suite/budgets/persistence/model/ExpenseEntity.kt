@@ -17,7 +17,7 @@ data class ExpenseEntity(
 
 enum class ExpenseType {
   FIX,
-  FIX_FROM_BUDGET,
+  FIX_FROM_BUDGET, // TODO or just FIX
   FLEX,
   BUDGET,
 }

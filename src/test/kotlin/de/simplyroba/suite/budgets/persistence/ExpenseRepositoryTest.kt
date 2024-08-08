@@ -14,7 +14,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
   @Autowired private lateinit var expenseRepository: ExpenseRepository
 
   @Test
-  @Disabled
+  @Disabled // TODO
   fun `should read expense entry`() {
     expenseRepository
       .save(
