@@ -1,6 +1,8 @@
 package de.simplyroba.suite.budgets.rest
 
-import de.simplyroba.suite.budgets.persistence.Income
+import de.simplyroba.suite.budgets.rest.model.Income
+import de.simplyroba.suite.budgets.rest.model.IncomeCreate
+import de.simplyroba.suite.budgets.rest.model.IncomeUpdate
 import de.simplyroba.suite.budgets.service.IncomeService
 import java.time.OffsetDateTime
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -22,16 +24,15 @@ class IncomeController(private val incomeService: IncomeService) {
   // TODO remove log() after testing
 
   @GetMapping()
-  fun getIncomeList(): Flux<Income> {
-    return incomeService.findAll().log()
-  }
-
-  @GetMapping()
-  fun getIncomeBetweenDates(
-    @RequestParam startDate: OffsetDateTime,
-    @RequestParam endDate: OffsetDateTime,
+  fun getIncomeList(
+    @RequestParam(required = false) startDate: OffsetDateTime?,
+    @RequestParam(required = false) endDate: OffsetDateTime?,
   ): Flux<Income> {
-    return incomeService.findAllBetweenDates(startDate, endDate).log()
+    return if (startDate == null || endDate == null) {
+      incomeService.findAll().log()
+    } else {
+      incomeService.findAllBetweenDates(startDate, endDate).log()
+    }
   }
 
   @GetMapping("/{id}")
@@ -43,14 +44,14 @@ class IncomeController(private val incomeService: IncomeService) {
 
   @PostMapping()
   fun createIncome(
-    @RequestBody income: Income,
+    @RequestBody income: IncomeCreate,
   ): Mono<Income> {
     return incomeService.createIncome(income).log()
   }
 
   @PutMapping("/{id}")
   fun updateIncome(
-    @RequestBody income: Income,
+    @RequestBody income: IncomeUpdate,
     @PathVariable id: Long,
   ): Mono<Income> {
     return incomeService.updateIncome(income, id).log()

@@ -1,35 +1,52 @@
 package de.simplyroba.suite.budgets.service
 
-import de.simplyroba.suite.budgets.persistence.Income
 import de.simplyroba.suite.budgets.persistence.IncomeRepository
+import de.simplyroba.suite.budgets.persistence.model.IncomeEntity
+import de.simplyroba.suite.budgets.rest.model.Income
+import de.simplyroba.suite.budgets.rest.model.IncomeCreate
+import de.simplyroba.suite.budgets.rest.model.IncomeUpdate
+import de.simplyroba.suite.budgets.service.converter.Converter
 import java.time.OffsetDateTime
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
-class IncomeService(private val incomeRepository: IncomeRepository) {
+class IncomeService(
+  private val incomeRepository: IncomeRepository,
+  private val incomeEntityToIncomeConverter: Converter<IncomeEntity, Income>
+) {
 
   fun findAll(): Flux<Income> {
-    return incomeRepository.findAll()
+    return incomeRepository.findAll().map(incomeEntityToIncomeConverter::convert)
   }
 
   fun findAllBetweenDates(startDate: OffsetDateTime, endDate: OffsetDateTime): Flux<Income> {
-    return incomeRepository.findAllByDueDateBetween(startDate, endDate)
+    return incomeRepository
+      .findAllByDueDateBetween(startDate, endDate)
+      .map(incomeEntityToIncomeConverter::convert)
   }
 
   fun findById(id: Long): Mono<Income> {
-    return incomeRepository.findById(id)
+    return incomeRepository.findById(id).map(incomeEntityToIncomeConverter::convert)
     // TODO try json problem later
     // https://docs.spring.io/spring-boot/reference/web/reactive.html#web.reactive.webflux.error-handling
     // .switchIfEmpty(Mono.error(IllegalArgumentException("Income with id $id not found")))
   }
 
-  fun createIncome(income: Income): Mono<Income> {
-    return incomeRepository.save(income)
+  fun createIncome(income: IncomeCreate): Mono<Income> {
+    return incomeRepository
+      .save(
+        IncomeEntity(
+          title = income.title,
+          amountInCents = income.amountInCents,
+          dueDate = income.dueDate
+        )
+      )
+      .map(incomeEntityToIncomeConverter::convert)
   }
 
-  fun updateIncome(newIncome: Income, id: Long): Mono<Income> {
+  fun updateIncome(incomeUpdate: IncomeUpdate, id: Long): Mono<Income> {
     return incomeRepository
       .findById(id)
       // TODO try json problem later
@@ -37,11 +54,13 @@ class IncomeService(private val incomeRepository: IncomeRepository) {
       // .switchIfEmpty(Mono.error(IllegalArgumentException("Income with id $id not found")))
       .map { existingIncome ->
         existingIncome.apply {
-          amountInCents = newIncome.amountInCents
-          dueDate = newIncome.dueDate
+          title = incomeUpdate.title
+          amountInCents = incomeUpdate.amountInCents
+          dueDate = incomeUpdate.dueDate
         }
       }
       .flatMap { incomeRepository.save(it) }
+      .map(incomeEntityToIncomeConverter::convert)
   }
 
   fun deleteIncome(id: Long): Mono<Void> {
