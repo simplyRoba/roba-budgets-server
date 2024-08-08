@@ -1,8 +1,6 @@
 spring:
   application.name: roba-budgets-server
 
-  datasource:
-    driver-class-name: org.postgresql.Driver
   liquibase:
     url: jdbc:postgresql://localhost:5432/roba_budgets
     user: ${DB_USERNAME:roba}

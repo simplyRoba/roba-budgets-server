@@ -1,6 +1,6 @@
 package de.simplyroba.suite.budgets.persistence
 
-import de.simplyroba.suite.budgets.AbstractBaseServiceTest
+import de.simplyroba.suite.budgets.AbstractIntegrationTest
 import de.simplyroba.suite.budgets.persistence.model.ExpenseEntity
 import de.simplyroba.suite.budgets.persistence.model.ExpenseType
 import java.time.OffsetDateTime
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import reactor.kotlin.test.test
 
-class ExpenseRepositoryTest : AbstractBaseServiceTest() {
+class ExpenseRepositoryTest : AbstractIntegrationTest() {
 
   @Autowired private lateinit var expenseRepository: ExpenseRepository
 
