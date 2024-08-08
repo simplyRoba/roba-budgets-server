@@ -21,8 +21,6 @@ import reactor.core.publisher.Mono
 @RequestMapping("/api/v1/income")
 class IncomeController(private val incomeService: IncomeService) {
 
-  // TODO remove log() after testing
-
   @GetMapping()
   fun getIncomeList(
     @RequestParam(required = false) startDate: OffsetDateTime?,
@@ -31,7 +29,7 @@ class IncomeController(private val incomeService: IncomeService) {
     return if (startDate == null || endDate == null) {
       incomeService.findAll().log()
     } else {
-      incomeService.findAllBetweenDates(startDate, endDate).log()
+      incomeService.findAllBetweenDates(startDate, endDate)
     }
   }
 
@@ -39,14 +37,14 @@ class IncomeController(private val incomeService: IncomeService) {
   fun getIncomeById(
     @PathVariable id: Long,
   ): Mono<Income> {
-    return incomeService.findById(id).log()
+    return incomeService.findById(id)
   }
 
   @PostMapping()
   fun createIncome(
     @RequestBody income: IncomeCreate,
   ): Mono<Income> {
-    return incomeService.createIncome(income).log()
+    return incomeService.createIncome(income)
   }
 
   @PutMapping("/{id}")
@@ -54,13 +52,13 @@ class IncomeController(private val incomeService: IncomeService) {
     @RequestBody income: IncomeUpdate,
     @PathVariable id: Long,
   ): Mono<Income> {
-    return incomeService.updateIncome(income, id).log()
+    return incomeService.updateIncome(income, id)
   }
 
   @DeleteMapping("/{id}")
   fun deleteIncome(
     @PathVariable id: Long,
   ): Mono<Void> {
-    return incomeService.deleteIncome(id).log()
+    return incomeService.deleteIncome(id)
   }
 }
