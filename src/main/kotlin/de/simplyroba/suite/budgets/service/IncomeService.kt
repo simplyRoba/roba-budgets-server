@@ -2,6 +2,7 @@ package de.simplyroba.suite.budgets.service
 
 import de.simplyroba.suite.budgets.persistence.IncomeRepository
 import de.simplyroba.suite.budgets.persistence.model.IncomeEntity
+import de.simplyroba.suite.budgets.rest.error.NotFoundError
 import de.simplyroba.suite.budgets.rest.model.Income
 import de.simplyroba.suite.budgets.rest.model.IncomeCreate
 import de.simplyroba.suite.budgets.rest.model.IncomeUpdate
@@ -28,10 +29,10 @@ class IncomeService(
   }
 
   fun findById(id: Long): Mono<Income> {
-    return incomeRepository.findById(id).map(incomeEntityToIncomeConverter::convert)
-    // TODO try json problem later
-    // https://docs.spring.io/spring-boot/reference/web/reactive.html#web.reactive.webflux.error-handling
-    // .switchIfEmpty(Mono.error(IllegalArgumentException("Income with id $id not found")))
+    return incomeRepository
+      .findById(id)
+      .map(incomeEntityToIncomeConverter::convert)
+      .switchIfEmpty(Mono.error(NotFoundError("Income with id $id not found")))
   }
 
   fun createIncome(income: IncomeCreate): Mono<Income> {
@@ -49,9 +50,7 @@ class IncomeService(
   fun updateIncome(incomeUpdate: IncomeUpdate, id: Long): Mono<Income> {
     return incomeRepository
       .findById(id)
-      // TODO try json problem later
-      // https://docs.spring.io/spring-boot/reference/web/reactive.html#web.reactive.webflux.error-handling
-      // .switchIfEmpty(Mono.error(IllegalArgumentException("Income with id $id not found")))
+      .switchIfEmpty(Mono.error(NotFoundError("Income with id $id not found")))
       .map { existingIncome ->
         existingIncome.apply {
           title = incomeUpdate.title

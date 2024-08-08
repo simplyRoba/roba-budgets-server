@@ -74,6 +74,13 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
   }
 
   @Test
+  fun `should return 404 when income not found on get`() {
+    val id = 1L
+
+    webTestClient.get().uri("/api/v1/income/$id").exchange().expectStatus().isNotFound
+  }
+
+  @Test
   fun `should create income`() {
     val title = "Income"
     val amountInCents = 1000
@@ -114,6 +121,21 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
         assertThat(it.responseBody?.id).isEqualTo(id)
         assertThat(it.responseBody?.title).isEqualTo(updatedTitle)
       }
+  }
+
+  @Test
+  fun `should return 404 when income not found on update`() {
+    val id = 1L
+
+    webTestClient
+      .put()
+      .uri("/api/v1/income/$id")
+      .bodyValue(
+        IncomeUpdate(title = "Updated Income", amountInCents = 1000, dueDate = OffsetDateTime.now())
+      )
+      .exchange()
+      .expectStatus()
+      .isNotFound
   }
 
   @Test

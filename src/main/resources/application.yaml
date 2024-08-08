@@ -10,6 +10,8 @@ spring:
     username: ${DB_USERNAME:roba}
     password: ${DB_PASSWORD:budgets}
 
-  webflux:
-    problemdetails:
-      enabled: true
+# TODO read more about this and how to use it
+# https://docs.spring.io/spring-boot/reference/web/reactive.html#web.reactive.webflux.error-handling
+#  webflux:
+#    problemdetails:
+#      enabled: true
