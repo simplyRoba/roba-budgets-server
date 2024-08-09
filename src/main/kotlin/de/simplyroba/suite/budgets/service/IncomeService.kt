@@ -31,8 +31,8 @@ class IncomeService(
   fun findById(id: Long): Mono<Income> {
     return incomeRepository
       .findById(id)
-      .map(incomeEntityToIncomeConverter::convert)
       .switchIfEmpty(Mono.error(NotFoundError("Income with id $id not found")))
+      .map(incomeEntityToIncomeConverter::convert)
   }
 
   fun createIncome(income: IncomeCreate): Mono<Income> {
@@ -47,7 +47,7 @@ class IncomeService(
       .map(incomeEntityToIncomeConverter::convert)
   }
 
-  fun updateIncome(incomeUpdate: IncomeUpdate, id: Long): Mono<Income> {
+  fun updateIncome(id: Long, incomeUpdate: IncomeUpdate): Mono<Income> {
     return incomeRepository
       .findById(id)
       .switchIfEmpty(Mono.error(NotFoundError("Income with id $id not found")))
@@ -58,7 +58,7 @@ class IncomeService(
           dueDate = incomeUpdate.dueDate
         }
       }
-      .flatMap { incomeRepository.save(it) }
+      .flatMap(incomeRepository::save)
       .map(incomeEntityToIncomeConverter::convert)
   }
 

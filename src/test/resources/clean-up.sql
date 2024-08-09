@@ -1,6 +1,6 @@
 TRUNCATE TABLE
     income,
     expense,
-    expense_category,
+    category,
     budget
 ;

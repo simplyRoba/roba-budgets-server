@@ -52,10 +52,10 @@ class IncomeController(private val incomeService: IncomeService) {
 
   @PutMapping("/{id}")
   fun updateIncome(
-    @RequestBody income: IncomeUpdate,
     @PathVariable id: Long,
+    @RequestBody income: IncomeUpdate,
   ): Mono<Income> {
-    return incomeService.updateIncome(income, id)
+    return incomeService.updateIncome(id, income)
   }
 
   @DeleteMapping("/{id}")

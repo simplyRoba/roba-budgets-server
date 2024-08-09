@@ -7,6 +7,7 @@ import de.simplyroba.suite.budgets.rest.model.IncomeUpdate
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.expectBody
 
 class IncomeIntegrationTest : AbstractIntegrationTest() {
@@ -89,12 +90,14 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
     webTestClient
       .post()
       .uri("/api/v1/income")
+      .contentType(MediaType.APPLICATION_JSON)
       .bodyValue(IncomeCreate(title = title, amountInCents = amountInCents, dueDate = dueDate))
       .exchange()
       .expectStatus()
       .isCreated
       .expectBody<Income>()
       .consumeWith {
+        assertThat(it.responseBody?.id).isNotNull
         assertThat(it.responseBody?.title).isEqualTo(title)
         assertThat(it.responseBody?.amountInCents).isEqualTo(amountInCents)
         assertThat(it.responseBody?.dueDate).isAtSameInstantAs(dueDate)
@@ -110,6 +113,7 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
     webTestClient
       .put()
       .uri("/api/v1/income/$id")
+      .contentType(MediaType.APPLICATION_JSON)
       .bodyValue(
         IncomeUpdate(title = updatedTitle, amountInCents = 1000, dueDate = OffsetDateTime.now())
       )
@@ -130,6 +134,7 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
     webTestClient
       .put()
       .uri("/api/v1/income/$id")
+      .contentType(MediaType.APPLICATION_JSON)
       .bodyValue(
         IncomeUpdate(title = "Updated Income", amountInCents = 1000, dueDate = OffsetDateTime.now())
       )

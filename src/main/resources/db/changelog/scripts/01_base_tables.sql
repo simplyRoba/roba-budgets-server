@@ -9,11 +9,11 @@ CREATE TABLE income
     due_date        TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
-CREATE TABLE expense_category
+CREATE TABLE category
 (
     id              INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name            VARCHAR NOT NULL UNIQUE,
-    sub_category_id INT REFERENCES expense_category (id)
+    parent_category_id INT REFERENCES category (id)
 );
 
 CREATE TABLE budget
@@ -30,7 +30,7 @@ CREATE TABLE expense
     amount_in_cents INT                                  NOT NULL,
     due_date        TIMESTAMP WITH TIME ZONE             NOT NULL,
     type            VARCHAR                              NOT NULL,
-    category_id     INT REFERENCES expense_category (id) NOT NULL,
+    category_id     INT REFERENCES category (id) NOT NULL,
     budget_id       INT REFERENCES budget (id)
 );
 

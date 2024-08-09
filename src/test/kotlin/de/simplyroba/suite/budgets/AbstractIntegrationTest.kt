@@ -1,6 +1,8 @@
 package de.simplyroba.suite.budgets
 
+import de.simplyroba.suite.budgets.persistence.CategoryRepository
 import de.simplyroba.suite.budgets.persistence.IncomeRepository
+import de.simplyroba.suite.budgets.persistence.model.CategoryEntity
 import de.simplyroba.suite.budgets.persistence.model.IncomeEntity
 import io.r2dbc.spi.ConnectionFactory
 import java.time.OffsetDateTime
@@ -22,6 +24,7 @@ abstract class AbstractIntegrationTest {
 
   @Autowired private lateinit var connectionFactory: ConnectionFactory
   @Autowired private lateinit var incomeRepository: IncomeRepository
+  @Autowired private lateinit var categoryRepository: CategoryRepository
 
   @AfterEach
   fun cleanUp(@Value("classpath:clean-up.sql") sqlScript: Resource) {
@@ -39,6 +42,14 @@ abstract class AbstractIntegrationTest {
     return incomeRepository
       .save(IncomeEntity(title = title, amountInCents = amountInCents, dueDate = dueDate))
       .log("create income $title")
+      .blockOptional()
+      .get()
+  }
+
+  fun createCategory(name: String = "Category", parentCategoryId: Long? = null): CategoryEntity {
+    return categoryRepository
+      .save(CategoryEntity(name = name, parentCategoryId = parentCategoryId))
+      .log("create category $name")
       .blockOptional()
       .get()
   }

@@ -10,12 +10,12 @@ data class ExpenseEntity(
   var title: String?,
   var amountInCents: Int,
   var dueDate: OffsetDateTime,
-  var type: ExpenseType,
+  var type: ExpenseEntityType,
   var categoryId: Long,
   var budgetId: Long?,
 )
 
-enum class ExpenseType {
+enum class ExpenseEntityType {
   FIX,
   FIX_FROM_BUDGET, // TODO or just FIX
   FLEX,

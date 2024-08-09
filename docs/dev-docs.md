@@ -1,7 +1,7 @@
 # local development
 ## run local postgres
 ```bash
-docker run --name budgets-pg -e POSTGRES_USER=roba -e POSTGRES_PASSWORD=budgets -e POSTGRES_DB=roba_budgets -p 5432:5432 -d postgres:16-alpine
+docker run --name budgets -e POSTGRES_USER=roba -e POSTGRES_PASSWORD=budgets -e POSTGRES_DB=roba_budgets -p 5432:5432 -d postgres:16-alpine
 ```
 
 ## run curl against endpoint
