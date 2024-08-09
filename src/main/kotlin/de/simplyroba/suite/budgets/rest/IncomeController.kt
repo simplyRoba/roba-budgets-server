@@ -23,7 +23,7 @@ import reactor.core.publisher.Mono
 @RequestMapping("/api/v1/income")
 class IncomeController(private val incomeService: IncomeService) {
 
-  @GetMapping()
+  @GetMapping
   fun getIncomeList(
     @RequestParam(required = false) startDate: OffsetDateTime?,
     @RequestParam(required = false) endDate: OffsetDateTime?,
@@ -42,7 +42,7 @@ class IncomeController(private val incomeService: IncomeService) {
     return incomeService.findById(id)
   }
 
-  @PostMapping()
+  @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   fun createIncome(
     @RequestBody income: IncomeCreate,
