@@ -1,0 +1,7 @@
+# TODO is there a leak somehow the 10th connection save in tests blocks indefinitely
+spring:
+  r2dbc:
+    pool:
+      enabled: false
+      #initial-size: 1
+      #max-size: 1
