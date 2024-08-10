@@ -11,7 +11,7 @@ class ExpenseEntityTypeToExpenseTypeConverterTest {
   private val converter = ExpenseEntityTypeToExpenseTypeConverter()
 
   @ParameterizedTest
-  @CsvSource("FIX, FIX", "FLEX, FLEX", "BUDGET, BUDGET")
+  @CsvSource("FIX:FIX", "FLEX:FLEX", "BUDGET:BUDGET", delimiter = ':')
   fun `should convert entity type to dto type`(
     entityType: ExpenseEntityType,
     dtoType: ExpenseType
