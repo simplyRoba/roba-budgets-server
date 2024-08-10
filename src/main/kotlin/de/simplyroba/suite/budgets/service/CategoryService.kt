@@ -16,7 +16,8 @@ import reactor.core.publisher.Mono
 @Service
 class CategoryService(
   private val categoryRepository: CategoryRepository,
-  private val categoryEntityToCategoryConverter: Converter<CategoryEntity, Category>
+  private val categoryEntityToCategoryConverter: Converter<CategoryEntity, Category>,
+  private val categoryCreateToEntityConverter: Converter<CategoryCreate, CategoryEntity>
 ) {
 
   fun findAll(): Flux<Category> {
@@ -53,12 +54,7 @@ class CategoryService(
   @Transactional
   fun createCategory(category: CategoryCreate): Mono<Category> {
     return categoryRepository
-      .save(
-        CategoryEntity(
-          name = category.name,
-          parentCategoryId = category.parentCategoryId,
-        )
-      )
+      .save(categoryCreateToEntityConverter.convert(category))
       .map(categoryEntityToCategoryConverter::convert)
   }
 

@@ -2,9 +2,12 @@ package de.simplyroba.suite.budgets
 
 import de.simplyroba.suite.budgets.persistence.BudgetRepository
 import de.simplyroba.suite.budgets.persistence.CategoryRepository
+import de.simplyroba.suite.budgets.persistence.ExpenseRepository
 import de.simplyroba.suite.budgets.persistence.IncomeRepository
 import de.simplyroba.suite.budgets.persistence.model.BudgetEntity
 import de.simplyroba.suite.budgets.persistence.model.CategoryEntity
+import de.simplyroba.suite.budgets.persistence.model.ExpenseEntity
+import de.simplyroba.suite.budgets.persistence.model.ExpenseEntityType
 import de.simplyroba.suite.budgets.persistence.model.IncomeEntity
 import io.r2dbc.spi.ConnectionFactory
 import java.time.OffsetDateTime
@@ -28,6 +31,7 @@ abstract class AbstractIntegrationTest {
 
   @Autowired private lateinit var connectionFactory: ConnectionFactory
   @Autowired private lateinit var incomeRepository: IncomeRepository
+  @Autowired private lateinit var expenseRepository: ExpenseRepository
   @Autowired private lateinit var categoryRepository: CategoryRepository
   @Autowired private lateinit var budgetRepository: BudgetRepository
 
@@ -50,6 +54,30 @@ abstract class AbstractIntegrationTest {
     return incomeRepository
       .save(IncomeEntity(title = title, amountInCents = amountInCents, dueDate = dueDate))
       .log("create income $title")
+      .blockOptional()
+      .get()
+  }
+
+  fun createExpense(
+    title: String = "Title",
+    amountInCents: Int = 999,
+    dueDate: OffsetDateTime = OffsetDateTime.now(),
+    type: ExpenseEntityType = ExpenseEntityType.FLEX,
+    categoryId: Long = 1,
+    budgetId: Long? = null,
+  ): ExpenseEntity {
+    return expenseRepository
+      .save(
+        ExpenseEntity(
+          title = title,
+          amountInCents = amountInCents,
+          dueDate = dueDate,
+          type = type,
+          categoryId = categoryId,
+          budgetId = budgetId
+        )
+      )
+      .log("create expense $title")
       .blockOptional()
       .get()
   }
