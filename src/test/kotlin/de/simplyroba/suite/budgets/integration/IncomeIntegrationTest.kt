@@ -44,8 +44,8 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
       .uri { builder ->
         builder
           .path("/api/v1/income")
-          .queryParam("startDate", "{1}")
-          .queryParam("endDate", "{2}")
+          .queryParam("startDate", "{startDate}")
+          .queryParam("endDate", "{endDate}")
           .build(startDate, endDate)
       }
       .exchange()
