@@ -36,5 +36,6 @@ CREATE TABLE expense
 
 CREATE INDEX income_due_date_idx ON income(due_date);
 CREATE INDEX expense_due_date_idx ON expense(due_date);
+CREATE INDEX expense_type_idx ON expense(type);
 CREATE INDEX expense_category_id_idx ON expense(category_id);
 CREATE INDEX expense_budget_id_idx ON expense(budget_id);

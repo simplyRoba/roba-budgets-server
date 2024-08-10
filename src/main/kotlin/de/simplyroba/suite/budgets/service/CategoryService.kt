@@ -9,6 +9,7 @@ import de.simplyroba.suite.budgets.rest.model.CategoryTree
 import de.simplyroba.suite.budgets.rest.model.CategoryUpdate
 import de.simplyroba.suite.budgets.service.converter.Converter
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
@@ -49,6 +50,7 @@ class CategoryService(
       .map(categoryEntityToCategoryConverter::convert)
   }
 
+  @Transactional
   fun createCategory(category: CategoryCreate): Mono<Category> {
     return categoryRepository
       .save(
@@ -60,20 +62,22 @@ class CategoryService(
       .map(categoryEntityToCategoryConverter::convert)
   }
 
-  fun updateCategory(id: Long, category: CategoryUpdate): Mono<Category> {
+  @Transactional
+  fun updateCategory(id: Long, categoryUpdate: CategoryUpdate): Mono<Category> {
     return categoryRepository
       .findById(id)
       .switchIfEmpty(Mono.error(NotFoundError("Category with id $id not found")))
       .map { existingCategory ->
         existingCategory.apply {
-          name = category.name
-          parentCategoryId = category.parentCategoryId
+          name = categoryUpdate.name
+          parentCategoryId = categoryUpdate.parentCategoryId
         }
       }
       .flatMap(categoryRepository::save)
       .map(categoryEntityToCategoryConverter::convert)
   }
 
+  @Transactional
   fun deleteCategory(id: Long): Mono<Void> {
     return categoryRepository.deleteById(id)
   }

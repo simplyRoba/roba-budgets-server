@@ -73,7 +73,7 @@ class CategoryIntegrationTest : AbstractIntegrationTest() {
 
   @Test
   fun `should return 404 when category not found on get`() {
-    val id = 1L
+    val id = 1
 
     webTestClient.get().uri("/api/v1/category/$id").exchange().expectStatus().isNotFound
   }
@@ -86,7 +86,7 @@ class CategoryIntegrationTest : AbstractIntegrationTest() {
       .post()
       .uri("/api/v1/category")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(CategoryCreate(name = name, parentCategoryId = null))
+      .bodyValue(CategoryCreate(name, null))
       .exchange()
       .expectStatus()
       .isCreated
@@ -107,7 +107,7 @@ class CategoryIntegrationTest : AbstractIntegrationTest() {
       .put()
       .uri("/api/v1/category/{id}", id)
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(CategoryUpdate(name = "Updated Category", parentCategoryId = null))
+      .bodyValue(CategoryUpdate("Updated Category", null))
       .exchange()
       .expectStatus()
       .isOk
@@ -120,13 +120,13 @@ class CategoryIntegrationTest : AbstractIntegrationTest() {
 
   @Test
   fun `should return 404 when category not found on update`() {
-    val id = 1L
+    val id = 1
 
     webTestClient
       .put()
       .uri("/api/v1/category/$id")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(CategoryUpdate(name = "Category", parentCategoryId = null))
+      .bodyValue(CategoryUpdate("Category", null))
       .exchange()
       .expectStatus()
       .isNotFound

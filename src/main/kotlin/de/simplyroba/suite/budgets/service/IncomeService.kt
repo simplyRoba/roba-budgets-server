@@ -9,6 +9,7 @@ import de.simplyroba.suite.budgets.rest.model.IncomeUpdate
 import de.simplyroba.suite.budgets.service.converter.Converter
 import java.time.OffsetDateTime
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
@@ -35,6 +36,7 @@ class IncomeService(
       .map(incomeEntityToIncomeConverter::convert)
   }
 
+  @Transactional
   fun createIncome(income: IncomeCreate): Mono<Income> {
     return incomeRepository
       .save(
@@ -47,6 +49,7 @@ class IncomeService(
       .map(incomeEntityToIncomeConverter::convert)
   }
 
+  @Transactional
   fun updateIncome(id: Long, incomeUpdate: IncomeUpdate): Mono<Income> {
     return incomeRepository
       .findById(id)
@@ -62,6 +65,7 @@ class IncomeService(
       .map(incomeEntityToIncomeConverter::convert)
   }
 
+  @Transactional
   fun deleteIncome(id: Long): Mono<Void> {
     return incomeRepository.deleteById(id)
   }

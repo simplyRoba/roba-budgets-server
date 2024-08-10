@@ -24,44 +24,31 @@ class CategoryController(
   private val categoryService: CategoryService,
 ) {
 
-  @GetMapping
-  fun getCategoryList(): Flux<Category> {
-    return categoryService.findAll()
-  }
+  @GetMapping fun getCategoryList(): Flux<Category> = categoryService.findAll()
 
   @GetMapping("/tree")
-  fun getCategoryTree(): Flux<CategoryTree> {
-    return categoryService.buildCategoryTree()
-  }
+  fun getCategoryTree(): Flux<CategoryTree> = categoryService.buildCategoryTree()
 
   @GetMapping("/{id}")
   fun getCategoryById(
     @PathVariable id: Long,
-  ): Mono<Category> {
-    return categoryService.findById(id)
-  }
+  ): Mono<Category> = categoryService.findById(id)
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   fun createCategory(
     @RequestBody category: CategoryCreate,
-  ): Mono<Category> {
-    return categoryService.createCategory(category)
-  }
+  ): Mono<Category> = categoryService.createCategory(category)
 
   @PutMapping("/{id}")
   fun updateCategory(
     @PathVariable id: Long,
     @RequestBody category: CategoryUpdate,
-  ): Mono<Category> {
-    return categoryService.updateCategory(id, category)
-  }
+  ): Mono<Category> = categoryService.updateCategory(id, category)
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   fun deleteCategory(
     @PathVariable id: Long,
-  ): Mono<Void> {
-    return categoryService.deleteCategory(id)
-  }
+  ): Mono<Void> = categoryService.deleteCategory(id)
 }

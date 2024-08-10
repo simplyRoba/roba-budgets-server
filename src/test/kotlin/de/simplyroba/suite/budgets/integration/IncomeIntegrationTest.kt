@@ -76,7 +76,7 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
 
   @Test
   fun `should return 404 when income not found on get`() {
-    val id = 1L
+    val id = 1
 
     webTestClient.get().uri("/api/v1/income/$id").exchange().expectStatus().isNotFound
   }
@@ -91,7 +91,7 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
       .post()
       .uri("/api/v1/income")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(IncomeCreate(title = title, amountInCents = amountInCents, dueDate = dueDate))
+      .bodyValue(IncomeCreate(title, amountInCents, dueDate))
       .exchange()
       .expectStatus()
       .isCreated
@@ -109,14 +109,14 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
     val title = "Income"
     val id = createIncome(title).id
     val updatedTitle = "Updated Income"
+    val updatedAmountInCents = 1000
+    val updatedDueDate = OffsetDateTime.now()
 
     webTestClient
       .put()
       .uri("/api/v1/income/$id")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(
-        IncomeUpdate(title = updatedTitle, amountInCents = 1000, dueDate = OffsetDateTime.now())
-      )
+      .bodyValue(IncomeUpdate(updatedTitle, updatedAmountInCents, updatedDueDate))
       .exchange()
       .expectStatus()
       .isOk
@@ -124,20 +124,20 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
       .consumeWith {
         assertThat(it.responseBody?.id).isEqualTo(id)
         assertThat(it.responseBody?.title).isEqualTo(updatedTitle)
+        assertThat(it.responseBody?.amountInCents).isEqualTo(updatedAmountInCents)
+        assertThat(it.responseBody?.dueDate).isAtSameInstantAs(updatedDueDate)
       }
   }
 
   @Test
   fun `should return 404 when income not found on update`() {
-    val id = 1L
+    val id = 1
 
     webTestClient
       .put()
       .uri("/api/v1/income/$id")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(
-        IncomeUpdate(title = "Updated Income", amountInCents = 1000, dueDate = OffsetDateTime.now())
-      )
+      .bodyValue(IncomeUpdate("Updated Income", 1000, OffsetDateTime.now()))
       .exchange()
       .expectStatus()
       .isNotFound
