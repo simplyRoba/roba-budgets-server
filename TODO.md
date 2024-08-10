@@ -1,0 +1,3 @@
+ - docker image
+ - clean up readme
+ - go public
