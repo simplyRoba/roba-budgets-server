@@ -5,7 +5,7 @@ import de.simplyroba.suite.budgets.rest.model.BudgetCreate
 import org.springframework.stereotype.Component
 
 @Component
-class BudgetCreateToBudgetEntityConverter : Converter<BudgetCreate, BudgetEntity> {
+class BudgetCreateToEntityConverter : Converter<BudgetCreate, BudgetEntity> {
   override fun convert(source: BudgetCreate): BudgetEntity {
     return BudgetEntity(name = source.name, savingAmountInCents = source.savingAmountInCents)
   }

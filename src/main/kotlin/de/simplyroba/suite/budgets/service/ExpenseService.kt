@@ -7,7 +7,9 @@ import de.simplyroba.suite.budgets.rest.error.NotFoundError
 import de.simplyroba.suite.budgets.rest.model.Expense
 import de.simplyroba.suite.budgets.rest.model.ExpenseCreate
 import de.simplyroba.suite.budgets.rest.model.ExpenseType
+import de.simplyroba.suite.budgets.rest.model.ExpenseUpdate
 import de.simplyroba.suite.budgets.service.converter.Converter
+import de.simplyroba.suite.budgets.service.converter.ExpenseTypeToExpenseEntityTypeConverter
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Flux
@@ -17,7 +19,8 @@ import reactor.core.publisher.Mono
 class ExpenseService(
   private val expenseRepository: ExpenseRepository,
   private val expenseEntityToExpenseConverter: Converter<ExpenseEntity, Expense>,
-  private val expenseTypeToExpenseEntityTypeConverter: Converter<ExpenseType, ExpenseEntityType>
+  private val expenseCreateToEntityConverter: Converter<ExpenseCreate, ExpenseEntity>,
+  private val expenseTypeToExpenseEntityTypeConverter: Converter<ExpenseType, ExpenseEntityType>,
 ) {
 
   fun findAll(): Flux<Expense> {
@@ -34,35 +37,28 @@ class ExpenseService(
   @Transactional
   fun createExpense(expense: ExpenseCreate): Mono<Expense> {
     return expenseRepository
-      .save(
-        ExpenseEntity(
-          title = expense.title,
-          amountInCents = expense.amountInCents,
-          dueDate = expense.dueDate,
-          type = expenseTypeToExpenseEntityTypeConverter.convert(expense.type),
-          categoryId = expense.categoryId,
-          budgetId = expense.budgetId
-        )
-      )
+      .save(expenseCreateToEntityConverter.convert(expense))
       .map(expenseEntityToExpenseConverter::convert)
   }
 
-  //    @Transactional
-  //    fun updateExpense(id: Long, expenseUpdate: ExpenseCreate): Mono<Expense> {
-  //        return expenseRepository
-  //            .findById(id)
-  //            .switchIfEmpty(Mono.error(NotFoundError("Expense with id $id not found")))
-  //            .map { existingExpense ->
-  //                existingExpense.apply {
-  //                    name = expenseUpdate.name
-  //                    amountInCents = expenseUpdate.amountInCents
-  //                    date = expenseUpdate.date
-  //                    budgetId = expenseUpdate.budgetId
-  //                }
-  //            }
-  //            .flatMap(expenseRepository::save)
-  //            .map(expenseEntityToExpenseConverter::convert)
-  //    }
+  @Transactional
+  fun updateExpense(id: Long, expenseUpdate: ExpenseUpdate): Mono<Expense> {
+    return expenseRepository
+      .findById(id)
+      .switchIfEmpty(Mono.error(NotFoundError("Expense with id $id not found")))
+      .map { existingExpense ->
+        existingExpense.apply {
+            title = expenseUpdate.title
+            amountInCents = expenseUpdate.amountInCents
+            dueDate = expenseUpdate.dueDate
+            type = expenseTypeToExpenseEntityTypeConverter.convert(expenseUpdate.type)
+            categoryId = expenseUpdate.categoryId
+            budgetId = expenseUpdate.budgetId
+        }
+      }
+      .flatMap(expenseRepository::save)
+      .map(expenseEntityToExpenseConverter::convert)
+  }
 
   @Transactional
   fun deleteExpense(id: Long): Mono<Void> {

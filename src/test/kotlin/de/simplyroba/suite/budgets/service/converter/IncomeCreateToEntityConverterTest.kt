@@ -5,9 +5,9 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Test
 
-class IncomeCreateToIncomeEntityConverterTest {
+class IncomeCreateToEntityConverterTest {
 
-  private val converter = IncomeCreateToIncomeEntityConverter()
+  private val converter = IncomeCreateToEntityConverter()
 
   @Test
   fun `should convert create to entity`() {

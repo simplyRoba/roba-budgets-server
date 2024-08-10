@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono
 class IncomeService(
   private val incomeRepository: IncomeRepository,
   private val incomeEntityToIncomeConverter: Converter<IncomeEntity, Income>,
-  private val incomeCreateToIncomeEntityConverter: Converter<IncomeCreate, IncomeEntity>
+  private val incomeCreateToEntityConverter: Converter<IncomeCreate, IncomeEntity>
 ) {
 
   fun findAll(): Flux<Income> {
@@ -40,7 +40,7 @@ class IncomeService(
   @Transactional
   fun createIncome(income: IncomeCreate): Mono<Income> {
     return incomeRepository
-      .save(incomeCreateToIncomeEntityConverter.convert(income))
+      .save(incomeCreateToEntityConverter.convert(income))
       .map(incomeEntityToIncomeConverter::convert)
   }
 

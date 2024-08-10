@@ -4,9 +4,9 @@ import de.simplyroba.suite.budgets.rest.model.BudgetCreate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class BudgetCreateToBudgetEntityConverterTest {
+class BudgetCreateToEntityConverterTest {
 
-  private val converter = BudgetCreateToBudgetEntityConverter()
+  private val converter = BudgetCreateToEntityConverter()
 
   @Test
   fun `should convert create to entity`() {
