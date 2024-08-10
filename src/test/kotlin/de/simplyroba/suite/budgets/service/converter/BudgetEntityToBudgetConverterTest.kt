@@ -1,6 +1,7 @@
 package de.simplyroba.suite.budgets.service.converter
 
 import de.simplyroba.suite.budgets.persistence.model.BudgetEntity
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -12,10 +13,10 @@ class BudgetEntityToBudgetConverterTest {
   fun `should convert entity to dto`() {
     val entity = BudgetEntity(id = 1, name = "name", savingAmountInCents = 2)
 
-    val dto = converter.convert(entity)
+    val result = converter.convert(entity)
 
-    assertEquals(entity.id, dto.id)
-    assertEquals(entity.name, dto.name)
-    assertEquals(entity.savingAmountInCents, dto.savingAmountInCents)
+    assertThat(result.id).isEqualTo(entity.id)
+    assertThat(result.name).isEqualTo(entity.name)
+    assertThat(result.savingAmountInCents).isEqualTo(entity.savingAmountInCents)
   }
 }

@@ -14,11 +14,11 @@ class IncomeEntityToIncomeConverterTest {
     val entity =
       IncomeEntity(id = 1, title = "title", amountInCents = 100, dueDate = OffsetDateTime.now())
 
-    val dto = converter.convert(entity)
+    val result = converter.convert(entity)
 
-    assertThat(entity.id).isEqualTo(dto.id)
-    assertThat(entity.title).isEqualTo(dto.title)
-    assertThat(entity.amountInCents).isEqualTo(dto.amountInCents)
-    assertThat(entity.dueDate).isEqualTo(dto.dueDate)
+    assertThat(result.id).isEqualTo(entity.id)
+    assertThat(result.title).isEqualTo(entity.title)
+    assertThat(result.amountInCents).isEqualTo(entity.amountInCents)
+    assertThat(result.dueDate).isEqualTo(entity.dueDate)
   }
 }

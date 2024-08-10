@@ -1,0 +1,12 @@
+package de.simplyroba.suite.budgets.service.converter
+
+import de.simplyroba.suite.budgets.persistence.model.BudgetEntity
+import de.simplyroba.suite.budgets.rest.model.BudgetCreate
+import org.springframework.stereotype.Component
+
+@Component
+class BudgetCreateToBudgetEntityConverter : Converter<BudgetCreate, BudgetEntity> {
+  override fun convert(source: BudgetCreate): BudgetEntity {
+    return BudgetEntity(name = source.name, savingAmountInCents = source.savingAmountInCents)
+  }
+}
