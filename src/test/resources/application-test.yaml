@@ -1,0 +1,6 @@
+
+logging:
+  level:
+    io.r2dbc.pool: DEBUG
+    org.springframework.transaction: TRACE
+    org.springframework.r2dbc: DEBUG

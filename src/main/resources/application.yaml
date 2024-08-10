@@ -1,0 +1,17 @@
+spring:
+  application.name: roba-budgets-server
+
+  liquibase:
+    url: jdbc:postgresql://localhost:5432/roba_budgets
+    user: ${DB_USERNAME:roba}
+    password: ${DB_PASSWORD:budgets}
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/roba_budgets
+    username: ${DB_USERNAME:roba}
+    password: ${DB_PASSWORD:budgets}
+
+# TODO read more about this and how to use it
+# https://docs.spring.io/spring-boot/reference/web/reactive.html#web.reactive.webflux.error-handling
+#  webflux:
+#    problemdetails:
+#      enabled: true
