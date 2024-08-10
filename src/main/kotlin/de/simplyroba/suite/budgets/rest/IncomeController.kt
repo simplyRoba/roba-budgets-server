@@ -27,42 +27,33 @@ class IncomeController(private val incomeService: IncomeService) {
   fun getIncomeList(
     @RequestParam(required = false) startDate: OffsetDateTime?,
     @RequestParam(required = false) endDate: OffsetDateTime?,
-  ): Flux<Income> {
-    return if (startDate != null && endDate != null) {
+  ): Flux<Income> =
+    if (startDate != null && endDate != null) {
       incomeService.findAllBetweenDates(startDate, endDate)
     } else {
       incomeService.findAll()
     }
-  }
 
   @GetMapping("/{id}")
   fun getIncomeById(
     @PathVariable id: Long,
-  ): Mono<Income> {
-    return incomeService.findById(id)
-  }
+  ): Mono<Income> = incomeService.findById(id)
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   fun createIncome(
     @RequestBody income: IncomeCreate,
-  ): Mono<Income> {
-    return incomeService.createIncome(income)
-  }
+  ): Mono<Income> = incomeService.createIncome(income)
 
   @PutMapping("/{id}")
   fun updateIncome(
     @PathVariable id: Long,
     @RequestBody income: IncomeUpdate,
-  ): Mono<Income> {
-    return incomeService.updateIncome(id, income)
-  }
+  ): Mono<Income> = incomeService.updateIncome(id, income)
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   fun deleteIncome(
     @PathVariable id: Long,
-  ): Mono<Void> {
-    return incomeService.deleteIncome(id)
-  }
+  ): Mono<Void> = incomeService.deleteIncome(id)
 }
