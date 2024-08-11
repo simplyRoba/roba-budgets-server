@@ -1,4 +1,4 @@
-# Code of Conduct - Pixoo Bridge
+# Code of Conduct - [roba] Budgets Server
 
 ## Our Pledge
 
