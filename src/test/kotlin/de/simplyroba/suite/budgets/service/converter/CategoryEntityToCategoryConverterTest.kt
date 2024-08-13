@@ -2,7 +2,6 @@ package de.simplyroba.suite.budgets.service.converter
 
 import de.simplyroba.suite.budgets.persistence.model.CategoryEntity
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class CategoryEntityToCategoryConverterTest {
