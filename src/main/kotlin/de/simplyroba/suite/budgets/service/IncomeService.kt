@@ -7,7 +7,7 @@ import de.simplyroba.suite.budgets.rest.model.Income
 import de.simplyroba.suite.budgets.rest.model.IncomeCreate
 import de.simplyroba.suite.budgets.rest.model.IncomeUpdate
 import de.simplyroba.suite.budgets.service.converter.Converter
-import java.time.OffsetDateTime
+import java.time.LocalDate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Flux
@@ -24,7 +24,7 @@ class IncomeService(
     return incomeRepository.findAll().map(incomeEntityToIncomeConverter::convert)
   }
 
-  fun findAllBetweenDates(startDate: OffsetDateTime, endDate: OffsetDateTime): Flux<Income> {
+  fun findAllBetweenDates(startDate: LocalDate, endDate: LocalDate): Flux<Income> {
     return incomeRepository
       .findAllByDueDateBetween(startDate, endDate)
       .map(incomeEntityToIncomeConverter::convert)

@@ -5,6 +5,7 @@ import de.simplyroba.suite.budgets.rest.model.BudgetCreate
 import de.simplyroba.suite.budgets.rest.model.BudgetUpdate
 import de.simplyroba.suite.budgets.service.BudgetService
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -19,6 +20,7 @@ import reactor.core.publisher.Mono
 
 @RestController
 @RequestMapping("api/v1/budget")
+@CrossOrigin
 class BudgetController(
   private val budgetService: BudgetService,
 ) {
