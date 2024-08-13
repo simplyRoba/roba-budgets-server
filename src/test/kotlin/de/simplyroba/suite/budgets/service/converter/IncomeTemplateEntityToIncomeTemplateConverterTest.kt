@@ -1,15 +1,14 @@
 package de.simplyroba.suite.budgets.service.converter
 
-import de.simplyroba.suite.budgets.persistence.model.EntityRepeatInterval
 import de.simplyroba.suite.budgets.persistence.model.IncomeTemplateEntity
+import de.simplyroba.suite.budgets.persistence.model.RepeatIntervalEnum
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class IncomeTemplateEntityToIncomeTemplateConverterTest {
 
   private val converter =
-    IncomeTemplateEntityToIncomeTemplateConverter(EntityRepeatIntervalToRepeatIntervalConverter())
+    IncomeTemplateEntityToIncomeTemplateConverter(RepeatIntervalEnumToRepeatIntervalConverter())
 
   @Test
   fun `should convert entity to dto`() {
@@ -18,7 +17,7 @@ class IncomeTemplateEntityToIncomeTemplateConverterTest {
         id = 1,
         title = "title",
         amountInCents = 100,
-        repeatInterval = EntityRepeatInterval.ANNUALLY
+        repeatInterval = RepeatIntervalEnum.ANNUALLY
       )
 
     val result = converter.convert(entity)

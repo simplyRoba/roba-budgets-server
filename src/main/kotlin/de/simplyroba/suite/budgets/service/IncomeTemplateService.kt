@@ -1,8 +1,8 @@
 package de.simplyroba.suite.budgets.service
 
 import de.simplyroba.suite.budgets.persistence.IncomeTemplateRepository
-import de.simplyroba.suite.budgets.persistence.model.EntityRepeatInterval
 import de.simplyroba.suite.budgets.persistence.model.IncomeTemplateEntity
+import de.simplyroba.suite.budgets.persistence.model.RepeatIntervalEnum
 import de.simplyroba.suite.budgets.rest.error.NotFoundError
 import de.simplyroba.suite.budgets.rest.model.IncomeTemplate
 import de.simplyroba.suite.budgets.rest.model.IncomeTemplateCreate
@@ -21,8 +21,8 @@ class IncomeTemplateService(
     Converter<IncomeTemplateEntity, IncomeTemplate>,
   private val incomeTemplateCreateToEntityConverter:
     Converter<IncomeTemplateCreate, IncomeTemplateEntity>,
-  private val repeatIntervalToEntityRepeatIntervalConverter:
-    Converter<RepeatInterval, EntityRepeatInterval>,
+  private val repeatIntervalToRepeatIntervalEnumConverter:
+    Converter<RepeatInterval, RepeatIntervalEnum>,
 ) {
 
   fun findAll(): Flux<IncomeTemplate> {
@@ -58,9 +58,7 @@ class IncomeTemplateService(
           title = incomeTemplateUpdate.title
           amountInCents = incomeTemplateUpdate.amountInCents
           repeatInterval =
-            repeatIntervalToEntityRepeatIntervalConverter.convert(
-              incomeTemplateUpdate.repeatInterval
-            )
+            repeatIntervalToRepeatIntervalEnumConverter.convert(incomeTemplateUpdate.repeatInterval)
         }
       }
       .flatMap(incomeTemplateRepository::save)

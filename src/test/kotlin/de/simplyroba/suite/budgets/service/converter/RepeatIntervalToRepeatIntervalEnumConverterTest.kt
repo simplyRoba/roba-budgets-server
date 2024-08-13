@@ -1,27 +1,28 @@
 package de.simplyroba.suite.budgets.service.converter
 
-import de.simplyroba.suite.budgets.persistence.model.EntityRepeatInterval
+import de.simplyroba.suite.budgets.persistence.model.RepeatIntervalEnum
 import de.simplyroba.suite.budgets.rest.model.RepeatInterval
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class EntityRepeatIntervalToRepeatIntervalConverterTest {
+class RepeatIntervalToRepeatIntervalEnumConverterTest {
 
-  private val converter = EntityRepeatIntervalToRepeatIntervalConverter()
+  private val converter = RepeatIntervalToRepeatIntervalEnumConverter()
 
   @ParameterizedTest
   @CsvSource(
+    "ONCE:ONCE",
     "MONTHLY:MONTHLY",
     "QUARTERLY:QUARTERLY",
     "SEMI_ANNUALLY:SEMI_ANNUALLY",
     "ANNUALLY:ANNUALLY",
     delimiter = ':'
   )
-  fun `converts entity repeat interval to repeat interval`(
-    entityRepeatInterval: EntityRepeatInterval,
-    repeatInterval: RepeatInterval
+  fun `converts repeat interval to entity repeat interval`(
+    repeatInterval: RepeatInterval,
+    repeatIntervalEnum: RepeatIntervalEnum
   ) {
-    assertEquals(repeatInterval, converter.convert(entityRepeatInterval))
+    assertEquals(repeatIntervalEnum, converter.convert(repeatInterval))
   }
 }

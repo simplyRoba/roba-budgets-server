@@ -8,12 +8,5 @@ data class IncomeTemplateEntity(
   @Id val id: Long = 0,
   var title: String,
   var amountInCents: Int,
-  var repeatInterval: EntityRepeatInterval,
+  var repeatInterval: RepeatIntervalEnum,
 )
-
-enum class EntityRepeatInterval {
-  MONTHLY,
-  QUARTERLY,
-  SEMI_ANNUALLY,
-  ANNUALLY
-}

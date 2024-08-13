@@ -7,13 +7,6 @@ data class IncomeTemplate(
   val repeatInterval: RepeatInterval,
 )
 
-enum class RepeatInterval {
-  MONTHLY,
-  QUARTERLY,
-  SEMI_ANNUALLY,
-  ANNUALLY,
-}
-
 data class IncomeTemplateCreate(
   val title: String,
   val amountInCents: Int,
