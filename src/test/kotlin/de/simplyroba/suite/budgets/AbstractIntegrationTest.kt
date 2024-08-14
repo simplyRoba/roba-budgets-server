@@ -103,7 +103,7 @@ abstract class AbstractIntegrationTest {
     return budgetRepository
       .save(
         BudgetEntity(
-          title = name,
+          name = name,
           savingAmountInCents = savingAmountInCents,
           categoryId = categoryId
         )

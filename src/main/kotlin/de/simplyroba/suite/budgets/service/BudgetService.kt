@@ -43,7 +43,7 @@ class BudgetService(
       .switchIfEmpty(Mono.error(NotFoundError("Budget with id $id not found")))
       .map { existingBudget ->
         existingBudget.apply {
-          title = budgetUpdate.title
+          name = budgetUpdate.name
           categoryId = budgetUpdate.categoryId
           savingAmountInCents = budgetUpdate.savingAmountInCents
         }

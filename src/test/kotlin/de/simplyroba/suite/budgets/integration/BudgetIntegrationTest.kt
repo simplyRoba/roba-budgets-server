@@ -43,7 +43,7 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
       .expectBody<Budget>()
       .consumeWith {
         assertThat(it.responseBody?.id).isEqualTo(id)
-        assertThat(it.responseBody?.title).isEqualTo(name)
+        assertThat(it.responseBody?.name).isEqualTo(name)
       }
   }
 
@@ -71,7 +71,7 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
       .expectBody<Budget>()
       .consumeWith {
         assertThat(it.responseBody?.id).isNotNull
-        assertThat(it.responseBody?.title).isEqualTo(name)
+        assertThat(it.responseBody?.name).isEqualTo(name)
         assertThat(it.responseBody?.savingAmountInCents).isEqualTo(savingAmountInCents)
       }
   }
@@ -95,7 +95,7 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
       .expectBody<Budget>()
       .consumeWith {
         assertThat(it.responseBody?.id).isEqualTo(id)
-        assertThat(it.responseBody?.title).isEqualTo(updatedName)
+        assertThat(it.responseBody?.name).isEqualTo(updatedName)
         assertThat(it.responseBody?.savingAmountInCents).isEqualTo(updatedSavingAmountInCents)
       }
   }

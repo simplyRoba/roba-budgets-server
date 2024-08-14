@@ -28,7 +28,7 @@ CREATE TABLE category
 CREATE TABLE budget
 (
     id                     INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    title                  VARCHAR                      NOT NULL UNIQUE,
+    name                   VARCHAR                      NOT NULL UNIQUE,
     saving_amount_in_cents INT                          NOT NULL,
     category_id            INT REFERENCES category (id) NOT NULL
 );

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 class BudgetCreateToEntityConverter : Converter<BudgetCreate, BudgetEntity> {
   override fun convert(source: BudgetCreate): BudgetEntity {
     return BudgetEntity(
-      title = source.title,
+      name = source.name,
       savingAmountInCents = source.savingAmountInCents,
       categoryId = source.categoryId,
     )
