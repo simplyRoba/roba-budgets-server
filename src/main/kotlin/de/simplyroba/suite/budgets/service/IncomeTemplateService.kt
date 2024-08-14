@@ -17,8 +17,7 @@ import reactor.core.publisher.Mono
 @Service
 class IncomeTemplateService(
   private val incomeTemplateRepository: IncomeTemplateRepository,
-  private val incomeTemplateEntityToDtoConverter:
-    Converter<IncomeTemplateEntity, IncomeTemplate>,
+  private val incomeTemplateEntityToDtoConverter: Converter<IncomeTemplateEntity, IncomeTemplate>,
   private val incomeTemplateCreateToEntityConverter:
     Converter<IncomeTemplateCreate, IncomeTemplateEntity>,
   private val repeatIntervalToPersistenceEnumConverter:
@@ -26,9 +25,7 @@ class IncomeTemplateService(
 ) {
 
   fun findAll(): Flux<IncomeTemplate> {
-    return incomeTemplateRepository
-      .findAll()
-      .map(incomeTemplateEntityToDtoConverter::convert)
+    return incomeTemplateRepository.findAll().map(incomeTemplateEntityToDtoConverter::convert)
   }
 
   fun findById(id: Long): Mono<IncomeTemplate> {

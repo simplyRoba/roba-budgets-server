@@ -71,9 +71,7 @@ class ExpenseService(
   }
 
   fun findAllByBudget(budgetId: Long): Flux<Expense> {
-    return expenseRepository
-      .findAllByBudgetId(budgetId)
-      .map(expenseEntityToDtoConverter::convert)
+    return expenseRepository.findAllByBudgetId(budgetId).map(expenseEntityToDtoConverter::convert)
   }
 
   fun findAllByBudgetBetweenDates(

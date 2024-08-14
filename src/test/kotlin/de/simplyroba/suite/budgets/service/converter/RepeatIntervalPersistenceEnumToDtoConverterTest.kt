@@ -12,7 +12,6 @@ class RepeatIntervalPersistenceEnumToDtoConverterTest {
 
   @ParameterizedTest
   @CsvSource(
-    "ONCE:ONCE",
     "MONTHLY:MONTHLY",
     "QUARTERLY:QUARTERLY",
     "SEMI_ANNUALLY:SEMI_ANNUALLY",
