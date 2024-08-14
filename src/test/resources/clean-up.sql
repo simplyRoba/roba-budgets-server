@@ -4,5 +4,5 @@ TRUNCATE TABLE
     fix_expense_template,
     expense,
     category,
-    budget_template
+    budget
 ;

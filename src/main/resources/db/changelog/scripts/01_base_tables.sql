@@ -25,7 +25,7 @@ CREATE TABLE category
     parent_category_id INT REFERENCES category (id)
 );
 
-CREATE TABLE budget_template
+CREATE TABLE budget
 (
     id                     INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     title                  VARCHAR                      NOT NULL UNIQUE,
@@ -36,9 +36,9 @@ CREATE TABLE budget_template
 CREATE TABLE fix_expense_template
 (
     id              INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    title           VARCHAR NOT NULL UNIQUE,
-    amount_in_cents INT     NOT NULL,
-    repeat_interval VARCHAR NOT NULL,
+    title           VARCHAR                      NOT NULL UNIQUE,
+    amount_in_cents INT                          NOT NULL,
+    repeat_interval VARCHAR                      NOT NULL,
     category_id     INT REFERENCES category (id) NOT NULL
 );
 
@@ -50,7 +50,7 @@ CREATE TABLE expense
     due_date        TIMESTAMP WITH TIME ZONE     NOT NULL,
     type            VARCHAR                      NOT NULL,
     category_id     INT REFERENCES category (id) NOT NULL,
-    budget_id       INT REFERENCES budget_template (id)
+    budget_id       INT REFERENCES budget (id)
 );
 
 CREATE INDEX income_date_idx ON income (due_date);
@@ -59,4 +59,4 @@ CREATE INDEX category_disabled_idx ON category (disabled);
 CREATE INDEX expense_due_date_idx ON expense (due_date);
 CREATE INDEX expense_type_idx ON expense (type);
 CREATE INDEX expense_category_id_idx ON expense (category_id);
-CREATE INDEX expense_budget_template_id_idx ON expense (budget_id);
+CREATE INDEX expense_budget_id_idx ON expense (budget_id);
