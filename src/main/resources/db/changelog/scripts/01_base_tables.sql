@@ -47,7 +47,7 @@ CREATE TABLE expense
     id              INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     title           VARCHAR,
     amount_in_cents INT                          NOT NULL,
-    due_date        TIMESTAMP WITH TIME ZONE     NOT NULL,
+    due_date        DATE                         NOT NULL,
     type            VARCHAR                      NOT NULL,
     category_id     INT REFERENCES category (id) NOT NULL,
     budget_id       INT REFERENCES budget (id)

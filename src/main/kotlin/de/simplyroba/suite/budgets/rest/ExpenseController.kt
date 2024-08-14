@@ -4,7 +4,7 @@ import de.simplyroba.suite.budgets.rest.model.Expense
 import de.simplyroba.suite.budgets.rest.model.ExpenseCreate
 import de.simplyroba.suite.budgets.rest.model.ExpenseType
 import de.simplyroba.suite.budgets.service.ExpenseService
-import java.time.OffsetDateTime
+import java.time.LocalDate
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -29,8 +29,8 @@ class ExpenseController(
 
   @GetMapping
   fun getExpenseList(
-    @RequestParam(required = false) startDate: OffsetDateTime?,
-    @RequestParam(required = false) endDate: OffsetDateTime?,
+    @RequestParam(required = false) startDate: LocalDate?,
+    @RequestParam(required = false) endDate: LocalDate?,
   ): Flux<Expense> =
     if (startDate != null && endDate != null) {
       expenseService.findAllBetweenDates(startDate, endDate)
@@ -41,8 +41,8 @@ class ExpenseController(
   @GetMapping("/type/{type}")
   fun getExpenseListByType(
     @PathVariable type: ExpenseType,
-    @RequestParam(required = false) startDate: OffsetDateTime?,
-    @RequestParam(required = false) endDate: OffsetDateTime?,
+    @RequestParam(required = false) startDate: LocalDate?,
+    @RequestParam(required = false) endDate: LocalDate?,
   ): Flux<Expense> =
     if (startDate != null && endDate != null) {
       expenseService.findAllByTypeBetweenDates(type, startDate, endDate)
@@ -53,8 +53,8 @@ class ExpenseController(
   @GetMapping("/category/{categoryId}")
   fun getExpenseListByCategory(
     @PathVariable categoryId: Long,
-    @RequestParam(required = false) startDate: OffsetDateTime?,
-    @RequestParam(required = false) endDate: OffsetDateTime?,
+    @RequestParam(required = false) startDate: LocalDate?,
+    @RequestParam(required = false) endDate: LocalDate?,
   ): Flux<Expense> =
     if (startDate != null && endDate != null) {
       expenseService.findAllCategoryBetweenDates(categoryId, startDate, endDate)
@@ -65,8 +65,8 @@ class ExpenseController(
   @GetMapping("/budget/{budgetId}")
   fun getExpenseListByBudget(
     @PathVariable budgetId: Long,
-    @RequestParam(required = false) startDate: OffsetDateTime?,
-    @RequestParam(required = false) endDate: OffsetDateTime?,
+    @RequestParam(required = false) startDate: LocalDate?,
+    @RequestParam(required = false) endDate: LocalDate?,
   ): Flux<Expense> =
     if (startDate != null && endDate != null) {
       expenseService.findAllByBudgetBetweenDates(budgetId, startDate, endDate)

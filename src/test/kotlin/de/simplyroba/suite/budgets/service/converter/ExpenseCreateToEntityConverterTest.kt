@@ -2,7 +2,7 @@ package de.simplyroba.suite.budgets.service.converter
 
 import de.simplyroba.suite.budgets.rest.model.ExpenseCreate
 import de.simplyroba.suite.budgets.rest.model.ExpenseType
-import java.time.OffsetDateTime
+import java.time.LocalDate
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -16,7 +16,7 @@ class ExpenseCreateToEntityConverterTest {
       ExpenseCreate(
         title = "Test",
         amountInCents = 1000,
-        dueDate = OffsetDateTime.now(),
+        dueDate = LocalDate.now(),
         type = ExpenseType.FIX,
         categoryId = 1,
         budgetId = 1

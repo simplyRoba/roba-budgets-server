@@ -9,7 +9,7 @@ import de.simplyroba.suite.budgets.rest.model.ExpenseCreate
 import de.simplyroba.suite.budgets.rest.model.ExpenseType
 import de.simplyroba.suite.budgets.rest.model.ExpenseUpdate
 import de.simplyroba.suite.budgets.service.converter.Converter
-import java.time.OffsetDateTime
+import java.time.LocalDate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Flux
@@ -28,7 +28,7 @@ class ExpenseService(
     return expenseRepository.findAll().map(expenseEntityToDtoConverter::convert)
   }
 
-  fun findAllBetweenDates(startDate: OffsetDateTime, endDate: OffsetDateTime): Flux<Expense> {
+  fun findAllBetweenDates(startDate: LocalDate, endDate: LocalDate): Flux<Expense> {
     return expenseRepository
       .findAllByDueDateBetween(startDate, endDate)
       .map(expenseEntityToDtoConverter::convert)
@@ -42,8 +42,8 @@ class ExpenseService(
 
   fun findAllByTypeBetweenDates(
     type: ExpenseType,
-    startDate: OffsetDateTime,
-    endDate: OffsetDateTime
+    startDate: LocalDate,
+    endDate: LocalDate
   ): Flux<Expense> {
     return expenseRepository
       .findAllByTypeAndDueDateBetween(
@@ -62,8 +62,8 @@ class ExpenseService(
 
   fun findAllCategoryBetweenDates(
     categoryId: Long,
-    startDate: OffsetDateTime,
-    endDate: OffsetDateTime
+    startDate: LocalDate,
+    endDate: LocalDate
   ): Flux<Expense> {
     return expenseRepository
       .findAllByCategoryIdAndDueDateBetween(categoryId, startDate, endDate)
@@ -76,8 +76,8 @@ class ExpenseService(
 
   fun findAllByBudgetBetweenDates(
     budgetId: Long,
-    startDate: OffsetDateTime,
-    endDate: OffsetDateTime
+    startDate: LocalDate,
+    endDate: LocalDate
   ): Flux<Expense> {
     return expenseRepository
       .findAllByBudgetIdAndDueDateBetween(budgetId, startDate, endDate)

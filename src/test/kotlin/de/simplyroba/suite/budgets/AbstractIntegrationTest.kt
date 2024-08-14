@@ -11,7 +11,6 @@ import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum
 import de.simplyroba.suite.budgets.persistence.model.IncomeEntity
 import io.r2dbc.spi.ConnectionFactory
 import java.time.LocalDate
-import java.time.OffsetDateTime
 import org.junit.jupiter.api.AfterEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -62,7 +61,7 @@ abstract class AbstractIntegrationTest {
   fun createExpense(
     title: String = "Title",
     amountInCents: Int = 999,
-    dueDate: OffsetDateTime = OffsetDateTime.now(),
+    dueDate: LocalDate = LocalDate.now(),
     type: ExpenseTypePersistenceEnum = ExpenseTypePersistenceEnum.FLEX,
     categoryId: Long,
     budgetId: Long? = null,

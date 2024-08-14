@@ -5,7 +5,7 @@ import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum
 import de.simplyroba.suite.budgets.rest.model.Expense
 import de.simplyroba.suite.budgets.rest.model.ExpenseCreate
 import de.simplyroba.suite.budgets.rest.model.ExpenseType
-import java.time.OffsetDateTime
+import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.reactive.server.expectBody
@@ -33,7 +33,7 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
 
   @Test
   fun `should return expense list between dates`() {
-    val startDate = OffsetDateTime.now()
+    val startDate = LocalDate.now()
     val endDate = startDate.plusDays(1)
     val outsideDate = endDate.plusDays(1)
     val categoryId = createCategory(name = "Default Category").id
@@ -83,7 +83,7 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
 
   @Test
   fun `should return expense by type between dates`() {
-    val startDate = OffsetDateTime.now()
+    val startDate = LocalDate.now()
     val endDate = startDate.plusDays(1)
     val outsideDate = endDate.plusDays(1)
     val categoryId = createCategory(name = "Default Category").id
@@ -151,7 +151,7 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
 
   @Test
   fun `should return expense by category between dates`() {
-    val startDate = OffsetDateTime.now()
+    val startDate = LocalDate.now()
     val endDate = startDate.plusDays(1)
     val outsideDate = endDate.plusDays(1)
     val categoryId = createCategory(name = "Default Category").id
@@ -200,7 +200,7 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
 
   @Test
   fun `should return expense by budget between dates`() {
-    val startDate = OffsetDateTime.now()
+    val startDate = LocalDate.now()
     val endDate = startDate.plusDays(1)
     val outsideDate = endDate.plusDays(1)
     val categoryId = createCategory(name = "Default Category").id
@@ -281,7 +281,7 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
     val categoryId = createCategory(name = "Default Category").id
     val title = "Expense"
     val amountInCents = 999
-    val dueDate = OffsetDateTime.now()
+    val dueDate = LocalDate.now()
     val type = ExpenseType.FLEX
 
     webTestClient
@@ -304,7 +304,7 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
       .consumeWith {
         assertThat(it.responseBody?.title).isEqualTo(title)
         assertThat(it.responseBody?.amountInCents).isEqualTo(amountInCents)
-        assertThat(it.responseBody?.dueDate).isAtSameInstantAs(dueDate)
+        assertThat(it.responseBody?.dueDate).isEqualTo(dueDate)
         assertThat(it.responseBody?.type?.name).isEqualTo(type.name)
         assertThat(it.responseBody?.categoryId).isEqualTo(categoryId)
       }
@@ -317,7 +317,7 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
     val id = createExpense(title = title, categoryId = categoryId).id
     val newTitle = "New Expense"
     val newAmountInCents = 1000
-    val newDueDate = OffsetDateTime.now()
+    val newDueDate = LocalDate.now()
     val newType = ExpenseType.FIX
     val newCategoryId = createCategory(name = "New Category").id
 
@@ -342,7 +342,7 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
         assertThat(it.responseBody?.id).isEqualTo(id)
         assertThat(it.responseBody?.title).isEqualTo(newTitle)
         assertThat(it.responseBody?.amountInCents).isEqualTo(newAmountInCents)
-        assertThat(it.responseBody?.dueDate).isAtSameInstantAs(newDueDate)
+        assertThat(it.responseBody?.dueDate).isEqualTo(newDueDate)
         assertThat(it.responseBody?.type?.name).isEqualTo(newType.name)
         assertThat(it.responseBody?.categoryId).isEqualTo(newCategoryId)
       }
@@ -355,7 +355,7 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
     webTestClient
       .put()
       .uri("/api/v1/expense/$id")
-      .bodyValue(ExpenseCreate("Title", 999, OffsetDateTime.now(), ExpenseType.FLEX, 1, null))
+      .bodyValue(ExpenseCreate("Title", 999, LocalDate.now(), ExpenseType.FLEX, 1, null))
       .exchange()
       .expectStatus()
       .isNotFound

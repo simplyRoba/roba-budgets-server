@@ -6,7 +6,7 @@ import de.simplyroba.suite.budgets.persistence.model.CategoryEntity
 import de.simplyroba.suite.budgets.persistence.model.ExpenseEntity
 import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum.FIX
 import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum.FLEX
-import java.time.OffsetDateTime
+import java.time.LocalDate
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,9 +33,9 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
   @Test
   fun `should include start and end date`() {
 
-    val startDate = OffsetDateTime.parse("2021-01-01T00:00:00Z")
-    val betweenDate = OffsetDateTime.parse("2021-01-02T00:00:00Z")
-    val endDate = OffsetDateTime.parse("2021-01-03T00:00:00Z")
+    val startDate = LocalDate.parse("2021-01-01")
+    val betweenDate = LocalDate.parse("2021-01-02")
+    val endDate = LocalDate.parse("2021-01-03")
 
     val expenseEqualStartDate =
       ExpenseEntity(
@@ -82,7 +82,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
       ExpenseEntity(
         title = "Flex Expense",
         amountInCents = 1000,
-        dueDate = OffsetDateTime.now(),
+        dueDate = LocalDate.now(),
         type = FLEX,
         categoryId = categoryId,
         budgetId = null
@@ -91,7 +91,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
       ExpenseEntity(
         title = "Other Expense",
         amountInCents = 1000,
-        dueDate = OffsetDateTime.now(),
+        dueDate = LocalDate.now(),
         type = FIX,
         categoryId = categoryId,
         budgetId = null
@@ -115,7 +115,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
       ExpenseEntity(
         title = "Expense 1",
         amountInCents = 1000,
-        dueDate = OffsetDateTime.now(),
+        dueDate = LocalDate.now(),
         type = FLEX,
         categoryId = searchedCategoryId,
         budgetId = null
@@ -124,7 +124,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
       ExpenseEntity(
         title = "Expense 2",
         amountInCents = 1000,
-        dueDate = OffsetDateTime.now(),
+        dueDate = LocalDate.now(),
         type = FLEX,
         categoryId = categoryId,
         budgetId = null
@@ -151,7 +151,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
       ExpenseEntity(
         title = "Expense 1",
         amountInCents = 1000,
-        dueDate = OffsetDateTime.now(),
+        dueDate = LocalDate.now(),
         type = FLEX,
         categoryId = categoryId,
         budgetId = budgetId
@@ -160,7 +160,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
       ExpenseEntity(
         title = "Expense 2",
         amountInCents = 1000,
-        dueDate = OffsetDateTime.now(),
+        dueDate = LocalDate.now(),
         type = FLEX,
         categoryId = categoryId,
         budgetId = null

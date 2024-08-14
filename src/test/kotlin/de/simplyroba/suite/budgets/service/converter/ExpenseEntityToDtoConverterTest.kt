@@ -2,7 +2,7 @@ package de.simplyroba.suite.budgets.service.converter
 
 import de.simplyroba.suite.budgets.persistence.model.ExpenseEntity
 import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum
-import java.time.OffsetDateTime
+import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -17,7 +17,7 @@ class ExpenseEntityToDtoConverterTest {
         id = 1,
         title = "title",
         amountInCents = 100,
-        dueDate = OffsetDateTime.now(),
+        dueDate = LocalDate.now(),
         type = ExpenseTypePersistenceEnum.FIX,
         categoryId = 1,
         budgetId = 1
