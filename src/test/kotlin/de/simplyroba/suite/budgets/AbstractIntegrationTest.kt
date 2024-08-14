@@ -95,9 +95,19 @@ abstract class AbstractIntegrationTest {
       .get()
   }
 
-  fun createBudget(name: String = "Budget", savingAmountInCents: Int = 10000, categoryId: Long): BudgetEntity {
+  fun createBudget(
+    name: String = "Budget",
+    savingAmountInCents: Int = 10000,
+    categoryId: Long
+  ): BudgetEntity {
     return budgetRepository
-      .save(BudgetEntity(title = name, savingAmountInCents = savingAmountInCents, categoryId = categoryId))
+      .save(
+        BudgetEntity(
+          title = name,
+          savingAmountInCents = savingAmountInCents,
+          categoryId = categoryId
+        )
+      )
       .log("create budget $name")
       .blockOptional()
       .get()
