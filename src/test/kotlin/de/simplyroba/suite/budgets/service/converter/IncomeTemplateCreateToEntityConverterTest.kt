@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class IncomeTemplateCreateToEntityConverterTest {
 
   private val converter =
-    IncomeTemplateCreateToEntityConverter(RepeatIntervalToRepeatIntervalEnumConverter())
+    IncomeTemplateCreateToEntityConverter(RepeatIntervalToPersistenceEnumConverter())
 
   @Test
   fun `should convert create to entity`() {

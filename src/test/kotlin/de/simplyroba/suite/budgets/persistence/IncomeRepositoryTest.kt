@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import reactor.kotlin.test.test
 
-class IncomeEntityRepositoryTest : AbstractIntegrationTest() {
+class IncomeRepositoryTest : AbstractIntegrationTest() {
 
   @Autowired private lateinit var incomeRepository: IncomeRepository
 

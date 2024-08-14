@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 class ExpenseCreateToEntityConverterTest {
 
-  private val converter = ExpenseCreateToEntityConverter(ExpenseTypeToExpenseEntityTypeConverter())
+  private val converter = ExpenseCreateToEntityConverter(ExpenseTypeToPersistenceEnumConverter())
 
   @Test
   fun `should convert create to entity`() {

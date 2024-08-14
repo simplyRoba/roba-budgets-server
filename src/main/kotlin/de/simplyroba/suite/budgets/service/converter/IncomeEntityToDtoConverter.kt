@@ -5,7 +5,7 @@ import de.simplyroba.suite.budgets.rest.model.Income
 import org.springframework.stereotype.Component
 
 @Component
-class IncomeEntityToIncomeConverter : Converter<IncomeEntity, Income> {
+class IncomeEntityToDtoConverter : Converter<IncomeEntity, Income> {
   override fun convert(source: IncomeEntity): Income {
     return Income(
       id = source.id,

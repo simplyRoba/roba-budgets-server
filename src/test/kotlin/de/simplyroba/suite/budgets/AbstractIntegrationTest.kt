@@ -7,7 +7,7 @@ import de.simplyroba.suite.budgets.persistence.IncomeRepository
 import de.simplyroba.suite.budgets.persistence.model.BudgetEntity
 import de.simplyroba.suite.budgets.persistence.model.CategoryEntity
 import de.simplyroba.suite.budgets.persistence.model.ExpenseEntity
-import de.simplyroba.suite.budgets.persistence.model.ExpenseEntityType
+import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum
 import de.simplyroba.suite.budgets.persistence.model.IncomeEntity
 import io.r2dbc.spi.ConnectionFactory
 import java.time.LocalDate
@@ -63,7 +63,7 @@ abstract class AbstractIntegrationTest {
     title: String = "Title",
     amountInCents: Int = 999,
     dueDate: OffsetDateTime = OffsetDateTime.now(),
-    type: ExpenseEntityType = ExpenseEntityType.FLEX,
+    type: ExpenseTypePersistenceEnum = ExpenseTypePersistenceEnum.FLEX,
     categoryId: Long,
     budgetId: Long? = null,
   ): ExpenseEntity {

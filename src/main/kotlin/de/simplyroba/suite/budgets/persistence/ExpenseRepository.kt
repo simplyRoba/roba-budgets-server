@@ -1,7 +1,7 @@
 package de.simplyroba.suite.budgets.persistence
 
 import de.simplyroba.suite.budgets.persistence.model.ExpenseEntity
-import de.simplyroba.suite.budgets.persistence.model.ExpenseEntityType
+import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum
 import java.time.OffsetDateTime
 import org.springframework.data.repository.reactive.ReactiveCrudRepository
 import reactor.core.publisher.Flux
@@ -13,10 +13,10 @@ interface ExpenseRepository : ReactiveCrudRepository<ExpenseEntity, Long> {
     endDate: OffsetDateTime
   ): Flux<ExpenseEntity>
 
-  fun findAllByType(type: ExpenseEntityType): Flux<ExpenseEntity>
+  fun findAllByType(type: ExpenseTypePersistenceEnum): Flux<ExpenseEntity>
 
   fun findAllByTypeAndDueDateBetween(
-    type: ExpenseEntityType,
+    type: ExpenseTypePersistenceEnum,
     startDate: OffsetDateTime,
     endDate: OffsetDateTime
   ): Flux<ExpenseEntity>

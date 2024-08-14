@@ -1,14 +1,14 @@
 package de.simplyroba.suite.budgets.service.converter
 
 import de.simplyroba.suite.budgets.persistence.model.ExpenseEntity
-import de.simplyroba.suite.budgets.persistence.model.ExpenseEntityType
+import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ExpenseEntityToExpenseConverterTest {
+class ExpenseEntityToDtoConverterTest {
 
-  private val converter = ExpenseEntityToExpenseConverter(ExpenseEntityTypeToExpenseTypeConverter())
+  private val converter = ExpenseEntityToDtoConverter(ExpenseTypePersistenceEnumToDtoConverter())
 
   @Test
   fun `should convert entity to dto`() {
@@ -18,7 +18,7 @@ class ExpenseEntityToExpenseConverterTest {
         title = "title",
         amountInCents = 100,
         dueDate = OffsetDateTime.now(),
-        type = ExpenseEntityType.FIX,
+        type = ExpenseTypePersistenceEnum.FIX,
         categoryId = 1,
         budgetId = 1
       )

@@ -4,9 +4,9 @@ import de.simplyroba.suite.budgets.persistence.model.BudgetEntity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class BudgetEntityToBudgetConverterTest {
+class BudgetEntityToDtoConverterTest {
 
-  private val converter = BudgetEntityToBudgetConverter()
+  private val converter = BudgetEntityToDtoConverter()
 
   @Test
   fun `should convert entity to dto`() {

@@ -5,9 +5,9 @@ import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class IncomeEntityToIncomeConverterTest {
+class IncomeEntityToDtoConverterTest {
 
-  private val converter = IncomeEntityToIncomeConverter()
+  private val converter = IncomeEntityToDtoConverter()
 
   @Test
   fun `should convert entity to dto`() {

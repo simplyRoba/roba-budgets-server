@@ -10,13 +10,7 @@ data class ExpenseEntity(
   var title: String?,
   var amountInCents: Int,
   var dueDate: OffsetDateTime,
-  var type: ExpenseEntityType,
+  var type: ExpenseTypePersistenceEnum,
   var categoryId: Long,
   var budgetId: Long?,
 )
-
-enum class ExpenseEntityType {
-  FIX,
-  FLEX,
-  BUDGET,
-}

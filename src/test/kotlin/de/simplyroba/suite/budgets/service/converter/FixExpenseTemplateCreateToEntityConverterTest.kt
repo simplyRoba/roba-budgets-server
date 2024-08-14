@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class FixExpenseTemplateCreateToEntityConverterTest {
 
   private val converter =
-    FixExpenseTemplateCreateToEntityConverter(RepeatIntervalToRepeatIntervalEnumConverter())
+    FixExpenseTemplateCreateToEntityConverter(RepeatIntervalToPersistenceEnumConverter())
 
   @Test
   fun `convert should convert create to entity`() {

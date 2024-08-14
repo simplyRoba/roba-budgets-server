@@ -16,12 +16,12 @@ import reactor.core.publisher.Mono
 @Service
 class CategoryService(
   private val categoryRepository: CategoryRepository,
-  private val categoryEntityToCategoryConverter: Converter<CategoryEntity, Category>,
+  private val categoryEntityToDtoConverter: Converter<CategoryEntity, Category>,
   private val categoryCreateToEntityConverter: Converter<CategoryCreate, CategoryEntity>
 ) {
 
   fun findAll(): Flux<Category> {
-    return categoryRepository.findAll().map(categoryEntityToCategoryConverter::convert)
+    return categoryRepository.findAll().map(categoryEntityToDtoConverter::convert)
   }
 
   fun buildCategoryTree(): Flux<CategoryTree> {
@@ -49,14 +49,14 @@ class CategoryService(
     return categoryRepository
       .findById(id)
       .switchIfEmpty(Mono.error(NotFoundError("Category with id $id not found")))
-      .map(categoryEntityToCategoryConverter::convert)
+      .map(categoryEntityToDtoConverter::convert)
   }
 
   @Transactional
   fun createCategory(category: CategoryCreate): Mono<Category> {
     return categoryRepository
       .save(categoryCreateToEntityConverter.convert(category))
-      .map(categoryEntityToCategoryConverter::convert)
+      .map(categoryEntityToDtoConverter::convert)
   }
 
   @Transactional
@@ -72,7 +72,7 @@ class CategoryService(
         }
       }
       .flatMap(categoryRepository::save)
-      .map(categoryEntityToCategoryConverter::convert)
+      .map(categoryEntityToDtoConverter::convert)
   }
 
   @Transactional

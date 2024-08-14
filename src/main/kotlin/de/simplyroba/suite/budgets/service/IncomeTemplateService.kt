@@ -2,7 +2,7 @@ package de.simplyroba.suite.budgets.service
 
 import de.simplyroba.suite.budgets.persistence.IncomeTemplateRepository
 import de.simplyroba.suite.budgets.persistence.model.IncomeTemplateEntity
-import de.simplyroba.suite.budgets.persistence.model.RepeatIntervalEnum
+import de.simplyroba.suite.budgets.persistence.model.RepeatIntervalPersistenceEnum
 import de.simplyroba.suite.budgets.rest.error.NotFoundError
 import de.simplyroba.suite.budgets.rest.model.IncomeTemplate
 import de.simplyroba.suite.budgets.rest.model.IncomeTemplateCreate
@@ -17,32 +17,32 @@ import reactor.core.publisher.Mono
 @Service
 class IncomeTemplateService(
   private val incomeTemplateRepository: IncomeTemplateRepository,
-  private val incomeTemplateEntityToIncomeTemplateConverter:
+  private val incomeTemplateEntityToDtoConverter:
     Converter<IncomeTemplateEntity, IncomeTemplate>,
   private val incomeTemplateCreateToEntityConverter:
     Converter<IncomeTemplateCreate, IncomeTemplateEntity>,
-  private val repeatIntervalToRepeatIntervalEnumConverter:
-    Converter<RepeatInterval, RepeatIntervalEnum>,
+  private val repeatIntervalToPersistenceEnumConverter:
+    Converter<RepeatInterval, RepeatIntervalPersistenceEnum>,
 ) {
 
   fun findAll(): Flux<IncomeTemplate> {
     return incomeTemplateRepository
       .findAll()
-      .map(incomeTemplateEntityToIncomeTemplateConverter::convert)
+      .map(incomeTemplateEntityToDtoConverter::convert)
   }
 
   fun findById(id: Long): Mono<IncomeTemplate> {
     return incomeTemplateRepository
       .findById(id)
       .switchIfEmpty(Mono.error(NotFoundError("IncomeTemplate with id $id not found")))
-      .map(incomeTemplateEntityToIncomeTemplateConverter::convert)
+      .map(incomeTemplateEntityToDtoConverter::convert)
   }
 
   @Transactional
   fun createIncomeTemplate(incomeTemplate: IncomeTemplateCreate): Mono<IncomeTemplate> {
     return incomeTemplateRepository
       .save(incomeTemplateCreateToEntityConverter.convert(incomeTemplate))
-      .map(incomeTemplateEntityToIncomeTemplateConverter::convert)
+      .map(incomeTemplateEntityToDtoConverter::convert)
   }
 
   @Transactional
@@ -58,11 +58,11 @@ class IncomeTemplateService(
           title = incomeTemplateUpdate.title
           amountInCents = incomeTemplateUpdate.amountInCents
           repeatInterval =
-            repeatIntervalToRepeatIntervalEnumConverter.convert(incomeTemplateUpdate.repeatInterval)
+            repeatIntervalToPersistenceEnumConverter.convert(incomeTemplateUpdate.repeatInterval)
         }
       }
       .flatMap(incomeTemplateRepository::save)
-      .map(incomeTemplateEntityToIncomeTemplateConverter::convert)
+      .map(incomeTemplateEntityToDtoConverter::convert)
   }
 
   @Transactional

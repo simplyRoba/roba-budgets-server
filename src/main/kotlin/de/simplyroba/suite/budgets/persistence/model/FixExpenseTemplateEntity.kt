@@ -7,6 +7,6 @@ data class FixExpenseTemplateEntity(
   val id: Long = 0,
   var title: String,
   var amountInCents: Int,
-  var repeatInterval: RepeatIntervalEnum,
+  var repeatInterval: RepeatIntervalPersistenceEnum,
   var categoryId: Long,
 )

@@ -2,7 +2,7 @@ package de.simplyroba.suite.budgets.service
 
 import de.simplyroba.suite.budgets.persistence.FixExpenseTemplateRepository
 import de.simplyroba.suite.budgets.persistence.model.FixExpenseTemplateEntity
-import de.simplyroba.suite.budgets.persistence.model.RepeatIntervalEnum
+import de.simplyroba.suite.budgets.persistence.model.RepeatIntervalPersistenceEnum
 import de.simplyroba.suite.budgets.rest.error.NotFoundError
 import de.simplyroba.suite.budgets.rest.model.FixExpenseTemplate
 import de.simplyroba.suite.budgets.rest.model.FixExpenseTemplateCreate
@@ -17,25 +17,25 @@ import reactor.core.publisher.Mono
 @Service
 class FixExpenseTemplateService(
   private val fixExpenseTemplateRepository: FixExpenseTemplateRepository,
-  private val fixExpenseTemplateEntityToFixExpenseTemplateConverter:
+  private val fixExpenseTemplateEntityToDtoConverter:
     Converter<FixExpenseTemplateEntity, FixExpenseTemplate>,
   private val fixExpenseTemplateCreateToEntityConverter:
     Converter<FixExpenseTemplateCreate, FixExpenseTemplateEntity>,
-  private val repeatIntervalToRepeatIntervalEnumConverter:
-    Converter<RepeatInterval, RepeatIntervalEnum>,
+  private val repeatIntervalToPersistenceEnumConverter:
+    Converter<RepeatInterval, RepeatIntervalPersistenceEnum>,
 ) {
 
   fun findAll(): Flux<FixExpenseTemplate> {
     return fixExpenseTemplateRepository
       .findAll()
-      .map(fixExpenseTemplateEntityToFixExpenseTemplateConverter::convert)
+      .map(fixExpenseTemplateEntityToDtoConverter::convert)
   }
 
   fun findById(id: Long): Mono<FixExpenseTemplate> {
     return fixExpenseTemplateRepository
       .findById(id)
       .switchIfEmpty(Mono.error(NotFoundError("FixExpenseTemplate with id $id not found")))
-      .map(fixExpenseTemplateEntityToFixExpenseTemplateConverter::convert)
+      .map(fixExpenseTemplateEntityToDtoConverter::convert)
   }
 
   @Transactional
@@ -44,7 +44,7 @@ class FixExpenseTemplateService(
   ): Mono<FixExpenseTemplate> {
     return fixExpenseTemplateRepository
       .save(fixExpenseTemplateCreateToEntityConverter.convert(fixExpenseTemplate))
-      .map(fixExpenseTemplateEntityToFixExpenseTemplateConverter::convert)
+      .map(fixExpenseTemplateEntityToDtoConverter::convert)
   }
 
   @Transactional
@@ -60,12 +60,12 @@ class FixExpenseTemplateService(
           title = fixExpenseTemplate.title
           amountInCents = fixExpenseTemplate.amountInCents
           repeatInterval =
-            repeatIntervalToRepeatIntervalEnumConverter.convert(fixExpenseTemplate.repeatInterval)
+            repeatIntervalToPersistenceEnumConverter.convert(fixExpenseTemplate.repeatInterval)
           categoryId = fixExpenseTemplate.categoryId
         }
       }
       .flatMap { fixExpenseTemplateRepository.save(it) }
-      .map(fixExpenseTemplateEntityToFixExpenseTemplateConverter::convert)
+      .map(fixExpenseTemplateEntityToDtoConverter::convert)
   }
 
   @Transactional

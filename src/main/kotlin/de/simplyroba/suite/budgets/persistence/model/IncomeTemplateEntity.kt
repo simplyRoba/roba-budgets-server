@@ -8,5 +8,5 @@ data class IncomeTemplateEntity(
   @Id val id: Long = 0,
   var title: String,
   var amountInCents: Int,
-  var repeatInterval: RepeatIntervalEnum,
+  var repeatInterval: RepeatIntervalPersistenceEnum,
 )

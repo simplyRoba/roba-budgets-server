@@ -1,7 +1,7 @@
 package de.simplyroba.suite.budgets.integration
 
 import de.simplyroba.suite.budgets.AbstractIntegrationTest
-import de.simplyroba.suite.budgets.persistence.model.ExpenseEntityType
+import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum
 import de.simplyroba.suite.budgets.rest.model.Expense
 import de.simplyroba.suite.budgets.rest.model.ExpenseCreate
 import de.simplyroba.suite.budgets.rest.model.ExpenseType
@@ -62,10 +62,14 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
   @Test
   fun `should return expense by type`() {
     val categoryId = createCategory(name = "Default Category").id
-    val type = ExpenseEntityType.FIX
+    val type = ExpenseTypePersistenceEnum.FIX
 
     createExpense(title = "Expense FIX", categoryId = categoryId, type = type)
-    createExpense(title = "Expense FLEX", categoryId = categoryId, type = ExpenseEntityType.FLEX)
+    createExpense(
+      title = "Expense FLEX",
+      categoryId = categoryId,
+      type = ExpenseTypePersistenceEnum.FLEX
+    )
 
     webTestClient
       .get()
@@ -83,7 +87,7 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
     val endDate = startDate.plusDays(1)
     val outsideDate = endDate.plusDays(1)
     val categoryId = createCategory(name = "Default Category").id
-    val type = ExpenseEntityType.FIX
+    val type = ExpenseTypePersistenceEnum.FIX
 
     createExpense(
       title = "Expense FIX start",
@@ -107,7 +111,7 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
       title = "Expense FLEX start",
       dueDate = startDate,
       categoryId = categoryId,
-      type = ExpenseEntityType.FLEX
+      type = ExpenseTypePersistenceEnum.FLEX
     )
 
     webTestClient
