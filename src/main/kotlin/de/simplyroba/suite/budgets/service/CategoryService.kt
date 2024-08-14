@@ -40,6 +40,7 @@ class CategoryService(
     return CategoryTree(
       id = category.id,
       name = category.name,
+      disabled = category.disabled,
       subCategory = subCategory.map { buildTreeRecursively(it, categoryMap) }
     )
   }
@@ -66,6 +67,7 @@ class CategoryService(
       .map { existingCategory ->
         existingCategory.apply {
           name = categoryUpdate.name
+          disabled = categoryUpdate.disabled
           parentCategoryId = categoryUpdate.parentCategoryId
         }
       }
