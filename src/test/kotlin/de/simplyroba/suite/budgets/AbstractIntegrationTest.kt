@@ -7,10 +7,10 @@ import de.simplyroba.suite.budgets.persistence.IncomeRepository
 import de.simplyroba.suite.budgets.persistence.model.BudgetEntity
 import de.simplyroba.suite.budgets.persistence.model.CategoryEntity
 import de.simplyroba.suite.budgets.persistence.model.ExpenseEntity
-import de.simplyroba.suite.budgets.persistence.model.ExpenseEntityType
+import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum
 import de.simplyroba.suite.budgets.persistence.model.IncomeEntity
 import io.r2dbc.spi.ConnectionFactory
-import java.time.OffsetDateTime
+import java.time.LocalDate
 import org.junit.jupiter.api.AfterEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -49,7 +49,7 @@ abstract class AbstractIntegrationTest {
   fun createIncome(
     title: String = "Title",
     amountInCents: Int = 999,
-    dueDate: OffsetDateTime = OffsetDateTime.now()
+    dueDate: LocalDate = LocalDate.now()
   ): IncomeEntity {
     return incomeRepository
       .save(IncomeEntity(title = title, amountInCents = amountInCents, dueDate = dueDate))
@@ -61,9 +61,9 @@ abstract class AbstractIntegrationTest {
   fun createExpense(
     title: String = "Title",
     amountInCents: Int = 999,
-    dueDate: OffsetDateTime = OffsetDateTime.now(),
-    type: ExpenseEntityType = ExpenseEntityType.FLEX,
-    categoryId: Long = 1,
+    dueDate: LocalDate = LocalDate.now(),
+    type: ExpenseTypePersistenceEnum = ExpenseTypePersistenceEnum.FLEX,
+    categoryId: Long,
     budgetId: Long? = null,
   ): ExpenseEntity {
     return expenseRepository
@@ -82,17 +82,31 @@ abstract class AbstractIntegrationTest {
       .get()
   }
 
-  fun createCategory(name: String = "Category", parentCategoryId: Long? = null): CategoryEntity {
+  fun createCategory(
+    name: String = "Category",
+    disabled: Boolean = false,
+    parentCategoryId: Long? = null
+  ): CategoryEntity {
     return categoryRepository
-      .save(CategoryEntity(name = name, parentCategoryId = parentCategoryId))
+      .save(CategoryEntity(name = name, disabled = disabled, parentCategoryId = parentCategoryId))
       .log("create category $name")
       .blockOptional()
       .get()
   }
 
-  fun createBudget(name: String = "Budget", savingAmountInCents: Int = 10000): BudgetEntity {
+  fun createBudget(
+    name: String = "Budget",
+    savingAmountInCents: Int = 10000,
+    categoryId: Long
+  ): BudgetEntity {
     return budgetRepository
-      .save(BudgetEntity(name = name, savingAmountInCents = savingAmountInCents))
+      .save(
+        BudgetEntity(
+          name = name,
+          savingAmountInCents = savingAmountInCents,
+          categoryId = categoryId
+        )
+      )
       .log("create budget $name")
       .blockOptional()
       .get()

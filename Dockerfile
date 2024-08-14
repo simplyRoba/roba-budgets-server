@@ -29,3 +29,5 @@ HEALTHCHECK --interval=60s --timeout=10s --retries=3 \
   CMD curl -f -s http://localhost:8020/health/check || exit 1
 
 ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
+
+EXPOSE 8020

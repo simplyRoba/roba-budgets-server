@@ -4,7 +4,7 @@ import de.simplyroba.suite.budgets.AbstractIntegrationTest
 import de.simplyroba.suite.budgets.rest.model.Income
 import de.simplyroba.suite.budgets.rest.model.IncomeCreate
 import de.simplyroba.suite.budgets.rest.model.IncomeUpdate
-import java.time.OffsetDateTime
+import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
@@ -31,7 +31,7 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
 
   @Test
   fun `should return income list between dates`() {
-    val startDate = OffsetDateTime.now()
+    val startDate = LocalDate.now()
     val endDate = startDate.plusDays(1)
     val outsideDate = endDate.plusDays(1)
 
@@ -85,7 +85,7 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
   fun `should create income`() {
     val title = "Income"
     val amountInCents = 1000
-    val dueDate = OffsetDateTime.now()
+    val dueDate = LocalDate.now()
 
     webTestClient
       .post()
@@ -100,7 +100,7 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
         assertThat(it.responseBody?.id).isNotNull
         assertThat(it.responseBody?.title).isEqualTo(title)
         assertThat(it.responseBody?.amountInCents).isEqualTo(amountInCents)
-        assertThat(it.responseBody?.dueDate).isAtSameInstantAs(dueDate)
+        assertThat(it.responseBody?.dueDate).isEqualTo(dueDate)
       }
   }
 
@@ -110,7 +110,7 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
     val id = createIncome(title).id
     val updatedTitle = "Updated Income"
     val updatedAmountInCents = 1000
-    val updatedDueDate = OffsetDateTime.now()
+    val updatedDueDate = LocalDate.now()
 
     webTestClient
       .put()
@@ -125,7 +125,7 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
         assertThat(it.responseBody?.id).isEqualTo(id)
         assertThat(it.responseBody?.title).isEqualTo(updatedTitle)
         assertThat(it.responseBody?.amountInCents).isEqualTo(updatedAmountInCents)
-        assertThat(it.responseBody?.dueDate).isAtSameInstantAs(updatedDueDate)
+        assertThat(it.responseBody?.dueDate).isEqualTo(updatedDueDate)
       }
   }
 
@@ -137,7 +137,7 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
       .put()
       .uri("/api/v1/income/$id")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(IncomeUpdate("Updated Income", 1000, OffsetDateTime.now()))
+      .bodyValue(IncomeUpdate("Updated Income", 1000, LocalDate.now()))
       .exchange()
       .expectStatus()
       .isNotFound

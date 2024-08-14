@@ -14,26 +14,26 @@ import reactor.core.publisher.Mono
 @Service
 class BudgetService(
   private val budgetRepository: BudgetRepository,
-  private val budgetEntityToBudgetConverter: Converter<BudgetEntity, Budget>,
+  private val budgetEntityToDtoConverter: Converter<BudgetEntity, Budget>,
   private val budgetCreateToEntityConverter: Converter<BudgetCreate, BudgetEntity>
 ) {
 
   fun findAll(): Flux<Budget> {
-    return budgetRepository.findAll().map(budgetEntityToBudgetConverter::convert)
+    return budgetRepository.findAll().map(budgetEntityToDtoConverter::convert)
   }
 
   fun findById(id: Long): Mono<Budget> {
     return budgetRepository
       .findById(id)
       .switchIfEmpty(Mono.error(NotFoundError("Budget with id $id not found")))
-      .map(budgetEntityToBudgetConverter::convert)
+      .map(budgetEntityToDtoConverter::convert)
   }
 
   @Transactional
   fun createBudget(budget: BudgetCreate): Mono<Budget> {
     return budgetRepository
       .save(budgetCreateToEntityConverter.convert(budget))
-      .map(budgetEntityToBudgetConverter::convert)
+      .map(budgetEntityToDtoConverter::convert)
   }
 
   @Transactional
@@ -44,11 +44,12 @@ class BudgetService(
       .map { existingBudget ->
         existingBudget.apply {
           name = budgetUpdate.name
+          categoryId = budgetUpdate.categoryId
           savingAmountInCents = budgetUpdate.savingAmountInCents
         }
       }
       .flatMap(budgetRepository::save)
-      .map(budgetEntityToBudgetConverter::convert)
+      .map(budgetEntityToDtoConverter::convert)
   }
 
   @Transactional

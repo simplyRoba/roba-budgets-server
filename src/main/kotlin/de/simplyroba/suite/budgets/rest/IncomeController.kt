@@ -4,8 +4,9 @@ import de.simplyroba.suite.budgets.rest.model.Income
 import de.simplyroba.suite.budgets.rest.model.IncomeCreate
 import de.simplyroba.suite.budgets.rest.model.IncomeUpdate
 import de.simplyroba.suite.budgets.service.IncomeService
-import java.time.OffsetDateTime
+import java.time.LocalDate
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -21,12 +22,13 @@ import reactor.core.publisher.Mono
 
 @RestController
 @RequestMapping("/api/v1/income")
+@CrossOrigin
 class IncomeController(private val incomeService: IncomeService) {
 
   @GetMapping
   fun getIncomeList(
-    @RequestParam(required = false) startDate: OffsetDateTime?,
-    @RequestParam(required = false) endDate: OffsetDateTime?,
+    @RequestParam(required = false) startDate: LocalDate?,
+    @RequestParam(required = false) endDate: LocalDate?,
   ): Flux<Income> =
     if (startDate != null && endDate != null) {
       incomeService.findAllBetweenDates(startDate, endDate)

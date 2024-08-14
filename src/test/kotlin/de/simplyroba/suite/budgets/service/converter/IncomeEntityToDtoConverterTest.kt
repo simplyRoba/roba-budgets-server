@@ -1,18 +1,18 @@
 package de.simplyroba.suite.budgets.service.converter
 
 import de.simplyroba.suite.budgets.persistence.model.IncomeEntity
-import java.time.OffsetDateTime
+import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class IncomeEntityToIncomeConverterTest {
+class IncomeEntityToDtoConverterTest {
 
-  private val converter = IncomeEntityToIncomeConverter()
+  private val converter = IncomeEntityToDtoConverter()
 
   @Test
   fun `should convert entity to dto`() {
     val entity =
-      IncomeEntity(id = 1, title = "title", amountInCents = 100, dueDate = OffsetDateTime.now())
+      IncomeEntity(id = 1, title = "title", amountInCents = 100, dueDate = LocalDate.now())
 
     val result = converter.convert(entity)
 

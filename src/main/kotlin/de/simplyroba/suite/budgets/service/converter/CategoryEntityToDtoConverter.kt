@@ -5,8 +5,13 @@ import de.simplyroba.suite.budgets.rest.model.Category
 import org.springframework.stereotype.Component
 
 @Component
-class CategoryEntityToCategoryConverter : Converter<CategoryEntity, Category> {
+class CategoryEntityToDtoConverter : Converter<CategoryEntity, Category> {
   override fun convert(source: CategoryEntity): Category {
-    return Category(id = source.id, name = source.name, parentCategoryId = source.parentCategoryId)
+    return Category(
+      id = source.id,
+      name = source.name,
+      disabled = source.disabled,
+      parentCategoryId = source.parentCategoryId
+    )
   }
 }

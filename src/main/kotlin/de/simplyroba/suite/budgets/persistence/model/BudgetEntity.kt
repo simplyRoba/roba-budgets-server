@@ -8,4 +8,5 @@ data class BudgetEntity(
   @Id val id: Long = 0,
   var name: String,
   var savingAmountInCents: Int,
+  var categoryId: Long,
 )
