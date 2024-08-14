@@ -9,8 +9,9 @@ class BudgetEntityToBudgetConverter : Converter<BudgetEntity, Budget> {
   override fun convert(source: BudgetEntity): Budget {
     return Budget(
       id = source.id,
-      name = source.name,
-      savingAmountInCents = source.savingAmountInCents
+      title = source.title,
+      savingAmountInCents = source.savingAmountInCents,
+      categoryId = source.categoryId,
     )
   }
 }

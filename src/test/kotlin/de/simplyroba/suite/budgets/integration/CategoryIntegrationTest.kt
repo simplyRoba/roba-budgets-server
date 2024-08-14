@@ -34,9 +34,9 @@ class CategoryIntegrationTest : AbstractIntegrationTest() {
     val id1 = createCategory("Root-Category 1").id
     val id2 = createCategory("Root-Category 2").id
 
-    createCategory("Sub-Category 1-1", id1)
-    createCategory("Sub-Category 2-1", id2)
-    createCategory("Sub-Category 2-2", id2)
+    createCategory("Sub-Category 1-1", parentCategoryId = id1)
+    createCategory("Sub-Category 2-1", parentCategoryId = id2)
+    createCategory("Sub-Category 2-2", parentCategoryId = id2)
 
     webTestClient
       .get()
@@ -86,13 +86,14 @@ class CategoryIntegrationTest : AbstractIntegrationTest() {
       .post()
       .uri("/api/v1/category")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(CategoryCreate(name, null))
+      .bodyValue(CategoryCreate(name, false, null))
       .exchange()
       .expectStatus()
       .isCreated
       .expectBody<Category>()
       .consumeWith {
         assertThat(it.responseBody?.id).isNotNull
+        assertThat(it.responseBody?.disabled).isFalse
         assertThat(it.responseBody?.name).isEqualTo(name)
       }
   }
@@ -107,7 +108,7 @@ class CategoryIntegrationTest : AbstractIntegrationTest() {
       .put()
       .uri("/api/v1/category/{id}", id)
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(CategoryUpdate("Updated Category", null))
+      .bodyValue(CategoryUpdate("Updated Category", false, null))
       .exchange()
       .expectStatus()
       .isOk
@@ -126,7 +127,7 @@ class CategoryIntegrationTest : AbstractIntegrationTest() {
       .put()
       .uri("/api/v1/category/$id")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(CategoryUpdate("Category", null))
+      .bodyValue(CategoryUpdate("Category", false, null))
       .exchange()
       .expectStatus()
       .isNotFound

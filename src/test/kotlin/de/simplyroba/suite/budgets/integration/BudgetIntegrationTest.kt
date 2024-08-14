@@ -12,9 +12,10 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
 
   @Test
   fun `should return budget list`() {
+    val categoryId = createCategory(name = "Default Category").id
     val size = 3
 
-    (1..size).forEach { i -> createBudget(name = "Budget $i") }
+    (1..size).forEach { i -> createBudget(name = "Budget $i", categoryId = categoryId) }
 
     webTestClient
       .get()
@@ -29,8 +30,9 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
 
   @Test
   fun `should return budget by id`() {
+    val categoryId = createCategory(name = "Default Category").id
     val name = "Budget"
-    val id = createBudget(name).id
+    val id = createBudget(name, categoryId = categoryId).id
 
     webTestClient
       .get()
@@ -41,7 +43,7 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
       .expectBody<Budget>()
       .consumeWith {
         assertThat(it.responseBody?.id).isEqualTo(id)
-        assertThat(it.responseBody?.name).isEqualTo(name)
+        assertThat(it.responseBody?.title).isEqualTo(name)
       }
   }
 
@@ -54,6 +56,7 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
 
   @Test
   fun `should create budget`() {
+    val categoryId = createCategory(name = "Default Category").id
     val name = "Budget"
     val savingAmountInCents = 1000
 
@@ -61,22 +64,23 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
       .post()
       .uri("/api/v1/budget")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(BudgetCreate(name, savingAmountInCents))
+      .bodyValue(BudgetCreate(name, savingAmountInCents, categoryId))
       .exchange()
       .expectStatus()
       .isCreated
       .expectBody<Budget>()
       .consumeWith {
         assertThat(it.responseBody?.id).isNotNull
-        assertThat(it.responseBody?.name).isEqualTo(name)
+        assertThat(it.responseBody?.title).isEqualTo(name)
         assertThat(it.responseBody?.savingAmountInCents).isEqualTo(savingAmountInCents)
       }
   }
 
   @Test
   fun `should update budget`() {
+    val categoryId = createCategory(name = "Default Category").id
     val name = "Budget"
-    val id = createBudget(name).id
+    val id = createBudget(name, categoryId = categoryId).id
     val updatedName = "Updated Budget"
     val updatedSavingAmountInCents = 2000
 
@@ -84,14 +88,14 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
       .put()
       .uri("/api/v1/budget/$id")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(BudgetCreate(updatedName, updatedSavingAmountInCents))
+      .bodyValue(BudgetCreate(updatedName, updatedSavingAmountInCents, categoryId))
       .exchange()
       .expectStatus()
       .isOk
       .expectBody<Budget>()
       .consumeWith {
         assertThat(it.responseBody?.id).isEqualTo(id)
-        assertThat(it.responseBody?.name).isEqualTo(updatedName)
+        assertThat(it.responseBody?.title).isEqualTo(updatedName)
         assertThat(it.responseBody?.savingAmountInCents).isEqualTo(updatedSavingAmountInCents)
       }
   }
@@ -104,7 +108,7 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
       .put()
       .uri("/api/v1/budget/$id")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(BudgetCreate("Name", 99))
+      .bodyValue(BudgetCreate("Name", 99, 1))
       .exchange()
       .expectStatus()
       .isNotFound
@@ -112,7 +116,8 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
 
   @Test
   fun `should delete budget`() {
-    val id = createBudget().id
+    val categoryId = createCategory(name = "Default Category").id
+    val id = createBudget(categoryId = categoryId).id
 
     webTestClient.delete().uri("/api/v1/budget/$id").exchange().expectStatus().isNoContent
   }

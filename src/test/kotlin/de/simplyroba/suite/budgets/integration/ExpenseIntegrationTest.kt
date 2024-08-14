@@ -178,8 +178,8 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
   @Test
   fun `should return expense by budget`() {
     val categoryId = createCategory(name = "Default Category").id
-    val budgetId = createBudget(name = "Default Budget").id
-    val otherBudgetId = createBudget(name = "Other Budget").id
+    val budgetId = createBudget(name = "Default Budget", categoryId = categoryId).id
+    val otherBudgetId = createBudget(name = "Other Budget", categoryId = categoryId).id
 
     createExpense(title = "Expense 1", budgetId = budgetId, categoryId = categoryId)
     createExpense(title = "Expense 2", budgetId = otherBudgetId, categoryId = categoryId)
@@ -200,8 +200,8 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
     val endDate = startDate.plusDays(1)
     val outsideDate = endDate.plusDays(1)
     val categoryId = createCategory(name = "Default Category").id
-    val budgetId = createBudget(name = "Default Budget").id
-    val otherBudgetId = createBudget(name = "Other Budget").id
+    val budgetId = createBudget(name = "Default Budget", categoryId = categoryId).id
+    val otherBudgetId = createBudget(name = "Other Budget", categoryId = categoryId).id
 
     createExpense(
       title = "Expense default start",

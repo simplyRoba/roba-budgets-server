@@ -64,7 +64,7 @@ abstract class AbstractIntegrationTest {
     amountInCents: Int = 999,
     dueDate: OffsetDateTime = OffsetDateTime.now(),
     type: ExpenseEntityType = ExpenseEntityType.FLEX,
-    categoryId: Long = 1,
+    categoryId: Long,
     budgetId: Long? = null,
   ): ExpenseEntity {
     return expenseRepository
@@ -95,9 +95,9 @@ abstract class AbstractIntegrationTest {
       .get()
   }
 
-  fun createBudget(name: String = "Budget", savingAmountInCents: Int = 10000): BudgetEntity {
+  fun createBudget(name: String = "Budget", savingAmountInCents: Int = 10000, categoryId: Long): BudgetEntity {
     return budgetRepository
-      .save(BudgetEntity(title = name, savingAmountInCents = savingAmountInCents))
+      .save(BudgetEntity(title = name, savingAmountInCents = savingAmountInCents, categoryId = categoryId))
       .log("create budget $name")
       .blockOptional()
       .get()
