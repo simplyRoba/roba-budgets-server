@@ -10,11 +10,13 @@ class CategoryCreateToEntityConverterTest {
 
   @Test
   fun `should convert create to entity`() {
-    val categoryCreate = CategoryCreate(name = "Test Category", parentCategoryId = 1)
+    val categoryCreate =
+      CategoryCreate(name = "Test Category", disabled = false, parentCategoryId = 1)
 
     val result = converter.convert(categoryCreate)
 
     assertThat(result.name).isEqualTo(categoryCreate.name)
+    assertThat(result.disabled).isEqualTo(categoryCreate.disabled)
     assertThat(result.parentCategoryId).isEqualTo(categoryCreate.parentCategoryId)
   }
 }

@@ -83,9 +83,13 @@ abstract class AbstractIntegrationTest {
       .get()
   }
 
-  fun createCategory(name: String = "Category", parentCategoryId: Long? = null): CategoryEntity {
+  fun createCategory(
+    name: String = "Category",
+    disabled: Boolean = false,
+    parentCategoryId: Long? = null
+  ): CategoryEntity {
     return categoryRepository
-      .save(CategoryEntity(name = name, parentCategoryId = parentCategoryId))
+      .save(CategoryEntity(name = name, disabled = disabled, parentCategoryId = parentCategoryId))
       .log("create category $name")
       .blockOptional()
       .get()
@@ -93,7 +97,7 @@ abstract class AbstractIntegrationTest {
 
   fun createBudget(name: String = "Budget", savingAmountInCents: Int = 10000): BudgetEntity {
     return budgetRepository
-      .save(BudgetEntity(name = name, savingAmountInCents = savingAmountInCents))
+      .save(BudgetEntity(title = name, savingAmountInCents = savingAmountInCents))
       .log("create budget $name")
       .blockOptional()
       .get()
