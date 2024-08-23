@@ -11,8 +11,7 @@ class BudgetCreateToEntityConverterTest {
   @Test
   fun `should convert create to entity`() {
 
-    val budgetCreate =
-      BudgetCreate("Test Budget", 100, 999,1)
+    val budgetCreate = BudgetCreate("Test Budget", 100, 999, 1)
 
     val result = converter.convert(budgetCreate)
 

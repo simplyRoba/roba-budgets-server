@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service
 @Service
 class BudgetExpenseService {
 
-    fun getBudgetExpenses() {
-        TODO("Not yet implemented")
-    }
+  fun getBudgetExpenses() {
+    TODO("Not yet implemented")
+  }
 }
