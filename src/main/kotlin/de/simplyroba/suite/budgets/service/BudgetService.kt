@@ -44,8 +44,9 @@ class BudgetService(
       .map { existingBudget ->
         existingBudget.apply {
           name = budgetUpdate.name
+          monthlySavingAmountInCents = budgetUpdate.monthlySavingAmountInCents
+          totalSavedAmountInCents = budgetUpdate.totalSavedAmountInCents
           categoryId = budgetUpdate.categoryId
-          savingAmountInCents = budgetUpdate.savingAmountInCents
         }
       }
       .flatMap(budgetRepository::save)

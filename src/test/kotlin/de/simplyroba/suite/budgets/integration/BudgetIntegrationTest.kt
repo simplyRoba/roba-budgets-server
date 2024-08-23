@@ -58,13 +58,16 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
   fun `should create budget`() {
     val categoryId = createCategory(name = "Default Category").id
     val name = "Budget"
-    val savingAmountInCents = 1000
+    val monthlySavingAmountInCents = 1000
+    val totalSavedAmountInCents = 99
 
     webTestClient
       .post()
       .uri("/api/v1/budget")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(BudgetCreate(name, savingAmountInCents, categoryId))
+      .bodyValue(
+        BudgetCreate(name, monthlySavingAmountInCents, totalSavedAmountInCents, categoryId)
+      )
       .exchange()
       .expectStatus()
       .isCreated
@@ -72,7 +75,9 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
       .consumeWith {
         assertThat(it.responseBody?.id).isNotNull
         assertThat(it.responseBody?.name).isEqualTo(name)
-        assertThat(it.responseBody?.savingAmountInCents).isEqualTo(savingAmountInCents)
+        assertThat(it.responseBody?.monthlySavingAmountInCents)
+          .isEqualTo(monthlySavingAmountInCents)
+        assertThat(it.responseBody?.totalSavedAmountInCents).isEqualTo(totalSavedAmountInCents)
       }
   }
 
@@ -83,12 +88,20 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
     val id = createBudget(name, categoryId = categoryId).id
     val updatedName = "Updated Budget"
     val updatedSavingAmountInCents = 2000
+    val updatedTotalSavedAmountInCents = 199
 
     webTestClient
       .put()
       .uri("/api/v1/budget/$id")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(BudgetCreate(updatedName, updatedSavingAmountInCents, categoryId))
+      .bodyValue(
+        BudgetCreate(
+          updatedName,
+          updatedSavingAmountInCents,
+          updatedTotalSavedAmountInCents,
+          categoryId
+        )
+      )
       .exchange()
       .expectStatus()
       .isOk
@@ -96,7 +109,10 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
       .consumeWith {
         assertThat(it.responseBody?.id).isEqualTo(id)
         assertThat(it.responseBody?.name).isEqualTo(updatedName)
-        assertThat(it.responseBody?.savingAmountInCents).isEqualTo(updatedSavingAmountInCents)
+        assertThat(it.responseBody?.monthlySavingAmountInCents)
+          .isEqualTo(updatedSavingAmountInCents)
+        assertThat(it.responseBody?.totalSavedAmountInCents)
+          .isEqualTo(updatedTotalSavedAmountInCents)
       }
   }
 
@@ -108,7 +124,7 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
       .put()
       .uri("/api/v1/budget/$id")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(BudgetCreate("Name", 99, 1))
+      .bodyValue(BudgetCreate("Name", 99, 199, 1))
       .exchange()
       .expectStatus()
       .isNotFound

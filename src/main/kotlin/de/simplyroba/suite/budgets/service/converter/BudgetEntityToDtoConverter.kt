@@ -10,7 +10,8 @@ class BudgetEntityToDtoConverter : Converter<BudgetEntity, Budget> {
     return Budget(
       id = source.id,
       name = source.name,
-      savingAmountInCents = source.savingAmountInCents,
+      monthlySavingAmountInCents = source.monthlySavingAmountInCents,
+      totalSavedAmountInCents = source.totalSavedAmountInCents,
       categoryId = source.categoryId,
     )
   }

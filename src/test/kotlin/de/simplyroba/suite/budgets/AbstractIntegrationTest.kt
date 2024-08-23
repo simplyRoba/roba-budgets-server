@@ -96,14 +96,16 @@ abstract class AbstractIntegrationTest {
 
   fun createBudget(
     name: String = "Budget",
-    savingAmountInCents: Int = 10000,
+    monthlySavingAmountInCents: Int = 10000,
+    totalSavedAmountInCents: Int = 100000,
     categoryId: Long
   ): BudgetEntity {
     return budgetRepository
       .save(
         BudgetEntity(
           name = name,
-          savingAmountInCents = savingAmountInCents,
+          monthlySavingAmountInCents = monthlySavingAmountInCents,
+          totalSavedAmountInCents = totalSavedAmountInCents,
           categoryId = categoryId
         )
       )
