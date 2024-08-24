@@ -11,5 +11,5 @@ data class BudgetExpenseEntity(
   var amountInCents: Int,
   var dueDate: LocalDate,
   var categoryId: Long,
-  var budgetId: Long?,
+  var budgetId: Long,
 )

@@ -1,10 +1,12 @@
 package de.simplyroba.suite.budgets
 
+import de.simplyroba.suite.budgets.persistence.BudgetExpenseRepository
 import de.simplyroba.suite.budgets.persistence.BudgetRepository
 import de.simplyroba.suite.budgets.persistence.CategoryRepository
 import de.simplyroba.suite.budgets.persistence.ExpenseRepository
 import de.simplyroba.suite.budgets.persistence.IncomeRepository
 import de.simplyroba.suite.budgets.persistence.model.BudgetEntity
+import de.simplyroba.suite.budgets.persistence.model.BudgetExpenseEntity
 import de.simplyroba.suite.budgets.persistence.model.CategoryEntity
 import de.simplyroba.suite.budgets.persistence.model.ExpenseEntity
 import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum
@@ -27,6 +29,7 @@ import reactor.core.publisher.Mono
 @ActiveProfiles("test")
 abstract class AbstractIntegrationTest {
 
+  @Autowired private lateinit var budgetExpenseRepository: BudgetExpenseRepository
   @Autowired lateinit var webTestClient: WebTestClient
 
   @Autowired private lateinit var connectionFactory: ConnectionFactory
@@ -110,6 +113,28 @@ abstract class AbstractIntegrationTest {
         )
       )
       .log("create budget $name")
+      .blockOptional()
+      .get()
+  }
+
+  fun createBudgetExpense(
+    name: String = "Budget Expense",
+    amountInCents: Int = 999,
+    dueDate: LocalDate = LocalDate.now(),
+    categoryId: Long,
+    budgetId: Long,
+  ): BudgetExpenseEntity {
+    return budgetExpenseRepository
+      .save(
+        BudgetExpenseEntity(
+          title = name,
+          amountInCents = amountInCents,
+          dueDate = dueDate,
+          categoryId = categoryId,
+          budgetId = budgetId
+        )
+      )
+      .log("create budget expense $name")
       .blockOptional()
       .get()
   }

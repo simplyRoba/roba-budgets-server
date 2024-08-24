@@ -41,7 +41,7 @@ CREATE TABLE budget_expense
     amount_in_cents INT                          NOT NULL,
     due_date        DATE                         NOT NULL,
     category_id     INT REFERENCES category (id) NOT NULL,
-    budget_id       INT REFERENCES budget (id) NOT NULL
+    budget_id       INT REFERENCES budget (id)   NOT NULL
 );
 
 CREATE TABLE fix_expense_template
