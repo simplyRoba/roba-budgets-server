@@ -5,12 +5,15 @@ import de.simplyroba.suite.budgets.persistence.BudgetRepository
 import de.simplyroba.suite.budgets.persistence.CategoryRepository
 import de.simplyroba.suite.budgets.persistence.ExpenseRepository
 import de.simplyroba.suite.budgets.persistence.IncomeRepository
+import de.simplyroba.suite.budgets.persistence.IncomeTemplateRepository
 import de.simplyroba.suite.budgets.persistence.model.BudgetEntity
 import de.simplyroba.suite.budgets.persistence.model.BudgetExpenseEntity
 import de.simplyroba.suite.budgets.persistence.model.CategoryEntity
 import de.simplyroba.suite.budgets.persistence.model.ExpenseEntity
 import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum
 import de.simplyroba.suite.budgets.persistence.model.IncomeEntity
+import de.simplyroba.suite.budgets.persistence.model.IncomeTemplateEntity
+import de.simplyroba.suite.budgets.persistence.model.RepeatIntervalPersistenceEnum
 import io.r2dbc.spi.ConnectionFactory
 import java.time.LocalDate
 import org.junit.jupiter.api.AfterEach
@@ -29,14 +32,15 @@ import reactor.core.publisher.Mono
 @ActiveProfiles("test")
 abstract class AbstractIntegrationTest {
 
-  @Autowired private lateinit var budgetExpenseRepository: BudgetExpenseRepository
   @Autowired lateinit var webTestClient: WebTestClient
-
   @Autowired private lateinit var connectionFactory: ConnectionFactory
+
   @Autowired private lateinit var incomeRepository: IncomeRepository
+  @Autowired private lateinit var incomeTemplateRepository: IncomeTemplateRepository
   @Autowired private lateinit var expenseRepository: ExpenseRepository
   @Autowired private lateinit var categoryRepository: CategoryRepository
   @Autowired private lateinit var budgetRepository: BudgetRepository
+  @Autowired private lateinit var budgetExpenseRepository: BudgetExpenseRepository
 
   @AfterEach
   fun cleanUp(@Value("classpath:clean-up.sql") sqlScript: Resource) {
@@ -57,6 +61,24 @@ abstract class AbstractIntegrationTest {
     return incomeRepository
       .save(IncomeEntity(title = title, amountInCents = amountInCents, dueDate = dueDate))
       .log("create income $title")
+      .blockOptional()
+      .get()
+  }
+
+  fun createIncomeTemplate(
+    title: String = "Title",
+    amountInCents: Int = 999,
+    repeatInterval: RepeatIntervalPersistenceEnum = RepeatIntervalPersistenceEnum.MONTHLY,
+  ): IncomeTemplateEntity {
+    return incomeTemplateRepository
+      .save(
+        IncomeTemplateEntity(
+          title = title,
+          amountInCents = amountInCents,
+          repeatInterval = repeatInterval
+        )
+      )
+      .log("create income template $title")
       .blockOptional()
       .get()
   }
