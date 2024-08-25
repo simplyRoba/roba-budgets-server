@@ -4,6 +4,7 @@ import de.simplyroba.suite.budgets.persistence.BudgetExpenseRepository
 import de.simplyroba.suite.budgets.persistence.BudgetRepository
 import de.simplyroba.suite.budgets.persistence.CategoryRepository
 import de.simplyroba.suite.budgets.persistence.ExpenseRepository
+import de.simplyroba.suite.budgets.persistence.FixExpenseTemplateRepository
 import de.simplyroba.suite.budgets.persistence.IncomeRepository
 import de.simplyroba.suite.budgets.persistence.IncomeTemplateRepository
 import de.simplyroba.suite.budgets.persistence.model.BudgetEntity
@@ -11,6 +12,7 @@ import de.simplyroba.suite.budgets.persistence.model.BudgetExpenseEntity
 import de.simplyroba.suite.budgets.persistence.model.CategoryEntity
 import de.simplyroba.suite.budgets.persistence.model.ExpenseEntity
 import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum
+import de.simplyroba.suite.budgets.persistence.model.FixExpenseTemplateEntity
 import de.simplyroba.suite.budgets.persistence.model.IncomeEntity
 import de.simplyroba.suite.budgets.persistence.model.IncomeTemplateEntity
 import de.simplyroba.suite.budgets.persistence.model.RepeatIntervalPersistenceEnum
@@ -33,11 +35,13 @@ import reactor.core.publisher.Mono
 abstract class AbstractIntegrationTest {
 
   @Autowired lateinit var webTestClient: WebTestClient
+
   @Autowired private lateinit var connectionFactory: ConnectionFactory
 
   @Autowired private lateinit var incomeRepository: IncomeRepository
   @Autowired private lateinit var incomeTemplateRepository: IncomeTemplateRepository
   @Autowired private lateinit var expenseRepository: ExpenseRepository
+  @Autowired private lateinit var fixExpenseTemplateRepository: FixExpenseTemplateRepository
   @Autowired private lateinit var categoryRepository: CategoryRepository
   @Autowired private lateinit var budgetRepository: BudgetRepository
   @Autowired private lateinit var budgetExpenseRepository: BudgetExpenseRepository
@@ -103,6 +107,26 @@ abstract class AbstractIntegrationTest {
         )
       )
       .log("create expense $title")
+      .blockOptional()
+      .get()
+  }
+
+  fun createFixExpenseTemplate(
+    title: String = "Fix Expense Template",
+    amountInCents: Int = 999,
+    repeatInterval: RepeatIntervalPersistenceEnum = RepeatIntervalPersistenceEnum.MONTHLY,
+    categoryId: Long
+  ): FixExpenseTemplateEntity {
+    return fixExpenseTemplateRepository
+      .save(
+        FixExpenseTemplateEntity(
+          title = title,
+          amountInCents = amountInCents,
+          repeatInterval = repeatInterval,
+          categoryId = categoryId,
+        )
+      )
+      .log("create fix expense template $title")
       .blockOptional()
       .get()
   }

@@ -19,7 +19,7 @@ class IncomeTemplateIntegrationTest : AbstractIntegrationTest() {
 
     webTestClient
       .get()
-      .uri("/api/v1/income/template")
+      .uri("/api/v1/income-template")
       .exchange()
       .expectStatus()
       .isOk
@@ -35,7 +35,7 @@ class IncomeTemplateIntegrationTest : AbstractIntegrationTest() {
 
     webTestClient
       .get()
-      .uri("/api/v1/income/template/$id")
+      .uri("/api/v1/income-template/$id")
       .exchange()
       .expectStatus()
       .isOk
@@ -50,7 +50,7 @@ class IncomeTemplateIntegrationTest : AbstractIntegrationTest() {
   fun `should return 404 when income template not found on get`() {
     val id = 1
 
-    webTestClient.get().uri("/api/v1/income/template/$id").exchange().expectStatus().isNotFound
+    webTestClient.get().uri("/api/v1/income-template/$id").exchange().expectStatus().isNotFound
   }
 
   @Test
@@ -60,7 +60,7 @@ class IncomeTemplateIntegrationTest : AbstractIntegrationTest() {
 
     webTestClient
       .post()
-      .uri("/api/v1/income/template")
+      .uri("/api/v1/income-template")
       .bodyValue(
         IncomeTemplateCreate(
           title = title,
@@ -90,7 +90,7 @@ class IncomeTemplateIntegrationTest : AbstractIntegrationTest() {
 
     webTestClient
       .put()
-      .uri("/api/v1/income/template/$id")
+      .uri("/api/v1/income-template/$id")
       .bodyValue(
         IncomeTemplateUpdate(
           title = updatedTitle,
@@ -115,7 +115,7 @@ class IncomeTemplateIntegrationTest : AbstractIntegrationTest() {
 
     webTestClient
       .put()
-      .uri("/api/v1/income/template/$id")
+      .uri("/api/v1/income-template/$id")
       .bodyValue(
         IncomeTemplateUpdate(
           title = "Updated Income Template",
@@ -132,6 +132,6 @@ class IncomeTemplateIntegrationTest : AbstractIntegrationTest() {
   fun `should delete income template`() {
     val id = createIncomeTemplate().id
 
-    webTestClient.delete().uri("/api/v1/income/template/$id").exchange().expectStatus().isNoContent
+    webTestClient.delete().uri("/api/v1/income-template/$id").exchange().expectStatus().isNoContent
   }
 }

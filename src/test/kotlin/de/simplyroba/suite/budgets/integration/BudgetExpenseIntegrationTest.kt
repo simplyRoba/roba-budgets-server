@@ -22,7 +22,7 @@ class BudgetExpenseIntegrationTest : AbstractIntegrationTest() {
 
     webTestClient
       .get()
-      .uri("/api/v1/budget/expense")
+      .uri("/api/v1/budget-expense")
       .exchange()
       .expectStatus()
       .isOk
@@ -40,7 +40,7 @@ class BudgetExpenseIntegrationTest : AbstractIntegrationTest() {
 
     webTestClient
       .get()
-      .uri("/api/v1/budget/expense/$id")
+      .uri("/api/v1/budget-expense/$id")
       .exchange()
       .expectStatus()
       .isOk
@@ -55,7 +55,7 @@ class BudgetExpenseIntegrationTest : AbstractIntegrationTest() {
   fun `should return 404 when budget expense not found on get`() {
     val id = 1
 
-    webTestClient.get().uri("/api/v1/budget/expense/$id").exchange().expectStatus().isNotFound
+    webTestClient.get().uri("/api/v1/budget-expense/$id").exchange().expectStatus().isNotFound
   }
 
   @Test
@@ -68,7 +68,7 @@ class BudgetExpenseIntegrationTest : AbstractIntegrationTest() {
 
     webTestClient
       .post()
-      .uri("/api/v1/budget/expense")
+      .uri("/api/v1/budget-expense")
       .bodyValue(
         BudgetExpenseCreate(
           title = title,
@@ -104,7 +104,7 @@ class BudgetExpenseIntegrationTest : AbstractIntegrationTest() {
 
     webTestClient
       .put()
-      .uri("/api/v1/budget/expense/$id")
+      .uri("/api/v1/budget-expense/$id")
       .bodyValue(
         BudgetExpenseCreate(
           title = newTitle,
@@ -131,7 +131,7 @@ class BudgetExpenseIntegrationTest : AbstractIntegrationTest() {
   fun `should return 404 when budget expense not found on update`() {
     val id = 1
 
-    webTestClient.put().uri("/api/v1/budget/expense/$id").exchange().expectStatus().isNotFound
+    webTestClient.put().uri("/api/v1/budget-expense/$id").exchange().expectStatus().isNotFound
   }
 
   @Test
@@ -141,6 +141,6 @@ class BudgetExpenseIntegrationTest : AbstractIntegrationTest() {
     val id =
       createBudgetExpense(name = "Budget Expense", categoryId = categoryId, budgetId = budgetId).id
 
-    webTestClient.delete().uri("/api/v1/budget/expense/$id").exchange().expectStatus().isNoContent
+    webTestClient.delete().uri("/api/v1/budget-expense/$id").exchange().expectStatus().isNoContent
   }
 }
