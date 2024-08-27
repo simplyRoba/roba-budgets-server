@@ -143,7 +143,14 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
   fun `should find by budget id`() {
     val budgetId =
       budgetRepository
-        .save(BudgetEntity(name = "Budget", savingAmountInCents = 99, categoryId = categoryId))
+        .save(
+          BudgetEntity(
+            name = "Budget",
+            monthlySavingAmountInCents = 99,
+            totalSavedAmountInCents = 199,
+            categoryId = categoryId
+          )
+        )
         .blockOptional()
         .get()
         .id

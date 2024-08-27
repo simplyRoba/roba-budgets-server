@@ -22,3 +22,9 @@ spring:
 #  webflux:
 #    problemdetails:
 #      enabled: true
+
+# see: SystemPropertiesSetterEventListener
+system-properties:
+  reactor:
+    schedulers:
+      defaultBoundedElasticOnVirtualThreads: true

@@ -1,13 +1,15 @@
 package de.simplyroba.suite.budgets.persistence.model
 
+import java.time.LocalDate
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 
-@Table("budget")
-data class BudgetEntity(
+@Table("budget_expense")
+data class BudgetExpenseEntity(
   @Id val id: Long = 0,
-  var name: String,
-  var monthlySavingAmountInCents: Int,
-  var totalSavedAmountInCents: Int,
+  var title: String?,
+  var amountInCents: Int,
+  var dueDate: LocalDate,
   var categoryId: Long,
+  var budgetId: Long,
 )

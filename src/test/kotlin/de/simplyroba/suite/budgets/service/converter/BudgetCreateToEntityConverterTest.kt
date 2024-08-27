@@ -11,13 +11,13 @@ class BudgetCreateToEntityConverterTest {
   @Test
   fun `should convert create to entity`() {
 
-    val budgetCreate =
-      BudgetCreate(name = "Test Budget", savingAmountInCents = 1000, categoryId = 1)
+    val budgetCreate = BudgetCreate("Test Budget", 100, 999, 1)
 
     val result = converter.convert(budgetCreate)
 
     assertThat(result.name).isEqualTo(budgetCreate.name)
-    assertThat(result.savingAmountInCents).isEqualTo(budgetCreate.savingAmountInCents)
+    assertThat(result.monthlySavingAmountInCents).isEqualTo(budgetCreate.monthlySavingAmountInCents)
+    assertThat(result.totalSavedAmountInCents).isEqualTo(budgetCreate.totalSavedAmountInCents)
     assertThat(result.categoryId).isEqualTo(budgetCreate.categoryId)
   }
 }

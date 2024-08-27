@@ -10,13 +10,14 @@ class BudgetEntityToDtoConverterTest {
 
   @Test
   fun `should convert entity to dto`() {
-    val entity = BudgetEntity(id = 1, name = "name", savingAmountInCents = 2, categoryId = 2)
+    val entity = BudgetEntity(1, "name", 20, 100, 2)
 
     val result = converter.convert(entity)
 
     assertThat(result.id).isEqualTo(entity.id)
     assertThat(result.name).isEqualTo(entity.name)
-    assertThat(result.savingAmountInCents).isEqualTo(entity.savingAmountInCents)
+    assertThat(result.monthlySavingAmountInCents).isEqualTo(entity.monthlySavingAmountInCents)
+    assertThat(result.totalSavedAmountInCents).isEqualTo(entity.totalSavedAmountInCents)
     assertThat(result.categoryId).isEqualTo(entity.categoryId)
   }
 }
