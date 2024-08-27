@@ -58,7 +58,7 @@ abstract class AbstractIntegrationTest {
   }
 
   fun createIncome(
-    title: String = "Title",
+    title: String = "Income",
     amountInCents: Int = 999,
     dueDate: LocalDate = LocalDate.now()
   ): IncomeEntity {
@@ -70,7 +70,7 @@ abstract class AbstractIntegrationTest {
   }
 
   fun createIncomeTemplate(
-    title: String = "Title",
+    title: String = "Income Template",
     amountInCents: Int = 999,
     repeatInterval: RepeatIntervalPersistenceEnum = RepeatIntervalPersistenceEnum.MONTHLY,
   ): IncomeTemplateEntity {
@@ -88,7 +88,7 @@ abstract class AbstractIntegrationTest {
   }
 
   fun createExpense(
-    title: String = "Title",
+    title: String = "Expense",
     amountInCents: Int = 999,
     dueDate: LocalDate = LocalDate.now(),
     type: ExpenseTypePersistenceEnum = ExpenseTypePersistenceEnum.FLEX,

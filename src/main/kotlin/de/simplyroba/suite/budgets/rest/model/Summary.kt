@@ -11,6 +11,6 @@ data class MonthlySummary(
 
 data class BudgetSummary(
   val name: String,
+  val totalSavedAmountInCents: Int,
   val totalExpensesInCents: Int,
-  val remainingInCents: Int,
 )

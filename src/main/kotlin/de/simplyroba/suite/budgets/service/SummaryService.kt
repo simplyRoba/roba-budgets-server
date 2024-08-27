@@ -11,6 +11,7 @@ import de.simplyroba.suite.budgets.rest.model.MonthlySummary
 import java.time.YearMonth
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
+import reactor.core.scheduler.Schedulers
 import reactor.kotlin.core.util.function.*
 
 @Service
@@ -29,14 +30,16 @@ class SummaryService(
             yearMonth.atDay(1),
             yearMonth.atEndOfMonth(),
           )
-          .collectList(),
+          .collectList()
+          .subscribeOn(Schedulers.boundedElastic()),
         expenseRepository
           .findAllByDueDateBetween(
             yearMonth.atDay(1),
             yearMonth.atEndOfMonth(),
           )
-          .collectList(),
-        getBudgets(),
+          .collectList()
+          .subscribeOn(Schedulers.boundedElastic()),
+        getBudgets().subscribeOn(Schedulers.boundedElastic()),
       )
       .map { (incomes, expenses, budgets) ->
         MonthlySummary(
@@ -52,14 +55,14 @@ class SummaryService(
 
   private fun getBudgets(): Mono<List<BudgetSummary>> {
     return Mono.zip(
-        budgetRepository.findAll().collectList(),
-        budgetExpenseRepository.findAll().collectList(),
+        budgetRepository.findAll().collectList().subscribeOn(Schedulers.boundedElastic()),
+        budgetExpenseRepository.findAll().collectList().subscribeOn(Schedulers.boundedElastic()),
       )
       .map { (budgets, expenses) ->
         budgets.map { budget ->
           BudgetSummary(
             name = budget.name,
-            remainingInCents = budget.totalSavedAmountInCents,
+            totalSavedAmountInCents = budget.totalSavedAmountInCents,
             totalExpensesInCents =
               expenses.filter { it.budgetId == budget.id }.sumOf { it.amountInCents },
           )
