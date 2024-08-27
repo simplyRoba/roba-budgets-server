@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 data class BudgetExpense(
   val id: Long,
-  val title: String,
+  val title: String?,
   val amountInCents: Int,
   val dueDate: LocalDate,
   val categoryId: Long,
@@ -12,7 +12,7 @@ data class BudgetExpense(
 )
 
 data class BudgetExpenseCreate(
-  val title: String,
+  val title: String?,
   val amountInCents: Int,
   val dueDate: LocalDate,
   val categoryId: Long,

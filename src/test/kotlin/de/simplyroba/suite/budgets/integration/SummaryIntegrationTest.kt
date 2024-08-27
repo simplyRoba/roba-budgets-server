@@ -84,7 +84,12 @@ class SummaryIntegrationTest : AbstractIntegrationTest() {
     val totalSavedAmount = 10000
     val budgetExpenseSum = 500
     val budgetId = createBudget("Budget", 1000, totalSavedAmount, categoryId).id
-    createBudgetExpense(amountInCents = budgetExpenseSum, dueDate = dueDate, budgetId = budgetId, categoryId = categoryId)
+    createBudgetExpense(
+      amountInCents = budgetExpenseSum,
+      dueDate = dueDate,
+      budgetId = budgetId,
+      categoryId = categoryId
+    )
 
     val response = webTestClient.get().uri("/api/v1/summary/year/$year/month/$month").exchange()
 

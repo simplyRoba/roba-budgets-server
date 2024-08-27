@@ -6,6 +6,7 @@ import de.simplyroba.suite.budgets.rest.model.BudgetExpenseCreate
 import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.expectBody
 
 class BudgetExpenseIntegrationTest : AbstractIntegrationTest() {
@@ -131,7 +132,14 @@ class BudgetExpenseIntegrationTest : AbstractIntegrationTest() {
   fun `should return 404 when budget expense not found on update`() {
     val id = 1
 
-    webTestClient.put().uri("/api/v1/budget-expense/$id").exchange().expectStatus().isNotFound
+    webTestClient
+      .put()
+      .uri("/api/v1/budget-expense/$id")
+      .contentType(MediaType.APPLICATION_JSON)
+      .bodyValue(BudgetExpenseCreate("Name", 99, LocalDate.now(), 1, 1))
+      .exchange()
+      .expectStatus()
+      .isNotFound
   }
 
   @Test
