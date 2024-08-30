@@ -39,21 +39,19 @@ class SummaryService(
           )
           .collectList()
           .subscribeOn(Schedulers.boundedElastic()),
-        getBudgets().subscribeOn(Schedulers.boundedElastic()),
       )
-      .map { (incomes, expenses, budgets) ->
+      .map { (incomes, expenses) ->
         MonthlySummary(
           month = month,
           year = year,
           totalIncomeInCents = incomes.sumOf { it.amountInCents },
           totalFixExpensesInCents = expenses.filter { it.type == FIX }.sumOf { it.amountInCents },
           totalFlexExpensesInCents = expenses.filter { it.type == FLEX }.sumOf { it.amountInCents },
-          budgets = budgets
         )
       }
   }
 
-  private fun getBudgets(): Mono<List<BudgetSummary>> {
+  fun getBudgetSummary(): Mono<List<BudgetSummary>> {
     return Mono.zip(
         budgetRepository.findAll().collectList().subscribeOn(Schedulers.boundedElastic()),
         budgetExpenseRepository.findAll().collectList().subscribeOn(Schedulers.boundedElastic()),
@@ -61,6 +59,7 @@ class SummaryService(
       .map { (budgets, expenses) ->
         budgets.map { budget ->
           BudgetSummary(
+            id = budget.id,
             name = budget.name,
             totalSavedAmountInCents = budget.totalSavedAmountInCents,
             totalExpensesInCents =

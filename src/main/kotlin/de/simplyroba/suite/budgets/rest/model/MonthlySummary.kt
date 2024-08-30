@@ -6,11 +6,4 @@ data class MonthlySummary(
   val totalIncomeInCents: Int,
   val totalFixExpensesInCents: Int,
   val totalFlexExpensesInCents: Int,
-  val budgets: List<BudgetSummary>,
-)
-
-data class BudgetSummary(
-  val name: String,
-  val totalSavedAmountInCents: Int,
-  val totalExpensesInCents: Int,
 )
