@@ -1,5 +1,6 @@
 package de.simplyroba.suite.budgets.rest
 
+import de.simplyroba.suite.budgets.rest.model.BudgetSummary
 import de.simplyroba.suite.budgets.rest.model.MonthlySummary
 import de.simplyroba.suite.budgets.service.SummaryService
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -21,4 +22,7 @@ class SummaryController(
     @PathVariable year: Int,
     @PathVariable month: Int,
   ): Mono<MonthlySummary> = summaryService.getSummaryForYearAndMonth(year, month)
+
+  @GetMapping("/budgets")
+  fun getBudgetSummary(): Mono<List<BudgetSummary>> = summaryService.getBudgetSummary()
 }

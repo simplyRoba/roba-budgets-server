@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class SummaryIntegrationTest : AbstractIntegrationTest() {
 
   @Test
-  fun `should return empty summary if no values present`() {
+  fun `should return empty monthly summary if no values present`() {
     val year = 2021
     val month = 1
 
@@ -28,12 +28,10 @@ class SummaryIntegrationTest : AbstractIntegrationTest() {
       .isEqualTo(0)
       .jsonPath("$.totalFlexExpensesInCents")
       .isEqualTo(0)
-      .jsonPath("$.budgets")
-      .isEmpty
   }
 
   @Test
-  fun `should return summary with income and expenses`() {
+  fun `should return monthly summary`() {
     val year = 2021
     val month = 1
     val dueDate = LocalDate.of(year, month, 1)
@@ -71,12 +69,10 @@ class SummaryIntegrationTest : AbstractIntegrationTest() {
       .isEqualTo(fixExpenseSum)
       .jsonPath("$.totalFlexExpensesInCents")
       .isEqualTo(flexExpenseSum)
-      .jsonPath("$.budgets")
-      .isEmpty
   }
 
   @Test
-  fun `should return summary with budgets`() {
+  fun `should return budget summary`() {
     val year = 2021
     val month = 1
     val dueDate = LocalDate.of(year, month, 1)
@@ -91,19 +87,21 @@ class SummaryIntegrationTest : AbstractIntegrationTest() {
       categoryId = categoryId
     )
 
-    val response = webTestClient.get().uri("/api/v1/summary/year/$year/month/$month").exchange()
+    val response = webTestClient.get().uri("/api/v1/summary/budgets").exchange()
 
     response
       .expectStatus()
       .isOk
       .expectBody()
-      .jsonPath("$.budgets")
+      .jsonPath("$")
       .isArray
-      .jsonPath("$.budgets[0].name")
+      .jsonPath("$.[0].id")
+      .isEqualTo(budgetId)
+      .jsonPath("$.[0].name")
       .isEqualTo("Budget")
-      .jsonPath("$.budgets[0].totalSavedAmountInCents")
+      .jsonPath("$.[0].totalSavedAmountInCents")
       .isEqualTo(totalSavedAmount)
-      .jsonPath("$.budgets[0].totalExpensesInCents")
+      .jsonPath("$.[0].totalExpensesInCents")
       .isEqualTo(budgetExpenseSum)
   }
 }
