@@ -30,10 +30,12 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
   }
 
   @Test
-  fun `should return income list between dates`() {
-    val startDate = LocalDate.now()
-    val endDate = startDate.plusDays(1)
-    val outsideDate = endDate.plusDays(1)
+  fun `should return income list for year and month`() {
+    val year = 2021
+    val month = 10
+    val startDate = LocalDate.parse("$year-$month-01")
+    val endDate = startDate.plusDays(30)
+    val outsideDate = startDate.plusMonths(1)
 
     createIncome(title = "Income start", dueDate = startDate)
     createIncome(title = "Income end", dueDate = endDate)
@@ -42,11 +44,7 @@ class IncomeIntegrationTest : AbstractIntegrationTest() {
     webTestClient
       .get()
       .uri { builder ->
-        builder
-          .path("/api/v1/income")
-          .queryParam("startDate", "{startDate}")
-          .queryParam("endDate", "{endDate}")
-          .build(startDate, endDate)
+        builder.path("/api/v1/income/year/{year}/month/{month}").build(year, month)
       }
       .exchange()
       .expectStatus()
