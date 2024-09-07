@@ -45,7 +45,6 @@ class ExpenseController(
     @PathVariable month: Int,
   ): Flux<Expense> = expenseService.findAllByTypeYearAndMonth(type, year, month)
 
-
   @GetMapping("/category/{categoryId}")
   fun getExpenseListByCategory(
     @PathVariable categoryId: Long,

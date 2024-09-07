@@ -10,12 +10,11 @@ import de.simplyroba.suite.budgets.rest.model.ExpenseType
 import de.simplyroba.suite.budgets.rest.model.ExpenseUpdate
 import de.simplyroba.suite.budgets.service.converter.Converter
 import java.time.LocalDate
+import java.time.YearMonth
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import java.time.Year
-import java.time.YearMonth
 
 @Service
 class ExpenseService(
@@ -36,11 +35,7 @@ class ExpenseService(
       .map(expenseEntityToDtoConverter::convert)
   }
 
-  fun findAllByTypeYearAndMonth(
-    type: ExpenseType,
-    year: Int,
-    month: Int
-  ): Flux<Expense> {
+  fun findAllByTypeYearAndMonth(type: ExpenseType, year: Int, month: Int): Flux<Expense> {
     val yearMonth = YearMonth.of(year, month)
     return expenseRepository
       .findAllByTypeAndDueDateBetween(
