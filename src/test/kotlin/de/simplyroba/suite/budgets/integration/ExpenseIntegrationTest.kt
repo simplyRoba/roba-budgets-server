@@ -60,32 +60,12 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
   }
 
   @Test
-  fun `should return expense by type`() {
-    val categoryId = createCategory(name = "Default Category").id
-    val type = ExpenseTypePersistenceEnum.FIX
-
-    createExpense(title = "Expense FIX", categoryId = categoryId, type = type)
-    createExpense(
-      title = "Expense FLEX",
-      categoryId = categoryId,
-      type = ExpenseTypePersistenceEnum.FLEX
-    )
-
-    webTestClient
-      .get()
-      .uri { builder -> builder.path("/api/v1/expense/type/{type}").build(type) }
-      .exchange()
-      .expectStatus()
-      .isOk
-      .expectBodyList<Expense>()
-      .hasSize(1)
-  }
-
-  @Test
-  fun `should return expense by type between dates`() {
-    val startDate = LocalDate.now()
-    val endDate = startDate.plusDays(1)
-    val outsideDate = endDate.plusDays(1)
+  fun `should return expense by type for year and month`() {
+    val year = 2023
+    val month = 8
+    val startDate = LocalDate.parse("$year-0$month-01")
+    val endDate = startDate.plusDays(30)
+    val outsideDate = startDate.plusMonths(1)
     val categoryId = createCategory(name = "Default Category").id
     val type = ExpenseTypePersistenceEnum.FIX
 
@@ -118,10 +98,8 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
       .get()
       .uri { builder ->
         builder
-          .path("/api/v1/expense/type/{type}")
-          .queryParam("startDate", "{startDate}")
-          .queryParam("endDate", "{endDate}")
-          .build(type, startDate, endDate)
+          .path("/api/v1/expense/type/{type}/year/{year}/month/{month}")
+          .build(type, year, month)
       }
       .exchange()
       .expectStatus()

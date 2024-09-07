@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.time.Year
+import java.time.YearMonth
 
 @Service
 class ExpenseService(
@@ -34,22 +36,17 @@ class ExpenseService(
       .map(expenseEntityToDtoConverter::convert)
   }
 
-  fun findAllByType(type: ExpenseType): Flux<Expense> {
-    return expenseRepository
-      .findAllByType(expenseTypeToPersistenceEnumConverter.convert(type))
-      .map(expenseEntityToDtoConverter::convert)
-  }
-
-  fun findAllByTypeBetweenDates(
+  fun findAllByTypeYearAndMonth(
     type: ExpenseType,
-    startDate: LocalDate,
-    endDate: LocalDate
+    year: Int,
+    month: Int
   ): Flux<Expense> {
+    val yearMonth = YearMonth.of(year, month)
     return expenseRepository
       .findAllByTypeAndDueDateBetween(
         expenseTypeToPersistenceEnumConverter.convert(type),
-        startDate,
-        endDate
+        yearMonth.atDay(1),
+        yearMonth.atEndOfMonth()
       )
       .map(expenseEntityToDtoConverter::convert)
   }

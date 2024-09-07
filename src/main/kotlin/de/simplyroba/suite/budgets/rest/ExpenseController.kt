@@ -38,17 +38,13 @@ class ExpenseController(
       expenseService.findAll()
     }
 
-  @GetMapping("/type/{type}")
+  @GetMapping("/type/{type}/year/{year}/month/{month}")
   fun getExpenseListByType(
     @PathVariable type: ExpenseType,
-    @RequestParam(required = false) startDate: LocalDate?,
-    @RequestParam(required = false) endDate: LocalDate?,
-  ): Flux<Expense> =
-    if (startDate != null && endDate != null) {
-      expenseService.findAllByTypeBetweenDates(type, startDate, endDate)
-    } else {
-      expenseService.findAllByType(type)
-    }
+    @PathVariable year: Int,
+    @PathVariable month: Int,
+  ): Flux<Expense> = expenseService.findAllByTypeYearAndMonth(type, year, month)
+
 
   @GetMapping("/category/{categoryId}")
   fun getExpenseListByCategory(
