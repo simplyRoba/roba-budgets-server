@@ -14,52 +14,6 @@ import org.springframework.test.web.reactive.server.expectBodyList
 class ExpenseIntegrationTest : AbstractIntegrationTest() {
 
   @Test
-  fun `should return expense list`() {
-    val size = 3
-    val categoryId = createCategory(name = "Default Category").id
-
-    (1..size).forEach { i -> createExpense(title = "Expense $i", categoryId = categoryId) }
-
-    webTestClient
-      .get()
-      .uri("/api/v1/expense")
-      .exchange()
-      .expectStatus()
-      .isOk
-      .expectBody()
-      .jsonPath("$.length()")
-      .isEqualTo(size)
-  }
-
-  @Test
-  fun `should return expense list between dates`() {
-    val startDate = LocalDate.now()
-    val endDate = startDate.plusDays(1)
-    val outsideDate = endDate.plusDays(1)
-    val categoryId = createCategory(name = "Default Category").id
-
-    createExpense(title = "Expense start", dueDate = startDate, categoryId = categoryId)
-    createExpense(title = "Expense end", dueDate = endDate, categoryId = categoryId)
-    createExpense(title = "Expense outside", dueDate = outsideDate, categoryId = categoryId)
-
-    webTestClient
-      .get()
-      .uri { builder ->
-        builder
-          .path("/api/v1/expense")
-          .queryParam("startDate", "{startDate}")
-          .queryParam("endDate", "{endDate}")
-          .build(startDate, endDate)
-      }
-      .exchange()
-      .expectStatus()
-      .isOk
-      .expectBody()
-      .jsonPath("$.length()")
-      .isEqualTo(2)
-  }
-
-  @Test
   fun `should return expense by type for year and month`() {
     val year = 2023
     val month = 8
@@ -228,15 +182,18 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
   }
 
   @Test
-  fun `should return expense by id`() {
+  fun `should return expense by id and type`() {
     val categoryId = createCategory(name = "Default Category").id
 
     val title = "Expense"
-    val id = createExpense(title = title, categoryId = categoryId).id
+    val id =
+      createExpense(title = title, categoryId = categoryId, type = ExpenseTypePersistenceEnum.FLEX)
+        .id
+    val type = ExpenseType.FLEX
 
     webTestClient
       .get()
-      .uri("/api/v1/expense/$id")
+      .uri("/api/v1/expense/$id/type/$type")
       .exchange()
       .expectStatus()
       .isOk
@@ -251,7 +208,7 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
   fun `should return 404 when expense not found on get`() {
     val id = 1
 
-    webTestClient.get().uri("/api/v1/expense/$id").exchange().expectStatus().isNotFound
+    webTestClient.get().uri("/api/v1/expense/$id/type/FLEX").exchange().expectStatus().isNotFound
   }
 
   @Test

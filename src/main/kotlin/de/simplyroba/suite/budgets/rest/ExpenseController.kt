@@ -27,17 +27,6 @@ class ExpenseController(
   private val expenseService: ExpenseService,
 ) {
 
-  @GetMapping
-  fun getExpenseList(
-    @RequestParam(required = false) startDate: LocalDate?,
-    @RequestParam(required = false) endDate: LocalDate?,
-  ): Flux<Expense> =
-    if (startDate != null && endDate != null) {
-      expenseService.findAllBetweenDates(startDate, endDate)
-    } else {
-      expenseService.findAll()
-    }
-
   @GetMapping("/type/{type}/year/{year}/month/{month}")
   fun getExpenseListByType(
     @PathVariable type: ExpenseType,
@@ -69,10 +58,11 @@ class ExpenseController(
       expenseService.findAllByBudget(budgetId)
     }
 
-  @GetMapping("/{id}")
+  @GetMapping("/{id}/type/{type}")
   fun getExpenseById(
     @PathVariable id: Long,
-  ): Mono<Expense> = expenseService.findById(id)
+    @PathVariable type: ExpenseType,
+  ): Mono<Expense> = expenseService.findByIdAndType(id, type)
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)

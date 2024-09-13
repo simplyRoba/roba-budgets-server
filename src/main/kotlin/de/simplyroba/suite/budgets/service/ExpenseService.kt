@@ -29,12 +29,6 @@ class ExpenseService(
     return expenseRepository.findAll().map(expenseEntityToDtoConverter::convert)
   }
 
-  fun findAllBetweenDates(startDate: LocalDate, endDate: LocalDate): Flux<Expense> {
-    return expenseRepository
-      .findAllByDueDateBetween(startDate, endDate)
-      .map(expenseEntityToDtoConverter::convert)
-  }
-
   fun findAllByTypeYearAndMonth(type: ExpenseType, year: Int, month: Int): Flux<Expense> {
     val yearMonth = YearMonth.of(year, month)
     return expenseRepository
@@ -76,10 +70,10 @@ class ExpenseService(
       .map(expenseEntityToDtoConverter::convert)
   }
 
-  fun findById(id: Long): Mono<Expense> {
+  fun findByIdAndType(id: Long, type: ExpenseType): Mono<Expense> {
     return expenseRepository
-      .findById(id)
-      .switchIfEmpty(Mono.error(NotFoundError("Expense with id $id not found")))
+      .findByIdAndType(id, expenseTypeToPersistenceEnumConverter.convert(type))
+      .switchIfEmpty(Mono.error(NotFoundError("Expense with id $id and type $type not found")))
       .map(expenseEntityToDtoConverter::convert)
   }
 
