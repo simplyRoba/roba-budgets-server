@@ -20,7 +20,7 @@ class ExpenseEntityToDtoConverterTest {
         dueDate = LocalDate.now(),
         type = ExpenseTypePersistenceEnum.FIX,
         categoryId = 1,
-        budgetId = 1
+        budgetId = 1,
       )
 
     val result = converter.convert(entity)

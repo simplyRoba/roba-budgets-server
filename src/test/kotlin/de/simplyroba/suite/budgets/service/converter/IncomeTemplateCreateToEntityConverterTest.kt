@@ -16,7 +16,7 @@ class IncomeTemplateCreateToEntityConverterTest {
       IncomeTemplateCreate(
         title = "Test",
         amountInCents = 1000,
-        repeatInterval = RepeatInterval.MONTHLY
+        repeatInterval = RepeatInterval.MONTHLY,
       )
 
     val result = converter.convert(incomeTemplateCreate)

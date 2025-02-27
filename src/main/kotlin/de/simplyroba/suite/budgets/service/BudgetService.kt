@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono
 class BudgetService(
   private val budgetRepository: BudgetRepository,
   private val budgetEntityToDtoConverter: Converter<BudgetEntity, Budget>,
-  private val budgetCreateToEntityConverter: Converter<BudgetCreate, BudgetEntity>
+  private val budgetCreateToEntityConverter: Converter<BudgetCreate, BudgetEntity>,
 ) {
 
   fun findAll(): Flux<Budget> {

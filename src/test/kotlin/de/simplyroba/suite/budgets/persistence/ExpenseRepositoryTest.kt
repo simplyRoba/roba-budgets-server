@@ -44,7 +44,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
         dueDate = startDate,
         type = FLEX,
         categoryId = categoryId,
-        budgetId = null
+        budgetId = null,
       )
     val expenseBetweenDate =
       ExpenseEntity(
@@ -53,7 +53,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
         dueDate = betweenDate,
         type = FLEX,
         categoryId = categoryId,
-        budgetId = null
+        budgetId = null,
       )
     val expenseEqualEndDate =
       ExpenseEntity(
@@ -62,7 +62,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
         dueDate = endDate,
         type = FLEX,
         categoryId = categoryId,
-        budgetId = null
+        budgetId = null,
       )
 
     expenseRepository
@@ -85,7 +85,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
         dueDate = LocalDate.now(),
         type = FLEX,
         categoryId = categoryId,
-        budgetId = null
+        budgetId = null,
       )
     val otherExpense =
       ExpenseEntity(
@@ -94,7 +94,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
         dueDate = LocalDate.now(),
         type = FIX,
         categoryId = categoryId,
-        budgetId = null
+        budgetId = null,
       )
 
     expenseRepository.saveAll(listOf(flexExpense, otherExpense)).blockLast()
@@ -118,7 +118,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
         dueDate = LocalDate.now(),
         type = FLEX,
         categoryId = searchedCategoryId,
-        budgetId = null
+        budgetId = null,
       )
     val expense2 =
       ExpenseEntity(
@@ -127,7 +127,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
         dueDate = LocalDate.now(),
         type = FLEX,
         categoryId = categoryId,
-        budgetId = null
+        budgetId = null,
       )
 
     expenseRepository.saveAll(listOf(expense1, expense2)).blockLast()
@@ -148,7 +148,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
             name = "Budget",
             monthlySavingAmountInCents = 99,
             totalSavedAmountInCents = 199,
-            categoryId = categoryId
+            categoryId = categoryId,
           )
         )
         .blockOptional()
@@ -161,7 +161,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
         dueDate = LocalDate.now(),
         type = FLEX,
         categoryId = categoryId,
-        budgetId = budgetId
+        budgetId = budgetId,
       )
     val expense2 =
       ExpenseEntity(
@@ -170,7 +170,7 @@ class ExpenseRepositoryTest : AbstractIntegrationTest() {
         dueDate = LocalDate.now(),
         type = FLEX,
         categoryId = categoryId,
-        budgetId = null
+        budgetId = null,
       )
 
     expenseRepository.saveAll(listOf(expense1, expense2)).blockLast()

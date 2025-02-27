@@ -23,9 +23,7 @@ import reactor.core.publisher.Mono
 @RestController
 @RequestMapping("api/v1/expense")
 @CrossOrigin
-class ExpenseController(
-  private val expenseService: ExpenseService,
-) {
+class ExpenseController(private val expenseService: ExpenseService) {
 
   @GetMapping("/type/{type}/year/{year}/month/{month}")
   fun getExpenseListByType(
@@ -66,19 +64,14 @@ class ExpenseController(
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  fun createExpense(
-    @RequestBody expense: ExpenseCreate,
-  ): Mono<Expense> = expenseService.createExpense(expense)
+  fun createExpense(@RequestBody expense: ExpenseCreate): Mono<Expense> =
+    expenseService.createExpense(expense)
 
   @PutMapping("/{id}")
-  fun updateExpense(
-    @PathVariable id: Long,
-    @RequestBody expense: ExpenseCreate,
-  ): Mono<Expense> = expenseService.updateExpense(id, expense)
+  fun updateExpense(@PathVariable id: Long, @RequestBody expense: ExpenseCreate): Mono<Expense> =
+    expenseService.updateExpense(id, expense)
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  fun deleteExpense(
-    @PathVariable id: Long,
-  ): Mono<Void> = expenseService.deleteExpense(id)
+  fun deleteExpense(@PathVariable id: Long): Mono<Void> = expenseService.deleteExpense(id)
 }

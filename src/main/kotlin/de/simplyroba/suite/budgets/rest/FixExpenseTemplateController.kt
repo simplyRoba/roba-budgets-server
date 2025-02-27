@@ -42,7 +42,7 @@ class FixExpenseTemplateController(
   @PutMapping("/{id}")
   fun updateFixExpenseTemplate(
     @PathVariable id: Long,
-    @RequestBody fixExpenseTemplate: FixExpenseTemplateUpdate
+    @RequestBody fixExpenseTemplate: FixExpenseTemplateUpdate,
   ): Mono<FixExpenseTemplate> =
     fixExpenseTemplateService.updateFixExpenseTemplate(id, fixExpenseTemplate)
 

@@ -14,7 +14,7 @@ class ExpenseTypePersistenceEnumToDtoConverterTest {
   @CsvSource("FIX:FIX", "FLEX:FLEX", "BUDGET:BUDGET", delimiter = ':')
   fun `should convert entity type to dto type`(
     entityType: ExpenseTypePersistenceEnum,
-    dtoType: ExpenseType
+    dtoType: ExpenseType,
   ) {
     val result = converter.convert(entityType)
     assertThat(result).isEqualTo(dtoType)

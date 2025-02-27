@@ -49,7 +49,7 @@ class ExpenseService(
   fun findAllCategoryBetweenDates(
     categoryId: Long,
     startDate: LocalDate,
-    endDate: LocalDate
+    endDate: LocalDate,
   ): Flux<Expense> {
     return expenseRepository
       .findAllByCategoryIdAndDueDateBetween(categoryId, startDate, endDate)
@@ -63,7 +63,7 @@ class ExpenseService(
   fun findAllByBudgetBetweenDates(
     budgetId: Long,
     startDate: LocalDate,
-    endDate: LocalDate
+    endDate: LocalDate,
   ): Flux<Expense> {
     return expenseRepository
       .findAllByBudgetIdAndDueDateBetween(budgetId, startDate, endDate)

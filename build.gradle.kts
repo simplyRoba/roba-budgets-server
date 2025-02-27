@@ -1,9 +1,9 @@
 plugins {
-  kotlin("jvm") version "2.1.0"
-  kotlin("plugin.spring") version "2.1.0"
-  id("org.springframework.boot") version "3.4.1"
+  kotlin("jvm") version "2.1.10"
+  kotlin("plugin.spring") version "2.1.10"
+  id("org.springframework.boot") version "3.4.3"
   id("io.spring.dependency-management") version "1.1.7"
-  id("com.diffplug.spotless") version "6.25.0"
+  id("com.diffplug.spotless") version "7.0.2"
 }
 
 group = "de.simplyroba.suite"
@@ -56,7 +56,7 @@ spotless {
     target("src/**/*.kt", "src/**/*.kts")
     targetExclude("build/**/*.kts", "build/**/*.kt")
     ktfmt().googleStyle()
-    indentWithSpaces(2)
+    leadingTabsToSpaces(2)
   }
 
   kotlinGradle {

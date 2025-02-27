@@ -11,7 +11,7 @@ class CategoryEntityToDtoConverter : Converter<CategoryEntity, Category> {
       id = source.id,
       name = source.name,
       disabled = source.disabled,
-      parentCategoryId = source.parentCategoryId
+      parentCategoryId = source.parentCategoryId,
     )
   }
 }

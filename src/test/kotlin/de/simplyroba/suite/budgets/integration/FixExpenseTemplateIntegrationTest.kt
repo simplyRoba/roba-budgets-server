@@ -96,7 +96,7 @@ class FixExpenseTemplateIntegrationTest : AbstractIntegrationTest() {
           title = "Fix Expense Template",
           amountInCents = 999,
           repeatInterval = RepeatIntervalPersistenceEnum.MONTHLY,
-          categoryId = categoryId
+          categoryId = categoryId,
         )
         .id
 

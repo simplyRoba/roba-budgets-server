@@ -44,13 +44,13 @@ class SummaryIntegrationTest : AbstractIntegrationTest() {
       amountInCents = fixExpenseSum,
       dueDate = dueDate,
       categoryId = categoryId,
-      type = ExpenseTypePersistenceEnum.FIX
+      type = ExpenseTypePersistenceEnum.FIX,
     )
     createExpense(
       amountInCents = flexExpenseSum,
       dueDate = dueDate,
       categoryId = categoryId,
-      type = ExpenseTypePersistenceEnum.FLEX
+      type = ExpenseTypePersistenceEnum.FLEX,
     )
 
     val response = webTestClient.get().uri("/api/v1/summary/year/$year/month/$month").exchange()
@@ -84,7 +84,7 @@ class SummaryIntegrationTest : AbstractIntegrationTest() {
       amountInCents = budgetExpenseSum,
       dueDate = dueDate,
       budgetId = budgetId,
-      categoryId = categoryId
+      categoryId = categoryId,
     )
 
     val response = webTestClient.get().uri("/api/v1/summary/budgets").exchange()

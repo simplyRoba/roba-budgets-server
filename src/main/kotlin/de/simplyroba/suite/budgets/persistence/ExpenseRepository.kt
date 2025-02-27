@@ -16,7 +16,7 @@ interface ExpenseRepository : ReactiveCrudRepository<ExpenseEntity, Long> {
   fun findAllByTypeAndDueDateBetween(
     type: ExpenseTypePersistenceEnum,
     startDate: LocalDate,
-    endDate: LocalDate
+    endDate: LocalDate,
   ): Flux<ExpenseEntity>
 
   fun findAllByCategoryId(categoryId: Long): Flux<ExpenseEntity>
@@ -24,7 +24,7 @@ interface ExpenseRepository : ReactiveCrudRepository<ExpenseEntity, Long> {
   fun findAllByCategoryIdAndDueDateBetween(
     categoryId: Long,
     startDate: LocalDate,
-    endDate: LocalDate
+    endDate: LocalDate,
   ): Flux<ExpenseEntity>
 
   fun findAllByBudgetId(budgetId: Long): Flux<ExpenseEntity>
@@ -32,7 +32,7 @@ interface ExpenseRepository : ReactiveCrudRepository<ExpenseEntity, Long> {
   fun findAllByBudgetIdAndDueDateBetween(
     budgetId: Long,
     startDate: LocalDate,
-    endDate: LocalDate
+    endDate: LocalDate,
   ): Flux<ExpenseEntity>
 
   fun findByIdAndType(id: Long, type: ExpenseTypePersistenceEnum): Mono<ExpenseEntity>

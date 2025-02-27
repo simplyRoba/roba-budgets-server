@@ -17,7 +17,7 @@ class IncomeTemplateEntityToDtoConverterTest {
         id = 1,
         title = "title",
         amountInCents = 100,
-        repeatInterval = RepeatIntervalPersistenceEnum.ANNUALLY
+        repeatInterval = RepeatIntervalPersistenceEnum.ANNUALLY,
       )
 
     val result = converter.convert(entity)

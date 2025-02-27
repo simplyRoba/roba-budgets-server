@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono
 class IncomeService(
   private val incomeRepository: IncomeRepository,
   private val incomeEntityToDtoConverter: Converter<IncomeEntity, Income>,
-  private val incomeCreateToEntityConverter: Converter<IncomeCreate, IncomeEntity>
+  private val incomeCreateToEntityConverter: Converter<IncomeCreate, IncomeEntity>,
 ) {
 
   fun findAll(): Flux<Income> {

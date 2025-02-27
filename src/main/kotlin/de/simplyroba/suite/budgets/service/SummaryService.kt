@@ -26,17 +26,11 @@ class SummaryService(
     val yearMonth = YearMonth.of(year, month)
     return Mono.zip(
         incomeRepository
-          .findAllByDueDateBetween(
-            yearMonth.atDay(1),
-            yearMonth.atEndOfMonth(),
-          )
+          .findAllByDueDateBetween(yearMonth.atDay(1), yearMonth.atEndOfMonth())
           .collectList()
           .subscribeOn(Schedulers.boundedElastic()),
         expenseRepository
-          .findAllByDueDateBetween(
-            yearMonth.atDay(1),
-            yearMonth.atEndOfMonth(),
-          )
+          .findAllByDueDateBetween(yearMonth.atDay(1), yearMonth.atEndOfMonth())
           .collectList()
           .subscribeOn(Schedulers.boundedElastic()),
       )

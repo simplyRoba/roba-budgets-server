@@ -38,7 +38,7 @@ class IncomeTemplateController(private val incomeTemplateService: IncomeTemplate
   @PutMapping("/{id}")
   fun updateIncomeTemplate(
     @PathVariable id: Long,
-    @RequestBody incomeTemplate: IncomeTemplateUpdate
+    @RequestBody incomeTemplate: IncomeTemplateUpdate,
   ): Mono<IncomeTemplate> = incomeTemplateService.updateIncomeTemplate(id, incomeTemplate)
 
   @DeleteMapping("/{id}")

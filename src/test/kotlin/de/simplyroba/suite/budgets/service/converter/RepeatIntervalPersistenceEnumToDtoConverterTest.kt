@@ -16,11 +16,11 @@ class RepeatIntervalPersistenceEnumToDtoConverterTest {
     "QUARTERLY:QUARTERLY",
     "SEMI_ANNUALLY:SEMI_ANNUALLY",
     "ANNUALLY:ANNUALLY",
-    delimiter = ':'
+    delimiter = ':',
   )
   fun `converts entity repeat interval to repeat interval`(
     repeatIntervalPersistenceEnum: RepeatIntervalPersistenceEnum,
-    repeatInterval: RepeatInterval
+    repeatInterval: RepeatInterval,
   ) {
     assertEquals(repeatInterval, converter.convert(repeatIntervalPersistenceEnum))
   }

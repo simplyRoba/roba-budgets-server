@@ -50,7 +50,7 @@ class FixExpenseTemplateService(
   @Transactional
   fun updateFixExpenseTemplate(
     id: Long,
-    fixExpenseTemplate: FixExpenseTemplateUpdate
+    fixExpenseTemplate: FixExpenseTemplateUpdate,
   ): Mono<FixExpenseTemplate> {
     return fixExpenseTemplateRepository
       .findById(id)

@@ -27,7 +27,7 @@ class SystemPropertiesSetterEventListener :
             System.getProperties()
               .putIfAbsent(
                 it.key.removePrefix(SYSTEM_PROPERTIES_PREFIX),
-                SystemPropertyUtils.resolvePlaceholders(it.value.toString())
+                SystemPropertyUtils.resolvePlaceholders(it.value.toString()),
               )
           }
       }
