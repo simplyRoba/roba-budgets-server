@@ -19,7 +19,7 @@ class ExpenseEntityToDtoConverter(
       dueDate = source.dueDate,
       type = expenseTypePersistenceEnumToDtoConverter.convert(source.type),
       categoryId = source.categoryId,
-      budgetId = source.budgetId
+      budgetId = source.budgetId,
     )
   }
 }

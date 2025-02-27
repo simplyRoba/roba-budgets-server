@@ -45,7 +45,7 @@ class IncomeTemplateService(
   @Transactional
   fun updateIncomeTemplate(
     id: Long,
-    incomeTemplateUpdate: IncomeTemplateUpdate
+    incomeTemplateUpdate: IncomeTemplateUpdate,
   ): Mono<IncomeTemplate> {
     return incomeTemplateRepository
       .findById(id)

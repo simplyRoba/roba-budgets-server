@@ -68,7 +68,7 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
     createExpense(
       title = "Expense FLEX",
       categoryId = categoryId,
-      type = ExpenseTypePersistenceEnum.FLEX
+      type = ExpenseTypePersistenceEnum.FLEX,
     )
 
     webTestClient
@@ -93,25 +93,25 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
       title = "Expense FIX start",
       dueDate = startDate,
       categoryId = categoryId,
-      type = type
+      type = type,
     )
     createExpense(
       title = "Expense FIX end",
       dueDate = endDate,
       categoryId = categoryId,
-      type = type
+      type = type,
     )
     createExpense(
       title = "Expense FIX outside",
       dueDate = outsideDate,
       categoryId = categoryId,
-      type = type
+      type = type,
     )
     createExpense(
       title = "Expense FLEX start",
       dueDate = startDate,
       categoryId = categoryId,
-      type = ExpenseTypePersistenceEnum.FLEX
+      type = ExpenseTypePersistenceEnum.FLEX,
     )
 
     webTestClient
@@ -211,25 +211,25 @@ class ExpenseIntegrationTest : AbstractIntegrationTest() {
       title = "Expense default start",
       dueDate = startDate,
       categoryId = categoryId,
-      budgetId = budgetId
+      budgetId = budgetId,
     )
     createExpense(
       title = "Expense default end",
       dueDate = endDate,
       categoryId = categoryId,
-      budgetId = budgetId
+      budgetId = budgetId,
     )
     createExpense(
       title = "Expense default outside",
       dueDate = outsideDate,
       categoryId = categoryId,
-      budgetId = budgetId
+      budgetId = budgetId,
     )
     createExpense(
       title = "Expense other start",
       dueDate = startDate,
       categoryId = categoryId,
-      budgetId = otherBudgetId
+      budgetId = otherBudgetId,
     )
 
     webTestClient

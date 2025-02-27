@@ -11,7 +11,7 @@ class IncomeEntityToDtoConverter : Converter<IncomeEntity, Income> {
       id = source.id,
       title = source.title,
       amountInCents = source.amountInCents,
-      dueDate = source.dueDate
+      dueDate = source.dueDate,
     )
   }
 }

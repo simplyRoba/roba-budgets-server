@@ -17,7 +17,7 @@ class FixExpenseTemplateEntityToDtoConverter(
       title = source.title,
       amountInCents = source.amountInCents,
       repeatInterval = repeatIntervalPersistenceEnumToDtoConverter.convert(source.repeatInterval),
-      categoryId = source.categoryId
+      categoryId = source.categoryId,
     )
   }
 }
