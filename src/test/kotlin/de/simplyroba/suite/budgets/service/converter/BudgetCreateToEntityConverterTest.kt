@@ -6,18 +6,18 @@ import org.junit.jupiter.api.Test
 
 class BudgetCreateToEntityConverterTest {
 
-  private val converter = BudgetCreateToEntityConverter()
+	private val converter = BudgetCreateToEntityConverter()
 
-  @Test
-  fun `should convert create to entity`() {
+	@Test
+	fun `should convert create to entity`() {
 
-    val budgetCreate = BudgetCreate("Test Budget", 100, 999, 1)
+		val budgetCreate = BudgetCreate("Test Budget", 100, 999, 1)
 
-    val result = converter.convert(budgetCreate)
+		val result = converter.convert(budgetCreate)
 
-    assertThat(result.name).isEqualTo(budgetCreate.name)
-    assertThat(result.monthlySavingAmountInCents).isEqualTo(budgetCreate.monthlySavingAmountInCents)
-    assertThat(result.totalSavedAmountInCents).isEqualTo(budgetCreate.totalSavedAmountInCents)
-    assertThat(result.categoryId).isEqualTo(budgetCreate.categoryId)
-  }
+		assertThat(result.name).isEqualTo(budgetCreate.name)
+		assertThat(result.monthlySavingAmountInCents).isEqualTo(budgetCreate.monthlySavingAmountInCents)
+		assertThat(result.totalSavedAmountInCents).isEqualTo(budgetCreate.totalSavedAmountInCents)
+		assertThat(result.categoryId).isEqualTo(budgetCreate.categoryId)
+	}
 }

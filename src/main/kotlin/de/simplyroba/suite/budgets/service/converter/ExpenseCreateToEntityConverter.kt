@@ -8,17 +8,17 @@ import org.springframework.stereotype.Component
 
 @Component
 class ExpenseCreateToEntityConverter(
-  private val expenseTypeToPersistenceEnumConverter:
-    Converter<ExpenseType, ExpenseTypePersistenceEnum>
+	private val expenseTypeToPersistenceEnumConverter:
+		Converter<ExpenseType, ExpenseTypePersistenceEnum>
 ) : Converter<ExpenseCreate, ExpenseEntity> {
-  override fun convert(source: ExpenseCreate): ExpenseEntity {
-    return ExpenseEntity(
-      title = source.title,
-      amountInCents = source.amountInCents,
-      dueDate = source.dueDate,
-      type = expenseTypeToPersistenceEnumConverter.convert(source.type),
-      categoryId = source.categoryId,
-      budgetId = source.budgetId,
-    )
-  }
+	override fun convert(source: ExpenseCreate): ExpenseEntity {
+		return ExpenseEntity(
+			title = source.title,
+			amountInCents = source.amountInCents,
+			dueDate = source.dueDate,
+			type = expenseTypeToPersistenceEnumConverter.convert(source.type),
+			categoryId = source.categoryId,
+			budgetId = source.budgetId,
+		)
+	}
 }

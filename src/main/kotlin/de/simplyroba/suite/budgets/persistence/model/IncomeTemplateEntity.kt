@@ -5,8 +5,8 @@ import org.springframework.data.relational.core.mapping.Table
 
 @Table("income_template")
 data class IncomeTemplateEntity(
-  @Id val id: Long = 0,
-  var title: String,
-  var amountInCents: Int,
-  var repeatInterval: RepeatIntervalPersistenceEnum,
+	@Id val id: Long = 0,
+	var title: String,
+	var amountInCents: Int,
+	var repeatInterval: RepeatIntervalPersistenceEnum,
 )

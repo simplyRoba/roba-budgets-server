@@ -9,8 +9,8 @@ import reactor.core.publisher.Mono
 @RequestMapping("/health")
 class HealthController {
 
-  @GetMapping("/check")
-  fun health(): Mono<Unit> {
-    return Mono.empty()
-  }
+	@GetMapping("/check")
+	fun health(): Mono<Unit> {
+		return Mono.empty()
+	}
 }

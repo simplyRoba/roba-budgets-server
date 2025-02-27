@@ -8,16 +8,16 @@ import org.springframework.stereotype.Component
 
 @Component
 class FixExpenseTemplateEntityToDtoConverter(
-  private val repeatIntervalPersistenceEnumToDtoConverter:
-    Converter<RepeatIntervalPersistenceEnum, RepeatInterval>
+	private val repeatIntervalPersistenceEnumToDtoConverter:
+		Converter<RepeatIntervalPersistenceEnum, RepeatInterval>
 ) : Converter<FixExpenseTemplateEntity, FixExpenseTemplate> {
-  override fun convert(source: FixExpenseTemplateEntity): FixExpenseTemplate {
-    return FixExpenseTemplate(
-      id = source.id,
-      title = source.title,
-      amountInCents = source.amountInCents,
-      repeatInterval = repeatIntervalPersistenceEnumToDtoConverter.convert(source.repeatInterval),
-      categoryId = source.categoryId,
-    )
-  }
+	override fun convert(source: FixExpenseTemplateEntity): FixExpenseTemplate {
+		return FixExpenseTemplate(
+			id = source.id,
+			title = source.title,
+			amountInCents = source.amountInCents,
+			repeatInterval = repeatIntervalPersistenceEnumToDtoConverter.convert(source.repeatInterval),
+			categoryId = source.categoryId,
+		)
+	}
 }

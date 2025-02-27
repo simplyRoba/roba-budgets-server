@@ -7,23 +7,23 @@ import org.junit.jupiter.api.Test
 
 class FixExpenseTemplateCreateToEntityConverterTest {
 
-  private val converter =
-    FixExpenseTemplateCreateToEntityConverter(RepeatIntervalToPersistenceEnumConverter())
+	private val converter =
+		FixExpenseTemplateCreateToEntityConverter(RepeatIntervalToPersistenceEnumConverter())
 
-  @Test
-  fun `convert should convert create to entity`() {
-    val source =
-      FixExpenseTemplateCreate(
-        title = "title",
-        amountInCents = 100,
-        repeatInterval = RepeatInterval.MONTHLY,
-        categoryId = 1,
-      )
+	@Test
+	fun `convert should convert create to entity`() {
+		val source =
+			FixExpenseTemplateCreate(
+				title = "title",
+				amountInCents = 100,
+				repeatInterval = RepeatInterval.MONTHLY,
+				categoryId = 1,
+			)
 
-    val result = converter.convert(source)
+		val result = converter.convert(source)
 
-    assertEquals(source.title, result.title)
-    assertEquals(source.amountInCents, result.amountInCents)
-    assertEquals(source.categoryId, result.categoryId)
-  }
+		assertEquals(source.title, result.title)
+		assertEquals(source.amountInCents, result.amountInCents)
+		assertEquals(source.categoryId, result.categoryId)
+	}
 }

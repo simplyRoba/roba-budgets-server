@@ -22,32 +22,32 @@ import reactor.core.publisher.Mono
 @RequestMapping("/api/v1/fix-expense-template")
 @CrossOrigin
 class FixExpenseTemplateController(
-  private val fixExpenseTemplateService: FixExpenseTemplateService
+	private val fixExpenseTemplateService: FixExpenseTemplateService
 ) {
 
-  @GetMapping
-  fun getFixExpenseTemplateList(): Flux<FixExpenseTemplate> = fixExpenseTemplateService.findAll()
+	@GetMapping
+	fun getFixExpenseTemplateList(): Flux<FixExpenseTemplate> = fixExpenseTemplateService.findAll()
 
-  @GetMapping("/{id}")
-  fun getFixExpenseTemplateById(@PathVariable id: Long): Mono<FixExpenseTemplate> =
-    fixExpenseTemplateService.findById(id)
+	@GetMapping("/{id}")
+	fun getFixExpenseTemplateById(@PathVariable id: Long): Mono<FixExpenseTemplate> =
+		fixExpenseTemplateService.findById(id)
 
-  @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
-  fun createFixExpenseTemplate(
-    @RequestBody fixExpenseTemplate: FixExpenseTemplateCreate
-  ): Mono<FixExpenseTemplate> =
-    fixExpenseTemplateService.createFixExpenseTemplate(fixExpenseTemplate)
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	fun createFixExpenseTemplate(
+		@RequestBody fixExpenseTemplate: FixExpenseTemplateCreate
+	): Mono<FixExpenseTemplate> =
+		fixExpenseTemplateService.createFixExpenseTemplate(fixExpenseTemplate)
 
-  @PutMapping("/{id}")
-  fun updateFixExpenseTemplate(
-    @PathVariable id: Long,
-    @RequestBody fixExpenseTemplate: FixExpenseTemplateUpdate,
-  ): Mono<FixExpenseTemplate> =
-    fixExpenseTemplateService.updateFixExpenseTemplate(id, fixExpenseTemplate)
+	@PutMapping("/{id}")
+	fun updateFixExpenseTemplate(
+		@PathVariable id: Long,
+		@RequestBody fixExpenseTemplate: FixExpenseTemplateUpdate,
+	): Mono<FixExpenseTemplate> =
+		fixExpenseTemplateService.updateFixExpenseTemplate(id, fixExpenseTemplate)
 
-  @DeleteMapping("/{id}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  fun deleteFixExpenseTemplate(@PathVariable id: Long): Mono<Void> =
-    fixExpenseTemplateService.deleteFixExpenseTemplate(id)
+	@DeleteMapping("/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	fun deleteFixExpenseTemplate(@PathVariable id: Long): Mono<Void> =
+		fixExpenseTemplateService.deleteFixExpenseTemplate(id)
 }

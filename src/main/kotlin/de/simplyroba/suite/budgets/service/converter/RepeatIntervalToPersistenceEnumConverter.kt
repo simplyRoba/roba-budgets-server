@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component
 
 @Component
 class RepeatIntervalToPersistenceEnumConverter :
-  Converter<RepeatInterval, RepeatIntervalPersistenceEnum> {
-  override fun convert(source: RepeatInterval): RepeatIntervalPersistenceEnum {
-    return when (source) {
-      RepeatInterval.MONTHLY -> RepeatIntervalPersistenceEnum.MONTHLY
-      RepeatInterval.QUARTERLY -> RepeatIntervalPersistenceEnum.QUARTERLY
-      RepeatInterval.SEMI_ANNUALLY -> RepeatIntervalPersistenceEnum.SEMI_ANNUALLY
-      RepeatInterval.ANNUALLY -> RepeatIntervalPersistenceEnum.ANNUALLY
-    }
-  }
+	Converter<RepeatInterval, RepeatIntervalPersistenceEnum> {
+	override fun convert(source: RepeatInterval): RepeatIntervalPersistenceEnum {
+		return when (source) {
+			RepeatInterval.MONTHLY -> RepeatIntervalPersistenceEnum.MONTHLY
+			RepeatInterval.QUARTERLY -> RepeatIntervalPersistenceEnum.QUARTERLY
+			RepeatInterval.SEMI_ANNUALLY -> RepeatIntervalPersistenceEnum.SEMI_ANNUALLY
+			RepeatInterval.ANNUALLY -> RepeatIntervalPersistenceEnum.ANNUALLY
+		}
+	}
 }

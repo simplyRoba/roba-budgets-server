@@ -15,68 +15,68 @@ import reactor.core.publisher.Mono
 
 @Service
 class CategoryService(
-  private val categoryRepository: CategoryRepository,
-  private val categoryEntityToDtoConverter: Converter<CategoryEntity, Category>,
-  private val categoryCreateToEntityConverter: Converter<CategoryCreate, CategoryEntity>,
+	private val categoryRepository: CategoryRepository,
+	private val categoryEntityToDtoConverter: Converter<CategoryEntity, Category>,
+	private val categoryCreateToEntityConverter: Converter<CategoryCreate, CategoryEntity>,
 ) {
 
-  fun findAll(): Flux<Category> {
-    return categoryRepository.findAll().map(categoryEntityToDtoConverter::convert)
-  }
+	fun findAll(): Flux<Category> {
+		return categoryRepository.findAll().map(categoryEntityToDtoConverter::convert)
+	}
 
-  fun buildCategoryTree(): Flux<CategoryTree> {
-    return categoryRepository.findAll().collectList().flatMapMany { categories ->
-      val categoryMap = categories.associateBy { it.id }
-      val topLevelCategories = categories.filter { it.parentCategoryId == null }
-      Flux.fromIterable(topLevelCategories.map { buildTreeRecursively(it, categoryMap) })
-    }
-  }
+	fun buildCategoryTree(): Flux<CategoryTree> {
+		return categoryRepository.findAll().collectList().flatMapMany { categories ->
+			val categoryMap = categories.associateBy { it.id }
+			val topLevelCategories = categories.filter { it.parentCategoryId == null }
+			Flux.fromIterable(topLevelCategories.map { buildTreeRecursively(it, categoryMap) })
+		}
+	}
 
-  private fun buildTreeRecursively(
-    category: CategoryEntity,
-    categoryMap: Map<Long, CategoryEntity>,
-  ): CategoryTree {
-    val subCategory = categoryMap.values.filter { it.parentCategoryId == category.id }
-    return CategoryTree(
-      id = category.id,
-      name = category.name,
-      disabled = category.disabled,
-      subCategory = subCategory.map { buildTreeRecursively(it, categoryMap) },
-    )
-  }
+	private fun buildTreeRecursively(
+		category: CategoryEntity,
+		categoryMap: Map<Long, CategoryEntity>,
+	): CategoryTree {
+		val subCategory = categoryMap.values.filter { it.parentCategoryId == category.id }
+		return CategoryTree(
+			id = category.id,
+			name = category.name,
+			disabled = category.disabled,
+			subCategory = subCategory.map { buildTreeRecursively(it, categoryMap) },
+		)
+	}
 
-  fun findById(id: Long): Mono<Category> {
-    return categoryRepository
-      .findById(id)
-      .switchIfEmpty(Mono.error(NotFoundError("Category with id $id not found")))
-      .map(categoryEntityToDtoConverter::convert)
-  }
+	fun findById(id: Long): Mono<Category> {
+		return categoryRepository
+			.findById(id)
+			.switchIfEmpty(Mono.error(NotFoundError("Category with id $id not found")))
+			.map(categoryEntityToDtoConverter::convert)
+	}
 
-  @Transactional
-  fun createCategory(category: CategoryCreate): Mono<Category> {
-    return categoryRepository
-      .save(categoryCreateToEntityConverter.convert(category))
-      .map(categoryEntityToDtoConverter::convert)
-  }
+	@Transactional
+	fun createCategory(category: CategoryCreate): Mono<Category> {
+		return categoryRepository
+			.save(categoryCreateToEntityConverter.convert(category))
+			.map(categoryEntityToDtoConverter::convert)
+	}
 
-  @Transactional
-  fun updateCategory(id: Long, categoryUpdate: CategoryUpdate): Mono<Category> {
-    return categoryRepository
-      .findById(id)
-      .switchIfEmpty(Mono.error(NotFoundError("Category with id $id not found")))
-      .map { existingCategory ->
-        existingCategory.apply {
-          name = categoryUpdate.name
-          disabled = categoryUpdate.disabled
-          parentCategoryId = categoryUpdate.parentCategoryId
-        }
-      }
-      .flatMap(categoryRepository::save)
-      .map(categoryEntityToDtoConverter::convert)
-  }
+	@Transactional
+	fun updateCategory(id: Long, categoryUpdate: CategoryUpdate): Mono<Category> {
+		return categoryRepository
+			.findById(id)
+			.switchIfEmpty(Mono.error(NotFoundError("Category with id $id not found")))
+			.map { existingCategory ->
+				existingCategory.apply {
+					name = categoryUpdate.name
+					disabled = categoryUpdate.disabled
+					parentCategoryId = categoryUpdate.parentCategoryId
+				}
+			}
+			.flatMap(categoryRepository::save)
+			.map(categoryEntityToDtoConverter::convert)
+	}
 
-  @Transactional
-  fun deleteCategory(id: Long): Mono<Void> {
-    return categoryRepository.deleteById(id)
-  }
+	@Transactional
+	fun deleteCategory(id: Long): Mono<Void> {
+		return categoryRepository.deleteById(id)
+	}
 }

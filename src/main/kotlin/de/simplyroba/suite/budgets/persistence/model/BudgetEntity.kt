@@ -5,9 +5,9 @@ import org.springframework.data.relational.core.mapping.Table
 
 @Table("budget")
 data class BudgetEntity(
-  @Id val id: Long = 0,
-  var name: String,
-  var monthlySavingAmountInCents: Int,
-  var totalSavedAmountInCents: Int,
-  var categoryId: Long,
+	@Id val id: Long = 0,
+	var name: String,
+	var monthlySavingAmountInCents: Int,
+	var totalSavedAmountInCents: Int,
+	var categoryId: Long,
 )

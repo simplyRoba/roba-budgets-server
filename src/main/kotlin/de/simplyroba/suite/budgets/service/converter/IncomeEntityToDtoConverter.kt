@@ -6,12 +6,12 @@ import org.springframework.stereotype.Component
 
 @Component
 class IncomeEntityToDtoConverter : Converter<IncomeEntity, Income> {
-  override fun convert(source: IncomeEntity): Income {
-    return Income(
-      id = source.id,
-      title = source.title,
-      amountInCents = source.amountInCents,
-      dueDate = source.dueDate,
-    )
-  }
+	override fun convert(source: IncomeEntity): Income {
+		return Income(
+			id = source.id,
+			title = source.title,
+			amountInCents = source.amountInCents,
+			dueDate = source.dueDate,
+		)
+	}
 }

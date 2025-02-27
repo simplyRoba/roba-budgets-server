@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component
 
 @Component
 class CategoryCreateToEntityConverter : Converter<CategoryCreate, CategoryEntity> {
-  override fun convert(source: CategoryCreate): CategoryEntity {
-    return CategoryEntity(
-      name = source.name,
-      disabled = source.disabled,
-      parentCategoryId = source.parentCategoryId,
-    )
-  }
+	override fun convert(source: CategoryCreate): CategoryEntity {
+		return CategoryEntity(
+			name = source.name,
+			disabled = source.disabled,
+			parentCategoryId = source.parentCategoryId,
+		)
+	}
 }

@@ -7,5 +7,5 @@ import reactor.core.publisher.Flux
 
 interface IncomeRepository : ReactiveCrudRepository<IncomeEntity, Long> {
 
-  fun findAllByDueDateBetween(startDate: LocalDate, endDate: LocalDate): Flux<IncomeEntity>
+	fun findAllByDueDateBetween(startDate: LocalDate, endDate: LocalDate): Flux<IncomeEntity>
 }

@@ -6,8 +6,8 @@ import org.springframework.data.relational.core.mapping.Table
 
 @Table("income")
 data class IncomeEntity(
-  @Id val id: Long = 0,
-  var title: String,
-  var amountInCents: Int,
-  var dueDate: LocalDate,
+	@Id val id: Long = 0,
+	var title: String,
+	var amountInCents: Int,
+	var dueDate: LocalDate,
 )

@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component
 @Component
 class BudgetExpenseCreateToEntityConverter : Converter<BudgetExpenseCreate, BudgetExpenseEntity> {
 
-  override fun convert(source: BudgetExpenseCreate): BudgetExpenseEntity {
-    return BudgetExpenseEntity(
-      title = source.title,
-      amountInCents = source.amountInCents,
-      dueDate = source.dueDate,
-      categoryId = source.categoryId,
-      budgetId = source.budgetId,
-    )
-  }
+	override fun convert(source: BudgetExpenseCreate): BudgetExpenseEntity {
+		return BudgetExpenseEntity(
+			title = source.title,
+			amountInCents = source.amountInCents,
+			dueDate = source.dueDate,
+			categoryId = source.categoryId,
+			budgetId = source.budgetId,
+		)
+	}
 }

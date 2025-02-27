@@ -6,12 +6,12 @@ import org.springframework.stereotype.Component
 
 @Component
 class ExpenseTypePersistenceEnumToDtoConverter :
-  Converter<ExpenseTypePersistenceEnum, ExpenseType> {
-  override fun convert(source: ExpenseTypePersistenceEnum): ExpenseType {
-    return when (source) {
-      ExpenseTypePersistenceEnum.FIX -> ExpenseType.FIX
-      ExpenseTypePersistenceEnum.FLEX -> ExpenseType.FLEX
-      ExpenseTypePersistenceEnum.BUDGET -> ExpenseType.BUDGET
-    }
-  }
+	Converter<ExpenseTypePersistenceEnum, ExpenseType> {
+	override fun convert(source: ExpenseTypePersistenceEnum): ExpenseType {
+		return when (source) {
+			ExpenseTypePersistenceEnum.FIX -> ExpenseType.FIX
+			ExpenseTypePersistenceEnum.FLEX -> ExpenseType.FLEX
+			ExpenseTypePersistenceEnum.BUDGET -> ExpenseType.BUDGET
+		}
+	}
 }
