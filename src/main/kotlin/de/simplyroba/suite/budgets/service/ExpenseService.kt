@@ -35,7 +35,7 @@ class ExpenseService(
       .findAllByTypeAndDueDateBetween(
         expenseTypeToPersistenceEnumConverter.convert(type),
         yearMonth.atDay(1),
-        yearMonth.atEndOfMonth()
+        yearMonth.atEndOfMonth(),
       )
       .map(expenseEntityToDtoConverter::convert)
   }

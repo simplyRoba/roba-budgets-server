@@ -57,10 +57,8 @@ class ExpenseController(private val expenseService: ExpenseService) {
     }
 
   @GetMapping("/{id}/type/{type}")
-  fun getExpenseById(
-    @PathVariable id: Long,
-    @PathVariable type: ExpenseType,
-  ): Mono<Expense> = expenseService.findByIdAndType(id, type)
+  fun getExpenseById(@PathVariable id: Long, @PathVariable type: ExpenseType): Mono<Expense> =
+    expenseService.findByIdAndType(id, type)
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
