@@ -21,32 +21,23 @@ import reactor.core.publisher.Mono
 @RestController
 @RequestMapping("api/v1/budget")
 @CrossOrigin
-class BudgetController(
-  private val budgetService: BudgetService,
-) {
+class BudgetController(private val budgetService: BudgetService) {
 
   @GetMapping fun getBudgetList(): Flux<Budget> = budgetService.findAll()
 
   @GetMapping("/{id}")
-  fun getBudgetById(
-    @PathVariable id: Long,
-  ): Mono<Budget> = budgetService.findById(id)
+  fun getBudgetById(@PathVariable id: Long): Mono<Budget> = budgetService.findById(id)
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  fun createBudget(
-    @RequestBody budget: BudgetCreate,
-  ): Mono<Budget> = budgetService.createBudget(budget)
+  fun createBudget(@RequestBody budget: BudgetCreate): Mono<Budget> =
+    budgetService.createBudget(budget)
 
   @PutMapping("/{id}")
-  fun updateBudget(
-    @PathVariable id: Long,
-    @RequestBody budget: BudgetUpdate,
-  ): Mono<Budget> = budgetService.updateBudget(id, budget)
+  fun updateBudget(@PathVariable id: Long, @RequestBody budget: BudgetUpdate): Mono<Budget> =
+    budgetService.updateBudget(id, budget)
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  fun deleteBudget(
-    @PathVariable id: Long,
-  ): Mono<Void> = budgetService.deleteBudget(id)
+  fun deleteBudget(@PathVariable id: Long): Mono<Void> = budgetService.deleteBudget(id)
 }

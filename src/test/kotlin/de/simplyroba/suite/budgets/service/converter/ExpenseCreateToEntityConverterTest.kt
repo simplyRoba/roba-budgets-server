@@ -19,7 +19,7 @@ class ExpenseCreateToEntityConverterTest {
         dueDate = LocalDate.now(),
         type = ExpenseType.FIX,
         categoryId = 1,
-        budgetId = 1
+        budgetId = 1,
       )
 
     val result = converter.convert(expenseCreate)

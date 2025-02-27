@@ -10,7 +10,7 @@ class IncomeCreateToEntityConverter : Converter<IncomeCreate, IncomeEntity> {
     return IncomeEntity(
       title = source.title,
       amountInCents = source.amountInCents,
-      dueDate = source.dueDate
+      dueDate = source.dueDate,
     )
   }
 }

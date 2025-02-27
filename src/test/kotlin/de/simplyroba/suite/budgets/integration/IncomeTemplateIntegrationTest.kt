@@ -65,7 +65,7 @@ class IncomeTemplateIntegrationTest : AbstractIntegrationTest() {
         IncomeTemplateCreate(
           title = title,
           amountInCents = amountInCents,
-          repeatInterval = RepeatInterval.MONTHLY
+          repeatInterval = RepeatInterval.MONTHLY,
         )
       )
       .exchange()
@@ -95,7 +95,7 @@ class IncomeTemplateIntegrationTest : AbstractIntegrationTest() {
         IncomeTemplateUpdate(
           title = updatedTitle,
           amountInCents = updatedAmountInCents,
-          repeatInterval = RepeatInterval.MONTHLY
+          repeatInterval = RepeatInterval.MONTHLY,
         )
       )
       .exchange()
@@ -120,7 +120,7 @@ class IncomeTemplateIntegrationTest : AbstractIntegrationTest() {
         IncomeTemplateUpdate(
           title = "Updated Income Template",
           amountInCents = 1000,
-          repeatInterval = RepeatInterval.MONTHLY
+          repeatInterval = RepeatInterval.MONTHLY,
         )
       )
       .exchange()

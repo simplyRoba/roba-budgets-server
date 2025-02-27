@@ -17,7 +17,7 @@ class FixExpenseTemplateCreateToEntityConverterTest {
         title = "title",
         amountInCents = 100,
         repeatInterval = RepeatInterval.MONTHLY,
-        categoryId = 1
+        categoryId = 1,
       )
 
     val result = converter.convert(source)

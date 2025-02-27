@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono
 class CategoryService(
   private val categoryRepository: CategoryRepository,
   private val categoryEntityToDtoConverter: Converter<CategoryEntity, Category>,
-  private val categoryCreateToEntityConverter: Converter<CategoryCreate, CategoryEntity>
+  private val categoryCreateToEntityConverter: Converter<CategoryCreate, CategoryEntity>,
 ) {
 
   fun findAll(): Flux<Category> {
@@ -34,14 +34,14 @@ class CategoryService(
 
   private fun buildTreeRecursively(
     category: CategoryEntity,
-    categoryMap: Map<Long, CategoryEntity>
+    categoryMap: Map<Long, CategoryEntity>,
   ): CategoryTree {
     val subCategory = categoryMap.values.filter { it.parentCategoryId == category.id }
     return CategoryTree(
       id = category.id,
       name = category.name,
       disabled = category.disabled,
-      subCategory = subCategory.map { buildTreeRecursively(it, categoryMap) }
+      subCategory = subCategory.map { buildTreeRecursively(it, categoryMap) },
     )
   }
 

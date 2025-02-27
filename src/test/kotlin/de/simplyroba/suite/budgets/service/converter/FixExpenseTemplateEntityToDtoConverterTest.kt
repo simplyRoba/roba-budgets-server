@@ -18,7 +18,7 @@ class FixExpenseTemplateEntityToDtoConverterTest {
         title = "title",
         amountInCents = 100,
         repeatInterval = RepeatIntervalPersistenceEnum.MONTHLY,
-        categoryId = 1
+        categoryId = 1,
       )
 
     val result = converter.convert(entity)

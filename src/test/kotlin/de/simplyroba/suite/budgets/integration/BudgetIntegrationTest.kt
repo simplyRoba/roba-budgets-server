@@ -99,7 +99,7 @@ class BudgetIntegrationTest : AbstractIntegrationTest() {
           updatedName,
           updatedSavingAmountInCents,
           updatedTotalSavedAmountInCents,
-          categoryId
+          categoryId,
         )
       )
       .exchange()

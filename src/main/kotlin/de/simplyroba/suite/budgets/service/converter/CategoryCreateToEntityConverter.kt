@@ -10,7 +10,7 @@ class CategoryCreateToEntityConverter : Converter<CategoryCreate, CategoryEntity
     return CategoryEntity(
       name = source.name,
       disabled = source.disabled,
-      parentCategoryId = source.parentCategoryId
+      parentCategoryId = source.parentCategoryId,
     )
   }
 }

@@ -52,7 +52,7 @@ abstract class AbstractIntegrationTest {
     Mono.usingWhen(
         connectionFactory.create(),
         { connection -> ScriptUtils.executeSqlScript(connection, sqlScript) },
-        { connection -> connection.close() }
+        { connection -> connection.close() },
       )
       .block()
   }
@@ -60,7 +60,7 @@ abstract class AbstractIntegrationTest {
   fun createIncome(
     title: String = "Income",
     amountInCents: Int = 999,
-    dueDate: LocalDate = LocalDate.now()
+    dueDate: LocalDate = LocalDate.now(),
   ): IncomeEntity {
     return incomeRepository
       .save(IncomeEntity(title = title, amountInCents = amountInCents, dueDate = dueDate))
@@ -79,7 +79,7 @@ abstract class AbstractIntegrationTest {
         IncomeTemplateEntity(
           title = title,
           amountInCents = amountInCents,
-          repeatInterval = repeatInterval
+          repeatInterval = repeatInterval,
         )
       )
       .log("create income template $title")
@@ -103,7 +103,7 @@ abstract class AbstractIntegrationTest {
           dueDate = dueDate,
           type = type,
           categoryId = categoryId,
-          budgetId = budgetId
+          budgetId = budgetId,
         )
       )
       .log("create expense $title")
@@ -115,7 +115,7 @@ abstract class AbstractIntegrationTest {
     title: String = "Fix Expense Template",
     amountInCents: Int = 999,
     repeatInterval: RepeatIntervalPersistenceEnum = RepeatIntervalPersistenceEnum.MONTHLY,
-    categoryId: Long
+    categoryId: Long,
   ): FixExpenseTemplateEntity {
     return fixExpenseTemplateRepository
       .save(
@@ -134,7 +134,7 @@ abstract class AbstractIntegrationTest {
   fun createCategory(
     name: String = "Category",
     disabled: Boolean = false,
-    parentCategoryId: Long? = null
+    parentCategoryId: Long? = null,
   ): CategoryEntity {
     return categoryRepository
       .save(CategoryEntity(name = name, disabled = disabled, parentCategoryId = parentCategoryId))
@@ -147,7 +147,7 @@ abstract class AbstractIntegrationTest {
     name: String = "Budget",
     monthlySavingAmountInCents: Int = 10000,
     totalSavedAmountInCents: Int = 100000,
-    categoryId: Long
+    categoryId: Long,
   ): BudgetEntity {
     return budgetRepository
       .save(
@@ -155,7 +155,7 @@ abstract class AbstractIntegrationTest {
           name = name,
           monthlySavingAmountInCents = monthlySavingAmountInCents,
           totalSavedAmountInCents = totalSavedAmountInCents,
-          categoryId = categoryId
+          categoryId = categoryId,
         )
       )
       .log("create budget $name")
@@ -177,7 +177,7 @@ abstract class AbstractIntegrationTest {
           amountInCents = amountInCents,
           dueDate = dueDate,
           categoryId = categoryId,
-          budgetId = budgetId
+          budgetId = budgetId,
         )
       )
       .log("create budget expense $name")

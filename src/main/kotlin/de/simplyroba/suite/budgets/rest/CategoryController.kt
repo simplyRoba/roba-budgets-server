@@ -22,9 +22,7 @@ import reactor.core.publisher.Mono
 @RestController
 @RequestMapping("api/v1/category")
 @CrossOrigin
-class CategoryController(
-  private val categoryService: CategoryService,
-) {
+class CategoryController(private val categoryService: CategoryService) {
 
   @GetMapping fun getCategoryList(): Flux<Category> = categoryService.findAll()
 
@@ -32,15 +30,12 @@ class CategoryController(
   fun getCategoryTree(): Flux<CategoryTree> = categoryService.buildCategoryTree()
 
   @GetMapping("/{id}")
-  fun getCategoryById(
-    @PathVariable id: Long,
-  ): Mono<Category> = categoryService.findById(id)
+  fun getCategoryById(@PathVariable id: Long): Mono<Category> = categoryService.findById(id)
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  fun createCategory(
-    @RequestBody category: CategoryCreate,
-  ): Mono<Category> = categoryService.createCategory(category)
+  fun createCategory(@RequestBody category: CategoryCreate): Mono<Category> =
+    categoryService.createCategory(category)
 
   @PutMapping("/{id}")
   fun updateCategory(
@@ -50,7 +45,5 @@ class CategoryController(
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  fun deleteCategory(
-    @PathVariable id: Long,
-  ): Mono<Void> = categoryService.deleteCategory(id)
+  fun deleteCategory(@PathVariable id: Long): Mono<Void> = categoryService.deleteCategory(id)
 }

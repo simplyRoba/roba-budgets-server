@@ -14,10 +14,6 @@ data class Category(
   val parentCategoryId: Long?,
 )
 
-data class CategoryCreate(
-  val name: String,
-  val disabled: Boolean,
-  val parentCategoryId: Long?,
-)
+data class CategoryCreate(val name: String, val disabled: Boolean, val parentCategoryId: Long?)
 
 typealias CategoryUpdate = CategoryCreate
