@@ -5,8 +5,8 @@ import org.springframework.data.relational.core.mapping.Table
 
 @Table("category")
 data class CategoryEntity(
-	@Id val id: Long = 0,
-	var name: String,
-	var disabled: Boolean,
-	var parentCategoryId: Long?,
+  @Id val id: Long = 0,
+  var name: String,
+  var disabled: Boolean,
+  var parentCategoryId: Long?,
 )

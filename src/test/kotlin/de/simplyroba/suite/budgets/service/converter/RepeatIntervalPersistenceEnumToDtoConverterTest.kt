@@ -8,20 +8,20 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class RepeatIntervalPersistenceEnumToDtoConverterTest {
 
-	private val converter = RepeatIntervalPersistenceEnumToDtoConverter()
+  private val converter = RepeatIntervalPersistenceEnumToDtoConverter()
 
-	@ParameterizedTest
-	@CsvSource(
-		"MONTHLY:MONTHLY",
-		"QUARTERLY:QUARTERLY",
-		"SEMI_ANNUALLY:SEMI_ANNUALLY",
-		"ANNUALLY:ANNUALLY",
-		delimiter = ':',
-	)
-	fun `converts entity repeat interval to repeat interval`(
-		repeatIntervalPersistenceEnum: RepeatIntervalPersistenceEnum,
-		repeatInterval: RepeatInterval,
-	) {
-		assertEquals(repeatInterval, converter.convert(repeatIntervalPersistenceEnum))
-	}
+  @ParameterizedTest
+  @CsvSource(
+    "MONTHLY:MONTHLY",
+    "QUARTERLY:QUARTERLY",
+    "SEMI_ANNUALLY:SEMI_ANNUALLY",
+    "ANNUALLY:ANNUALLY",
+    delimiter = ':',
+  )
+  fun `converts entity repeat interval to repeat interval`(
+    repeatIntervalPersistenceEnum: RepeatIntervalPersistenceEnum,
+    repeatInterval: RepeatInterval,
+  ) {
+    assertEquals(repeatInterval, converter.convert(repeatIntervalPersistenceEnum))
+  }
 }

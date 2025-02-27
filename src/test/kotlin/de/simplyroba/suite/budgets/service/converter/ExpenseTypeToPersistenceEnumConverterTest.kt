@@ -8,15 +8,15 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class ExpenseTypeToPersistenceEnumConverterTest {
 
-	private val converter = ExpenseTypeToPersistenceEnumConverter()
+  private val converter = ExpenseTypeToPersistenceEnumConverter()
 
-	@ParameterizedTest
-	@CsvSource("FIX:FIX", "FLEX:FLEX", "BUDGET:BUDGET", delimiter = ':')
-	fun `should convert dto type to entity type`(
-		dtoType: ExpenseType,
-		entityType: ExpenseTypePersistenceEnum,
-	) {
-		val result = converter.convert(dtoType)
-		assertThat(result).isEqualTo(entityType)
-	}
+  @ParameterizedTest
+  @CsvSource("FIX:FIX", "FLEX:FLEX", "BUDGET:BUDGET", delimiter = ':')
+  fun `should convert dto type to entity type`(
+    dtoType: ExpenseType,
+    entityType: ExpenseTypePersistenceEnum,
+  ) {
+    val result = converter.convert(dtoType)
+    assertThat(result).isEqualTo(entityType)
+  }
 }

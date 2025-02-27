@@ -8,18 +8,18 @@ import org.springframework.stereotype.Component
 
 @Component
 class ExpenseEntityToDtoConverter(
-	private val expenseTypePersistenceEnumToDtoConverter:
-		Converter<ExpenseTypePersistenceEnum, ExpenseType>
+  private val expenseTypePersistenceEnumToDtoConverter:
+    Converter<ExpenseTypePersistenceEnum, ExpenseType>
 ) : Converter<ExpenseEntity, Expense> {
-	override fun convert(source: ExpenseEntity): Expense {
-		return Expense(
-			id = source.id,
-			title = source.title,
-			amountInCents = source.amountInCents,
-			dueDate = source.dueDate,
-			type = expenseTypePersistenceEnumToDtoConverter.convert(source.type),
-			categoryId = source.categoryId,
-			budgetId = source.budgetId,
-		)
-	}
+  override fun convert(source: ExpenseEntity): Expense {
+    return Expense(
+      id = source.id,
+      title = source.title,
+      amountInCents = source.amountInCents,
+      dueDate = source.dueDate,
+      type = expenseTypePersistenceEnumToDtoConverter.convert(source.type),
+      categoryId = source.categoryId,
+      budgetId = source.budgetId,
+    )
+  }
 }

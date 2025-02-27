@@ -7,21 +7,21 @@ import org.junit.jupiter.api.Test
 
 class IncomeTemplateCreateToEntityConverterTest {
 
-	private val converter =
-		IncomeTemplateCreateToEntityConverter(RepeatIntervalToPersistenceEnumConverter())
+  private val converter =
+    IncomeTemplateCreateToEntityConverter(RepeatIntervalToPersistenceEnumConverter())
 
-	@Test
-	fun `should convert create to entity`() {
-		val incomeTemplateCreate =
-			IncomeTemplateCreate(
-				title = "Test",
-				amountInCents = 1000,
-				repeatInterval = RepeatInterval.MONTHLY,
-			)
+  @Test
+  fun `should convert create to entity`() {
+    val incomeTemplateCreate =
+      IncomeTemplateCreate(
+        title = "Test",
+        amountInCents = 1000,
+        repeatInterval = RepeatInterval.MONTHLY,
+      )
 
-		val result = converter.convert(incomeTemplateCreate)
+    val result = converter.convert(incomeTemplateCreate)
 
-		assertEquals(incomeTemplateCreate.title, result.title)
-		assertEquals(incomeTemplateCreate.amountInCents, result.amountInCents)
-	}
+    assertEquals(incomeTemplateCreate.title, result.title)
+    assertEquals(incomeTemplateCreate.amountInCents, result.amountInCents)
+  }
 }

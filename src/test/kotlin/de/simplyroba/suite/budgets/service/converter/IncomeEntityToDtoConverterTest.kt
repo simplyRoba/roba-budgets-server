@@ -7,18 +7,18 @@ import org.junit.jupiter.api.Test
 
 class IncomeEntityToDtoConverterTest {
 
-	private val converter = IncomeEntityToDtoConverter()
+  private val converter = IncomeEntityToDtoConverter()
 
-	@Test
-	fun `should convert entity to dto`() {
-		val entity =
-			IncomeEntity(id = 1, title = "title", amountInCents = 100, dueDate = LocalDate.now())
+  @Test
+  fun `should convert entity to dto`() {
+    val entity =
+      IncomeEntity(id = 1, title = "title", amountInCents = 100, dueDate = LocalDate.now())
 
-		val result = converter.convert(entity)
+    val result = converter.convert(entity)
 
-		assertThat(result.id).isEqualTo(entity.id)
-		assertThat(result.title).isEqualTo(entity.title)
-		assertThat(result.amountInCents).isEqualTo(entity.amountInCents)
-		assertThat(result.dueDate).isEqualTo(entity.dueDate)
-	}
+    assertThat(result.id).isEqualTo(entity.id)
+    assertThat(result.title).isEqualTo(entity.title)
+    assertThat(result.amountInCents).isEqualTo(entity.amountInCents)
+    assertThat(result.dueDate).isEqualTo(entity.dueDate)
+  }
 }

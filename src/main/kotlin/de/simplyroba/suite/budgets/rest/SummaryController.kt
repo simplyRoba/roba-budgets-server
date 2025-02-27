@@ -15,10 +15,10 @@ import reactor.core.publisher.Mono
 @CrossOrigin
 class SummaryController(private val summaryService: SummaryService) {
 
-	@GetMapping("/year/{year}/month/{month}")
-	fun getSummary(@PathVariable year: Int, @PathVariable month: Int): Mono<MonthlySummary> =
-		summaryService.getSummaryForYearAndMonth(year, month)
+  @GetMapping("/year/{year}/month/{month}")
+  fun getSummary(@PathVariable year: Int, @PathVariable month: Int): Mono<MonthlySummary> =
+    summaryService.getSummaryForYearAndMonth(year, month)
 
-	@GetMapping("/budgets")
-	fun getBudgetSummary(): Mono<List<BudgetSummary>> = summaryService.getBudgetSummary()
+  @GetMapping("/budgets")
+  fun getBudgetSummary(): Mono<List<BudgetSummary>> = summaryService.getBudgetSummary()
 }

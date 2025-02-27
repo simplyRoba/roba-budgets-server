@@ -12,19 +12,19 @@ import org.testcontainers.utility.DockerImageName
 @TestConfiguration(proxyBeanMethods = false)
 class TestcontainersConfiguration {
 
-	@Bean
-	@ServiceConnection
-	fun postgresContainer(): PostgreSQLContainer<*> {
-		return PostgreSQLContainer(DockerImageName.parse("postgres:16-alpine"))
-			// see
-			// https://github.com/rancher-sandbox/rancher-desktop/issues/2609#issuecomment-1788871956
-			.waitingFor(
-				WaitAllStrategy()
-					.withStrategy(Wait.forListeningPort())
-					.withStrategy(
-						Wait.forLogMessage(".*database system is ready to accept connections.*\\s", 2)
-							.withStartupTimeout(Duration.ofSeconds(60))
-					)
-			)
-	}
+  @Bean
+  @ServiceConnection
+  fun postgresContainer(): PostgreSQLContainer<*> {
+    return PostgreSQLContainer(DockerImageName.parse("postgres:16-alpine"))
+      // see
+      // https://github.com/rancher-sandbox/rancher-desktop/issues/2609#issuecomment-1788871956
+      .waitingFor(
+        WaitAllStrategy()
+          .withStrategy(Wait.forListeningPort())
+          .withStrategy(
+            Wait.forLogMessage(".*database system is ready to accept connections.*\\s", 2)
+              .withStartupTimeout(Duration.ofSeconds(60))
+          )
+      )
+  }
 }

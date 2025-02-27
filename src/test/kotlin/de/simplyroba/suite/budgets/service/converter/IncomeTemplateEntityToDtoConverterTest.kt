@@ -7,23 +7,23 @@ import org.junit.jupiter.api.Test
 
 class IncomeTemplateEntityToDtoConverterTest {
 
-	private val converter =
-		IncomeTemplateEntityToDtoConverter(RepeatIntervalPersistenceEnumToDtoConverter())
+  private val converter =
+    IncomeTemplateEntityToDtoConverter(RepeatIntervalPersistenceEnumToDtoConverter())
 
-	@Test
-	fun `should convert entity to dto`() {
-		val entity =
-			IncomeTemplateEntity(
-				id = 1,
-				title = "title",
-				amountInCents = 100,
-				repeatInterval = RepeatIntervalPersistenceEnum.ANNUALLY,
-			)
+  @Test
+  fun `should convert entity to dto`() {
+    val entity =
+      IncomeTemplateEntity(
+        id = 1,
+        title = "title",
+        amountInCents = 100,
+        repeatInterval = RepeatIntervalPersistenceEnum.ANNUALLY,
+      )
 
-		val result = converter.convert(entity)
+    val result = converter.convert(entity)
 
-		assertThat(result.id).isEqualTo(entity.id)
-		assertThat(result.title).isEqualTo(entity.title)
-		assertThat(result.amountInCents).isEqualTo(entity.amountInCents)
-	}
+    assertThat(result.id).isEqualTo(entity.id)
+    assertThat(result.title).isEqualTo(entity.title)
+    assertThat(result.amountInCents).isEqualTo(entity.amountInCents)
+  }
 }

@@ -56,7 +56,7 @@ spotless {
     target("src/**/*.kt", "src/**/*.kts")
     targetExclude("build/**/*.kts", "build/**/*.kt")
     ktfmt().googleStyle()
-    leadingSpacesToTabs(2)
+    leadingTabsToSpaces(2)
   }
 
   kotlinGradle {

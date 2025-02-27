@@ -23,26 +23,26 @@ import reactor.core.publisher.Mono
 @CrossOrigin
 class IncomeTemplateController(private val incomeTemplateService: IncomeTemplateService) {
 
-	@GetMapping fun getIncomeTemplateList(): Flux<IncomeTemplate> = incomeTemplateService.findAll()
+  @GetMapping fun getIncomeTemplateList(): Flux<IncomeTemplate> = incomeTemplateService.findAll()
 
-	@GetMapping("/{id}")
-	fun getIncomeTemplateById(@PathVariable id: Long): Mono<IncomeTemplate> =
-		incomeTemplateService.findById(id)
+  @GetMapping("/{id}")
+  fun getIncomeTemplateById(@PathVariable id: Long): Mono<IncomeTemplate> =
+    incomeTemplateService.findById(id)
 
-	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	fun createIncomeTemplate(
-		@RequestBody incomeTemplate: IncomeTemplateCreate
-	): Mono<IncomeTemplate> = incomeTemplateService.createIncomeTemplate(incomeTemplate)
+  @PostMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  fun createIncomeTemplate(
+    @RequestBody incomeTemplate: IncomeTemplateCreate
+  ): Mono<IncomeTemplate> = incomeTemplateService.createIncomeTemplate(incomeTemplate)
 
-	@PutMapping("/{id}")
-	fun updateIncomeTemplate(
-		@PathVariable id: Long,
-		@RequestBody incomeTemplate: IncomeTemplateUpdate,
-	): Mono<IncomeTemplate> = incomeTemplateService.updateIncomeTemplate(id, incomeTemplate)
+  @PutMapping("/{id}")
+  fun updateIncomeTemplate(
+    @PathVariable id: Long,
+    @RequestBody incomeTemplate: IncomeTemplateUpdate,
+  ): Mono<IncomeTemplate> = incomeTemplateService.updateIncomeTemplate(id, incomeTemplate)
 
-	@DeleteMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	fun deleteIncomeTemplate(@PathVariable id: Long): Mono<Void> =
-		incomeTemplateService.deleteIncomeTemplate(id)
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  fun deleteIncomeTemplate(@PathVariable id: Long): Mono<Void> =
+    incomeTemplateService.deleteIncomeTemplate(id)
 }

@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component
 
 @Component
 class IncomeCreateToEntityConverter : Converter<IncomeCreate, IncomeEntity> {
-	override fun convert(source: IncomeCreate): IncomeEntity {
-		return IncomeEntity(
-			title = source.title,
-			amountInCents = source.amountInCents,
-			dueDate = source.dueDate,
-		)
-	}
+  override fun convert(source: IncomeCreate): IncomeEntity {
+    return IncomeEntity(
+      title = source.title,
+      amountInCents = source.amountInCents,
+      dueDate = source.dueDate,
+    )
+  }
 }

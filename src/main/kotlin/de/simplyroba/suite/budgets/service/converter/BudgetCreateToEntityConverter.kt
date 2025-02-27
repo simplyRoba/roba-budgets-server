@@ -6,12 +6,12 @@ import org.springframework.stereotype.Component
 
 @Component
 class BudgetCreateToEntityConverter : Converter<BudgetCreate, BudgetEntity> {
-	override fun convert(source: BudgetCreate): BudgetEntity {
-		return BudgetEntity(
-			name = source.name,
-			monthlySavingAmountInCents = source.monthlySavingAmountInCents,
-			totalSavedAmountInCents = source.totalSavedAmountInCents,
-			categoryId = source.categoryId,
-		)
-	}
+  override fun convert(source: BudgetCreate): BudgetEntity {
+    return BudgetEntity(
+      name = source.name,
+      monthlySavingAmountInCents = source.monthlySavingAmountInCents,
+      totalSavedAmountInCents = source.totalSavedAmountInCents,
+      categoryId = source.categoryId,
+    )
+  }
 }

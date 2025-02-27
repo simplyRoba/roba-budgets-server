@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Test
 
 class CategoryEntityToDtoConverterTest {
 
-	private val converter = CategoryEntityToDtoConverter()
+  private val converter = CategoryEntityToDtoConverter()
 
-	@Test
-	fun `should convert entity to dto`() {
-		val entity = CategoryEntity(id = 1, name = "name", disabled = true, parentCategoryId = 2)
+  @Test
+  fun `should convert entity to dto`() {
+    val entity = CategoryEntity(id = 1, name = "name", disabled = true, parentCategoryId = 2)
 
-		val result = converter.convert(entity)
+    val result = converter.convert(entity)
 
-		assertThat(result.id).isEqualTo(entity.id)
-		assertThat(result.name).isEqualTo(entity.name)
-		assertThat(result.disabled).isEqualTo(entity.disabled)
-		assertThat(result.parentCategoryId).isEqualTo(entity.parentCategoryId)
-	}
+    assertThat(result.id).isEqualTo(entity.id)
+    assertThat(result.name).isEqualTo(entity.name)
+    assertThat(result.disabled).isEqualTo(entity.disabled)
+    assertThat(result.parentCategoryId).isEqualTo(entity.parentCategoryId)
+  }
 }
