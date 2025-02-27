@@ -10,6 +10,7 @@ import de.simplyroba.suite.budgets.rest.model.ExpenseType
 import de.simplyroba.suite.budgets.rest.model.ExpenseUpdate
 import de.simplyroba.suite.budgets.service.converter.Converter
 import java.time.LocalDate
+import java.time.YearMonth
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Flux
@@ -28,28 +29,13 @@ class ExpenseService(
     return expenseRepository.findAll().map(expenseEntityToDtoConverter::convert)
   }
 
-  fun findAllBetweenDates(startDate: LocalDate, endDate: LocalDate): Flux<Expense> {
-    return expenseRepository
-      .findAllByDueDateBetween(startDate, endDate)
-      .map(expenseEntityToDtoConverter::convert)
-  }
-
-  fun findAllByType(type: ExpenseType): Flux<Expense> {
-    return expenseRepository
-      .findAllByType(expenseTypeToPersistenceEnumConverter.convert(type))
-      .map(expenseEntityToDtoConverter::convert)
-  }
-
-  fun findAllByTypeBetweenDates(
-    type: ExpenseType,
-    startDate: LocalDate,
-    endDate: LocalDate,
-  ): Flux<Expense> {
+  fun findAllByTypeYearAndMonth(type: ExpenseType, year: Int, month: Int): Flux<Expense> {
+    val yearMonth = YearMonth.of(year, month)
     return expenseRepository
       .findAllByTypeAndDueDateBetween(
         expenseTypeToPersistenceEnumConverter.convert(type),
-        startDate,
-        endDate,
+        yearMonth.atDay(1),
+        yearMonth.atEndOfMonth(),
       )
       .map(expenseEntityToDtoConverter::convert)
   }
@@ -84,10 +70,10 @@ class ExpenseService(
       .map(expenseEntityToDtoConverter::convert)
   }
 
-  fun findById(id: Long): Mono<Expense> {
+  fun findByIdAndType(id: Long, type: ExpenseType): Mono<Expense> {
     return expenseRepository
-      .findById(id)
-      .switchIfEmpty(Mono.error(NotFoundError("Expense with id $id not found")))
+      .findByIdAndType(id, expenseTypeToPersistenceEnumConverter.convert(type))
+      .switchIfEmpty(Mono.error(NotFoundError("Expense with id $id and type $type not found")))
       .map(expenseEntityToDtoConverter::convert)
   }
 
