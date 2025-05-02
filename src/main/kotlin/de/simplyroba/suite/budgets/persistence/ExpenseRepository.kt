@@ -5,6 +5,7 @@ import de.simplyroba.suite.budgets.persistence.model.ExpenseTypePersistenceEnum
 import java.time.LocalDate
 import org.springframework.data.repository.reactive.ReactiveCrudRepository
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
 interface ExpenseRepository : ReactiveCrudRepository<ExpenseEntity, Long> {
 
@@ -33,4 +34,6 @@ interface ExpenseRepository : ReactiveCrudRepository<ExpenseEntity, Long> {
     startDate: LocalDate,
     endDate: LocalDate,
   ): Flux<ExpenseEntity>
+
+  fun findByIdAndType(id: Long, type: ExpenseTypePersistenceEnum): Mono<ExpenseEntity>
 }
